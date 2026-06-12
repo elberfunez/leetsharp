@@ -7,26 +7,85 @@
  *  (e.g. Two Sum shows the input array AND the dictionary). */
 export type VisualState =
   | ArrayVisualState
-  | DictVisualState;
+  | DictVisualState
+  | SetVisualState
+  | StackVisualState
+  | LinkedListVisualState
+  | TreeVisualState;
 
 export interface ArrayVisualState {
   type: "array";
   /** Panel heading, e.g. "nums" */
   title?: string;
   items: (number | string)[];
-  /** pointer name -> index it points at, e.g. { i: 2 } */
+  /** pointer name -> index it points at, e.g. { l: 0, r: 5, m: 2 } */
   pointers?: Record<string, number>;
-  /** indices to emphasize (e.g. the matched pair) */
+  /** indices to emphasize (matched pair, current window, ...) */
   highlighted?: number[];
+  /** indices to fade out (e.g. the half discarded by binary search) */
+  dimmed?: number[];
 }
 
 export interface DictVisualState {
   type: "dict";
-  /** Panel heading, e.g. "seen <value, index>" */
+  /** Panel heading, e.g. "d <value, index>" */
   title?: string;
   entries: [key: number | string, value: number | string][];
   /** key being read or written this step */
   activeKey?: number | string;
+}
+
+export interface SetVisualState {
+  type: "set";
+  /** Panel heading, e.g. "charSet" */
+  title?: string;
+  items: (number | string)[];
+  /** item being added, removed, or tested this step */
+  activeItem?: number | string;
+}
+
+export interface StackVisualState {
+  type: "stack";
+  /** Panel heading, e.g. "stack" */
+  title?: string;
+  /** bottom first — last item renders on top */
+  items: (number | string)[];
+  /** emphasize the top item (being pushed or popped) */
+  topActive?: boolean;
+}
+
+export interface LinkedListVisualState {
+  type: "linkedlist";
+  title?: string;
+  /** node values in their ORIGINAL order — nodes never move on screen,
+   *  only the arrows between them change */
+  values: (number | string)[];
+  /** next[i] = index of the node that node i points to, or null.
+   *  Arrows between neighbors render as → or ← from this. */
+  next: (number | null)[];
+  /** pointer name -> node index. Pointers that are null this step are
+   *  omitted here and shown in the variables panel instead. */
+  pointers?: Record<string, number>;
+  highlighted?: number[];
+}
+
+export interface TreeVisualNode {
+  id: string;
+  value: number | string;
+  left?: TreeVisualNode | null;
+  right?: TreeVisualNode | null;
+}
+
+export interface TreeVisualState {
+  type: "tree";
+  title?: string;
+  root: TreeVisualNode;
+  /** node ids being processed this step */
+  highlighted?: string[];
+  /** node ids already fully processed (rendered dimmed) */
+  visited?: string[];
+  /** node id -> small badge text, e.g. its depth */
+  annotations?: Record<string, string>;
 }
 
 /** One frame of the visualization. */
@@ -50,10 +109,14 @@ export interface Approach {
 
 export interface Problem {
   slug: string;
+  /** LeetCode problem number */
+  number: number;
   title: string;
   difficulty: "Easy" | "Medium" | "Hard";
+  /** NeetCode roadmap category, e.g. "Arrays & Hashing" */
+  category: string;
   leetcodeUrl: string;
-  /** Human-readable description of the traced input, e.g. "nums = [3,4,5,6], target = 9" */
+  /** Human-readable description of the traced input, e.g. "nums = [3,4,5,6], target = 7" */
   input: string;
   /** The C# solution source. Line numbers in steps refer to this, 1-based. */
   code: string;

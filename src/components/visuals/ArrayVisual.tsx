@@ -2,8 +2,14 @@ import { motion } from "framer-motion";
 import type { ArrayVisualState } from "../../domain/types";
 
 /** An array as a row of cells with index labels, named pointers that glide
- *  between cells, and optional highlighted cells. */
-export function ArrayVisual({ title, items, pointers = {}, highlighted = [] }: ArrayVisualState) {
+ *  between cells, highlighted cells, and dimmed (discarded) cells. */
+export function ArrayVisual({
+  title,
+  items,
+  pointers = {},
+  highlighted = [],
+  dimmed = [],
+}: ArrayVisualState) {
   return (
     <div className="visual-block">
       {title && <div className="visual-title">{title}</div>}
@@ -12,11 +18,21 @@ export function ArrayVisual({ title, items, pointers = {}, highlighted = [] }: A
           const pointerNames = Object.entries(pointers)
             .filter(([, idx]) => idx === i)
             .map(([name]) => name);
+          const cellClass = [
+            "array-cell",
+            highlighted.includes(i) ? "cell-highlighted" : "",
+            dimmed.includes(i) ? "cell-dimmed" : "",
+          ]
+            .filter(Boolean)
+            .join(" ");
           return (
             <div className="array-col" key={i}>
               <motion.div
-                className={`array-cell${highlighted.includes(i) ? " cell-highlighted" : ""}`}
-                animate={{ scale: highlighted.includes(i) ? 1.08 : 1 }}
+                className={cellClass}
+                animate={{
+                  scale: highlighted.includes(i) ? 1.08 : 1,
+                  opacity: dimmed.includes(i) ? 0.3 : 1,
+                }}
                 transition={{ type: "spring", stiffness: 400, damping: 22 }}
               >
                 {value}
