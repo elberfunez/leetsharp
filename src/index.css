@@ -458,3 +458,352 @@ body {
 .complexity strong {
   color: var(--text);
 }
+
+/* ---------- Stack ---------- */
+
+.stack-column {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 46px;
+  width: 120px;
+  justify-content: flex-end;
+}
+
+.stack-empty {
+  color: var(--text-dim);
+  font-style: italic;
+  font-size: 14px;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 8px 0;
+  text-align: center;
+}
+
+.stack-item {
+  position: relative;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 0;
+  text-align: center;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.stack-item-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.stack-top-tag {
+  position: absolute;
+  right: -38px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+/* ---------- Set ---------- */
+
+.set-item {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--highlight);
+}
+
+/* ---------- Linked list ---------- */
+
+.list-row {
+  display: flex;
+  align-items: flex-start;
+}
+
+.list-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list-node {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.list-null-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--red);
+}
+
+.list-gap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 52px;
+  width: 34px;
+  align-items: center;
+}
+
+.list-arrow {
+  font-size: 16px;
+  line-height: 1.1;
+  color: var(--border);
+  opacity: 0.35;
+  transition: all 0.25s ease;
+}
+
+.list-arrow-on {
+  color: var(--accent);
+  opacity: 1;
+  font-weight: 700;
+}
+
+/* ---------- Tree ---------- */
+
+.tree-root {
+  display: flex;
+  justify-content: center;
+}
+
+.tree-branch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tree-children {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+  position: relative;
+}
+
+.tree-children::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 25%;
+  right: 25%;
+  border-top: 1px solid var(--border);
+}
+
+.tree-spacer {
+  width: 44px;
+}
+
+.tree-node {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 16px;
+  font-weight: 600;
+  transition: border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.tree-node-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+  color: var(--accent);
+}
+
+.tree-node-visited {
+  opacity: 0.35;
+}
+
+.tree-badge {
+  position: absolute;
+  top: -10px;
+  right: -14px;
+  font-size: 10px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  padding: 1px 6px;
+  font-weight: 700;
+}
+
+/* ---------- Dimmed array cells ---------- */
+
+.cell-dimmed {
+  border-color: var(--border);
+}
+
+/* ---------- Home page ---------- */
+
+.home-intro {
+  margin: 8px 0 28px;
+  color: var(--text-dim);
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 640px;
+}
+
+.category-group {
+  margin-bottom: 28px;
+}
+
+.category-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.problem-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.problem-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.15s ease;
+}
+
+.problem-card:hover {
+  border-color: var(--accent);
+}
+
+.problem-number {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 13px;
+  color: var(--text-dim);
+  min-width: 36px;
+}
+
+.problem-title {
+  font-weight: 600;
+  flex: 1;
+}
+
+.topbar-link {
+  display: block;
+}
+
+.back-link {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 13px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.back-link:hover {
+  color: var(--text);
+}
+
+/* ---------- Home page hero ---------- */
+
+.home-hero {
+  background: linear-gradient(135deg, rgba(124, 92, 255, 0.08) 0%, rgba(124, 92, 255, 0.02) 100%);
+  border: 1px solid rgba(124, 92, 255, 0.2);
+  border-radius: 14px;
+  padding: 32px;
+  margin-bottom: 32px;
+}
+
+.home-hero h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 24px;
+}
+
+.home-hero p {
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+
+.home-hero code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 13px;
+  background: var(--bg-elevated);
+  color: var(--accent);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.home-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.home-button {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.home-button-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.home-button-primary:hover {
+  background: #6b4ce0;
+  transform: translateY(-1px);
+}
+
+.home-button-secondary {
+  background: var(--bg-panel);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.home-button-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
