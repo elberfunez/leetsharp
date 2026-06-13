@@ -1,4 +1,5 @@
-:root {
+:root,
+[data-theme="dark"] {
   --bg: #0d1117;
   --bg-panel: #161b22;
   --bg-elevated: #1f2630;
@@ -11,6 +12,21 @@
   --yellow: #d29922;
   --red: #f85149;
   --highlight: #f0883e;
+}
+
+[data-theme="light"] {
+  --bg: #fafbfc;
+  --bg-panel: #f6f8fa;
+  --bg-elevated: #eaeef2;
+  --border: #d0d7de;
+  --text: #24292f;
+  --text-dim: #57606a;
+  --accent: #6b3fa0;
+  --accent-soft: rgba(107, 63, 160, 0.12);
+  --green: #1a7f34;
+  --yellow: #8b5e00;
+  --red: #d1242f;
+  --highlight: #d97706;
 }
 
 * {
@@ -730,7 +746,9 @@ body {
   color: var(--text-dim);
   text-decoration: none;
   font-size: 13px;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   margin-bottom: 12px;
 }
 
@@ -777,7 +795,9 @@ body {
 }
 
 .home-button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   padding: 10px 16px;
   border-radius: 8px;
   font-size: 14px;
@@ -806,4 +826,22 @@ body {
 .home-button-secondary:hover {
   border-color: var(--accent);
   color: var(--accent);
+}
+
+/* ---------- Theme toggle ---------- */
+
+.theme-toggle {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }

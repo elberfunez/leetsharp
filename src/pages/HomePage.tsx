@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Star, GitBranch, GitFork } from "lucide-react";
 import { problems } from "../problems";
 
 /** Problem index, grouped by NeetCode category. */
@@ -25,7 +26,7 @@ export function HomePage() {
             rel="noreferrer"
             className="home-button home-button-primary"
           >
-            ⭐ Star on GitHub
+            <Star size={15} strokeWidth={2} /> Star on GitHub
           </a>
           <a
             href="https://github.com/elberfunez"
@@ -33,7 +34,7 @@ export function HomePage() {
             rel="noreferrer"
             className="home-button home-button-secondary"
           >
-            Follow @elberfunez
+            <GitBranch size={15} strokeWidth={2} /> Follow @elberfunez
           </a>
           <a
             href="https://github.com/elberfunez/leetsharp/blob/main/CONTRIBUTING.md"
@@ -41,7 +42,7 @@ export function HomePage() {
             rel="noreferrer"
             className="home-button home-button-secondary"
           >
-            Contribute
+            <GitFork size={15} strokeWidth={2} /> Contribute
           </a>
         </div>
       </div>
