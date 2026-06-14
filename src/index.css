@@ -832,13 +832,15 @@ body {
 
 .theme-toggle {
   margin-left: auto;
-  background: transparent;
+  background: none;
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 6px 10px;
-  font-size: 16px;
   cursor: pointer;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
 }
 
 .theme-toggle:hover {
