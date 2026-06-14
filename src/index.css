@@ -1226,3 +1226,14 @@ body {
   border-color: var(--accent);
   color: var(--accent);
 }
+
+/* ---------- Home footer ---------- */
+
+.home-footer {
+  display: flex;
+  gap: 12px;
+  margin-top: 80px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  justify-content: center;
+}

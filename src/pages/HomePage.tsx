@@ -28,33 +28,6 @@ export function HomePage() {
 
   return (
     <div>
-      <div className="home-links">
-        <a
-          href="https://github.com/elberfunez/leetsharp"
-          target="_blank"
-          rel="noreferrer"
-          className="home-link"
-        >
-          <Star size={14} strokeWidth={2} /> Star
-        </a>
-        <a
-          href="https://github.com/elberfunez"
-          target="_blank"
-          rel="noreferrer"
-          className="home-link"
-        >
-          <GitBranch size={14} strokeWidth={2} /> Follow
-        </a>
-        <a
-          href="https://github.com/elberfunez/leetsharp/blob/main/CONTRIBUTING.md"
-          target="_blank"
-          rel="noreferrer"
-          className="home-link"
-        >
-          <GitFork size={14} strokeWidth={2} /> Contribute
-        </a>
-      </div>
-
       <div className="home-controls">
         <div className="view-toggle">
           <button
@@ -117,6 +90,33 @@ export function HomePage() {
       {openCategory && (
         <CategoryPanel category={openCategory} onClose={() => setOpenCategory(null)} />
       )}
+
+      <div className="home-footer">
+        <a
+          href="https://github.com/elberfunez/leetsharp"
+          target="_blank"
+          rel="noreferrer"
+          className="home-link"
+        >
+          <Star size={14} strokeWidth={2} /> Star
+        </a>
+        <a
+          href="https://github.com/elberfunez"
+          target="_blank"
+          rel="noreferrer"
+          className="home-link"
+        >
+          <GitBranch size={14} strokeWidth={2} /> Follow
+        </a>
+        <a
+          href="https://github.com/elberfunez/leetsharp/blob/main/CONTRIBUTING.md"
+          target="_blank"
+          rel="noreferrer"
+          className="home-link"
+        >
+          <GitFork size={14} strokeWidth={2} /> Contribute
+        </a>
+      </div>
     </div>
   );
 }
