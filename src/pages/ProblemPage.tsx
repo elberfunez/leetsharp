@@ -1,31 +1,22 @@
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import type { Problem } from "../domain/types";
+import type { Problem, Solution } from "../domain/types";
 import { useStepRunner } from "../engine/useStepRunner";
 import { CodePanel } from "../components/CodePanel";
 import { VisualPanel } from "../components/VisualPanel";
 import { VariablesPanel } from "../components/VariablesPanel";
 import { StepControls } from "../components/StepControls";
 
-/** Composes the engine and panels for one problem. */
-export function ProblemPage({ problem }: { problem: Problem }) {
-  const runner = useStepRunner(problem.steps);
+/** Renders a single solution: code + visualization + approach write-up. */
+function SolutionView({ solution }: { solution: Solution }) {
+  const runner = useStepRunner(solution.steps);
 
   return (
-    <div className="problem-page">
-      <header className="problem-header">
-        <h1>{problem.title}</h1>
-        <span className={`difficulty difficulty-${problem.difficulty.toLowerCase()}`}>
-          {problem.difficulty}
-        </span>
-        <a href={problem.leetcodeUrl} target="_blank" rel="noreferrer" className="leetcode-link">
-          View on LeetCode ↗
-        </a>
-      </header>
-
-      <div className="problem-input">Tracing: {problem.input}</div>
+    <>
+      <div className="problem-input">Tracing: {solution.input}</div>
 
       <div className="workspace">
-        <CodePanel code={problem.code} activeLines={runner.step.lines} />
+        <CodePanel code={solution.code} activeLines={runner.step.lines} />
         <div className="right-pane">
           <AnimatePresence mode="wait">
             <motion.div
@@ -48,26 +39,67 @@ export function ProblemPage({ problem }: { problem: Problem }) {
 
       <section className="approach">
         <h2>Approach</h2>
-        <p>{problem.approach.summary}</p>
+        <p>{solution.approach.summary}</p>
         <div className="complexity">
           <div>
-            <strong>Time:</strong> {problem.approach.timeComplexity}
+            <strong>Time:</strong> {solution.approach.timeComplexity}
           </div>
           <div>
-            <strong>Space:</strong> {problem.approach.spaceComplexity}
+            <strong>Space:</strong> {solution.approach.spaceComplexity}
           </div>
         </div>
-        {problem.approach.notes && (
+        {solution.approach.notes && (
           <>
             <h3>C# notes</h3>
             <ul>
-              {problem.approach.notes.map((note, i) => (
+              {solution.approach.notes.map((note, i) => (
                 <li key={i}>{note}</li>
               ))}
             </ul>
           </>
         )}
       </section>
+    </>
+  );
+}
+
+/** Composes the engine and panels for one problem, with a tab per approach. */
+export function ProblemPage({ problem }: { problem: Problem }) {
+  const [active, setActive] = useState(0);
+  const solution = problem.solutions[active];
+  const multiple = problem.solutions.length > 1;
+
+  return (
+    <div className="problem-page">
+      <header className="problem-header">
+        <h1>{problem.title}</h1>
+        <span className={`difficulty difficulty-${problem.difficulty.toLowerCase()}`}>
+          {problem.difficulty}
+        </span>
+        <a href={problem.leetcodeUrl} target="_blank" rel="noreferrer" className="leetcode-link">
+          View on LeetCode ↗
+        </a>
+      </header>
+
+      {multiple && (
+        <div className="solution-tabs" role="tablist">
+          {problem.solutions.map((s, i) => (
+            <button
+              key={i}
+              role="tab"
+              aria-selected={i === active}
+              className={`solution-tab${i === active ? " solution-tab-active" : ""}`}
+              onClick={() => setActive(i)}
+            >
+              <span className="solution-tab-index">Approach {i + 1}</span>
+              <span className="solution-tab-name">{s.name}</span>
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* key remounts so playback state resets when switching approaches */}
+      <SolutionView key={active} solution={solution} />
     </div>
   );
 }

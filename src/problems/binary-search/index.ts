@@ -37,9 +37,12 @@ export const binarySearch: Problem = {
   difficulty: "Easy",
   category: "Binary Search",
   leetcodeUrl: "https://leetcode.com/problems/binary-search/",
-  input: "nums = [-1, 0, 2, 4, 6, 8], target = 4",
-  code,
-  steps: [
+  solutions: [
+    {
+      name: "Iterative",
+      input: "nums = [-1, 0, 2, 4, 6, 8], target = 4",
+      code,
+      steps: [
     {
       lines: [3, 4],
       label: "Start with the whole array in play: l at the first index, r at the last.",
@@ -111,4 +114,6 @@ export const binarySearch: Problem = {
       "When the target is absent, l eventually crosses past r and the loop exits to return -1 (his Example 2: target 3 → -1).",
     ],
   },
+    },
+  ],
 };

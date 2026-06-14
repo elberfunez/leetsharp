@@ -1,10 +1,10 @@
-import type { Problem, TreeVisualState, VisualState } from "../../domain/types";
+import type { Approach, Problem, Step, TreeVisualState, VisualState } from "../../domain/types";
 
 // Elber's actual BFS solution from
 // LeetcodePractice/Problems/Trees/MaximumDepthOfBinaryTree/Solutions/BFS.cs,
 // presented in LeetCode submission format. (He also solved the recursive DFS
 // version — BFS is the one visualized because you can watch the queue work.)
-const code = `public class Solution {
+const bfsCode = `public class Solution {
     public int MaxDepth(TreeNode root) {
         // base case
         if (root == null) return 0;
@@ -57,6 +57,146 @@ function queue(items: number[], highlightLast = false): VisualState {
   };
 }
 
+// Elber's recursive DFS solution from the same problem's Solutions/DFS.cs.
+const dfsCode = `public class Solution {
+    public int MaxDepth(TreeNode root) {
+        // base case
+        if (root == null) return 0;
+        // use recursion with DFS
+        int maxDepthLeftSide = MaxDepth(root.left);
+        int maxDepthRightSide = MaxDepth(root.right);
+        return 1 + Math.Max(maxDepthLeftSide, maxDepthRightSide);
+    }
+}`;
+
+/** The recursion's call stack, top frame is the call running right now. */
+function callStack(frames: string[], topActive = false): VisualState {
+  return { type: "stack", title: "call stack", items: frames, topActive };
+}
+
+const dfsSteps: Step[] = [
+  {
+    lines: [4],
+    label: "Call MaxDepth(1). Node 1 isn't null, so we skip the base case — we'll need the depth of both subtrees.",
+    visuals: [tree({ highlighted: ["n1"] }), callStack(["MaxDepth(1)"], true)],
+  },
+  {
+    lines: [6],
+    label: "Left side first: recurse into node 2 → MaxDepth(2). The call stack grows.",
+    visuals: [tree({ highlighted: ["n2"] }), callStack(["MaxDepth(1)", "MaxDepth(2)"], true)],
+  },
+  {
+    lines: [6],
+    label: "MaxDepth(2): node 2's left child is null → MaxDepth(null) hits the base case and returns 0.",
+    variables: { maxDepthLeftSide: "0" },
+    visuals: [tree({ highlighted: ["n2"] }), callStack(["MaxDepth(1)", "MaxDepth(2)"])],
+  },
+  {
+    lines: [7],
+    label: "Node 2's right child is also null → returns 0. Both of node 2's sides are 0.",
+    variables: { maxDepthLeftSide: "0", maxDepthRightSide: "0" },
+    visuals: [tree({ highlighted: ["n2"] }), callStack(["MaxDepth(1)", "MaxDepth(2)"])],
+  },
+  {
+    lines: [8],
+    label: "MaxDepth(2) returns 1 + max(0, 0) = 1 and pops off the stack. Node 2 is a leaf at depth 1.",
+    visuals: [
+      tree({ visited: ["n2"], annotations: { n2: "1" } }),
+      callStack(["MaxDepth(1)"]),
+    ],
+  },
+  {
+    lines: [6],
+    label: "Back in MaxDepth(1): maxDepthLeftSide = 1.",
+    variables: { maxDepthLeftSide: "1" },
+    visuals: [
+      tree({ highlighted: ["n1"], visited: ["n2"], annotations: { n2: "1" } }),
+      callStack(["MaxDepth(1)"]),
+    ],
+  },
+  {
+    lines: [7],
+    label: "Now the right side: recurse into node 3 → MaxDepth(3).",
+    visuals: [
+      tree({ highlighted: ["n3"], visited: ["n2"], annotations: { n2: "1" } }),
+      callStack(["MaxDepth(1)", "MaxDepth(3)"], true),
+    ],
+  },
+  {
+    lines: [6],
+    label: "MaxDepth(3): node 3 has a left child → recurse deeper into node 4 → MaxDepth(4).",
+    visuals: [
+      tree({ highlighted: ["n4"], visited: ["n2"], annotations: { n2: "1" } }),
+      callStack(["MaxDepth(1)", "MaxDepth(3)", "MaxDepth(4)"], true),
+    ],
+  },
+  {
+    lines: [6, 7],
+    label: "MaxDepth(4): both children are null → left and right both return 0.",
+    variables: { maxDepthLeftSide: "0", maxDepthRightSide: "0" },
+    visuals: [
+      tree({ highlighted: ["n4"], visited: ["n2"], annotations: { n2: "1" } }),
+      callStack(["MaxDepth(1)", "MaxDepth(3)", "MaxDepth(4)"]),
+    ],
+  },
+  {
+    lines: [8],
+    label: "MaxDepth(4) returns 1 + max(0, 0) = 1 and pops. Node 4 is a leaf at depth 1.",
+    visuals: [
+      tree({ visited: ["n2", "n4"], annotations: { n2: "1", n4: "1" } }),
+      callStack(["MaxDepth(1)", "MaxDepth(3)"]),
+    ],
+  },
+  {
+    lines: [7],
+    label: "Back in MaxDepth(3): left = 1. Its right child is null → MaxDepth(null) returns 0.",
+    variables: { maxDepthLeftSide: "1", maxDepthRightSide: "0" },
+    visuals: [
+      tree({ highlighted: ["n3"], visited: ["n2", "n4"], annotations: { n2: "1", n4: "1" } }),
+      callStack(["MaxDepth(1)", "MaxDepth(3)"]),
+    ],
+  },
+  {
+    lines: [8],
+    label: "MaxDepth(3) returns 1 + max(1, 0) = 2 and pops. Node 3's subtree is depth 2.",
+    visuals: [
+      tree({ visited: ["n2", "n3", "n4"], annotations: { n2: "1", n3: "2", n4: "1" } }),
+      callStack(["MaxDepth(1)"]),
+    ],
+  },
+  {
+    lines: [7],
+    label: "Back in MaxDepth(1): maxDepthRightSide = 2 (left was 1).",
+    variables: { maxDepthLeftSide: "1", maxDepthRightSide: "2" },
+    visuals: [
+      tree({ highlighted: ["n1"], visited: ["n2", "n3", "n4"], annotations: { n2: "1", n3: "2", n4: "1" } }),
+      callStack(["MaxDepth(1)"]),
+    ],
+  },
+  {
+    lines: [8],
+    label: "MaxDepth(1) returns 1 + max(1, 2) = 3 — the deeper path 1→3→4 wins. ✓",
+    variables: { result: "3" },
+    visuals: [
+      tree({ annotations: { n1: "3", n2: "1", n3: "2", n4: "1" } }),
+      callStack([]),
+    ],
+  },
+];
+
+const dfsApproach: Approach = {
+  summary:
+    "Depth-first recursion: a tree's depth is 1 (for the current node) plus the deeper of its two subtrees. The base case — a null node has depth 0 — stops the recursion, and each call combines its children's answers on the way back up. The call stack does the level-tracking bookkeeping that BFS did explicitly with a queue.",
+  timeComplexity: "O(n) — every node is visited exactly once.",
+  spaceComplexity: "O(h) — the recursion call stack, where h is the tree height. O(log n) balanced, O(n) for a skewed tree.",
+  notes: [
+    "Same answer as BFS in far fewer lines — but the cost moves from a visible queue to the call stack, which you can't watch at runtime.",
+    "Math.Max picks the deeper subtree; the + 1 counts the current node's own level.",
+    "Every null child bottoms out at return 0, so a leaf computes 1 + max(0, 0) = 1.",
+    "Elegant, but a pathologically deep tree (tens of thousands of nodes in a line) can overflow the stack — the iterative BFS version sidesteps that.",
+  ],
+};
+
 export const maximumDepthOfBinaryTree: Problem = {
   slug: "maximum-depth-of-binary-tree",
   number: 104,
@@ -64,9 +204,12 @@ export const maximumDepthOfBinaryTree: Problem = {
   difficulty: "Easy",
   category: "Trees",
   leetcodeUrl: "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
-  input: "root = [1, 2, 3, null, null, 4]",
-  code,
-  steps: [
+  solutions: [
+    {
+      name: "BFS",
+      input: "root = [1, 2, 3, null, null, 4]",
+      code: bfsCode,
+      steps: [
     {
       lines: [4],
       label: "Base case: root isn't null, so there's a tree to measure.",
@@ -226,4 +369,13 @@ export const maximumDepthOfBinaryTree: Problem = {
       "Queue<TreeNode> q = new() is C# 9 target-typed new — the type is already on the left, no need to repeat it.",
     ],
   },
+    },
+    {
+      name: "DFS",
+      input: "root = [1, 2, 3, null, null, 4]",
+      code: dfsCode,
+      steps: dfsSteps,
+      approach: dfsApproach,
+    },
+  ],
 };

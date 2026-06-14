@@ -44,9 +44,12 @@ export const longestSubstringWithoutRepeatingCharacters: Problem = {
   difficulty: "Medium",
   category: "Sliding Window",
   leetcodeUrl: "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
-  input: 's = "zxyzxyz"',
-  code,
-  steps: [
+  solutions: [
+    {
+      name: "Sliding Window",
+      input: 's = "zxyzxyz"',
+      code,
+      steps: [
     {
       lines: [3, 4, 5],
       label: "Setup: an empty HashSet holding the characters inside the window, l = 0 (window's left edge), maxLen = 0 (best seen so far).",
@@ -207,4 +210,6 @@ export const longestSubstringWithoutRepeatingCharacters: Problem = {
       "An upgrade worth knowing: Dictionary<char, int> storing each char's last index lets l JUMP straight past the duplicate instead of evicting one at a time — same O(n), fewer steps.",
     ],
   },
+    },
+  ],
 };

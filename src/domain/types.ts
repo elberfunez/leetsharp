@@ -107,6 +107,19 @@ export interface Approach {
   notes?: string[];
 }
 
+/** One way to solve a problem. A problem can ship several (e.g. BFS + DFS),
+ *  rendered as tabs. Single-solution problems just have one entry. */
+export interface Solution {
+  /** Short tab label, e.g. "Hash Map", "BFS", "Two Pointers" */
+  name: string;
+  /** Human-readable description of the traced input, e.g. "nums = [3,4,5,6], target = 7" */
+  input: string;
+  /** The C# solution source. Line numbers in steps refer to this, 1-based. */
+  code: string;
+  steps: Step[];
+  approach: Approach;
+}
+
 export interface Problem {
   slug: string;
   /** LeetCode problem number */
@@ -116,10 +129,6 @@ export interface Problem {
   /** NeetCode roadmap category, e.g. "Arrays & Hashing" */
   category: string;
   leetcodeUrl: string;
-  /** Human-readable description of the traced input, e.g. "nums = [3,4,5,6], target = 7" */
-  input: string;
-  /** The C# solution source. Line numbers in steps refer to this, 1-based. */
-  code: string;
-  steps: Step[];
-  approach: Approach;
+  /** One or more approaches. Multiple → rendered as tabs. */
+  solutions: Solution[];
 }

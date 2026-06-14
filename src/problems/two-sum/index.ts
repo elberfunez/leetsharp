@@ -39,9 +39,12 @@ export const twoSum: Problem = {
   difficulty: "Easy",
   category: "Arrays & Hashing",
   leetcodeUrl: "https://leetcode.com/problems/two-sum/",
-  input: "nums = [3, 4, 5, 6], target = 7",
-  code,
-  steps: [
+  solutions: [
+    {
+      name: "Hash Map",
+      input: "nums = [3, 4, 5, 6], target = 7",
+      code,
+      steps: [
     {
       lines: [3],
       label: "Create an empty dictionary. It will remember each value we've seen and the index where we saw it.",
@@ -109,4 +112,6 @@ export const twoSum: Problem = {
       "LeetCode guarantees exactly one solution, so the final return [0,0] is unreachable — it only exists to satisfy the compiler.",
     ],
   },
+    },
+  ],
 };

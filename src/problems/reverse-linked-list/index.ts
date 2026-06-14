@@ -36,9 +36,12 @@ export const reverseLinkedList: Problem = {
   difficulty: "Easy",
   category: "Linked List",
   leetcodeUrl: "https://leetcode.com/problems/reverse-linked-list/",
-  input: "head = [0, 1, 2, 3]",
-  code,
-  steps: [
+  solutions: [
+    {
+      name: "Iterative",
+      input: "head = [0, 1, 2, 3]",
+      code,
+      steps: [
     {
       lines: [3, 4],
       label: "Two trackers: cur starts at the head, prev starts at null — prev is always the portion already reversed (nothing yet).",
@@ -135,4 +138,6 @@ export const reverseLinkedList: Problem = {
       "The recursive version is elegant but uses O(n) call stack; interviewers usually want this iterative one.",
     ],
   },
+    },
+  ],
 };

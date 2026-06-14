@@ -57,9 +57,12 @@ export const validParentheses: Problem = {
   difficulty: "Easy",
   category: "Stack",
   leetcodeUrl: "https://leetcode.com/problems/valid-parentheses/",
-  input: 's = "([{}])"',
-  code,
-  steps: [
+  solutions: [
+    {
+      name: "Stack",
+      input: 's = "([{}])"',
+      code,
+      steps: [
     {
       lines: [3],
       label: "Quick rejection: 6 characters is even, so it COULD be valid. (An odd-length string never can be — brackets come in pairs.)",
@@ -149,4 +152,6 @@ export const validParentheses: Problem = {
       "The final return stack.Count == 0 catches leftover openers — \"((\" sails through the loop but still isn't valid.",
     ],
   },
+    },
+  ],
 };
