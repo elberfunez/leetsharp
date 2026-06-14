@@ -21,51 +21,38 @@ export function HomePage() {
   }, [view]);
 
   const q = query.trim().toLowerCase();
-  const matches = (title: string, number: number) =>
-    title.toLowerCase().includes(q) || String(number).includes(q);
+  const matches = (title: string) =>
+    title.toLowerCase().includes(q);
 
   const categories = [...new Set(problems.map((p) => p.category))];
 
   return (
     <div>
-      <div className="home-hero">
-        <h2>Why LeetSharp?</h2>
-        <p>
-          You've been grinding LeetCode in C#, but every solution guide assumes you speak Python or JavaScript.
-          The visualizations skip your language. The explanations gloss over C#-specific gotchas like
-          {" "}<code>TryGetValue</code> vs{" "}<code>ContainsKey</code>, or why <code>queue.Count</code> matters.
-        </p>
-        <p>
-          <strong>LeetSharp is different.</strong> Every solution here is solved in C#, traced through your actual
-          code, and explained the way a C# dev thinks. Watch pointers glide, arrays flip, linked lists reverse — step
-          by step. Built by <strong>Elber Funez</strong>, a C# dev tired of settling.
-        </p>
-        <div className="home-buttons">
-          <a
-            href="https://github.com/elberfunez/leetsharp"
-            target="_blank"
-            rel="noreferrer"
-            className="home-button home-button-primary"
-          >
-            <Star size={15} strokeWidth={2} /> Star on GitHub
-          </a>
-          <a
-            href="https://github.com/elberfunez"
-            target="_blank"
-            rel="noreferrer"
-            className="home-button home-button-secondary"
-          >
-            <GitBranch size={15} strokeWidth={2} /> Follow @elberfunez
-          </a>
-          <a
-            href="https://github.com/elberfunez/leetsharp/blob/main/CONTRIBUTING.md"
-            target="_blank"
-            rel="noreferrer"
-            className="home-button home-button-secondary"
-          >
-            <GitFork size={15} strokeWidth={2} /> Contribute
-          </a>
-        </div>
+      <div className="home-links">
+        <a
+          href="https://github.com/elberfunez/leetsharp"
+          target="_blank"
+          rel="noreferrer"
+          className="home-link"
+        >
+          <Star size={14} strokeWidth={2} /> Star
+        </a>
+        <a
+          href="https://github.com/elberfunez"
+          target="_blank"
+          rel="noreferrer"
+          className="home-link"
+        >
+          <GitBranch size={14} strokeWidth={2} /> Follow
+        </a>
+        <a
+          href="https://github.com/elberfunez/leetsharp/blob/main/CONTRIBUTING.md"
+          target="_blank"
+          rel="noreferrer"
+          className="home-link"
+        >
+          <GitFork size={14} strokeWidth={2} /> Contribute
+        </a>
       </div>
 
       <div className="home-controls">
@@ -103,7 +90,7 @@ export function HomePage() {
       ) : (
         <>
           {categories.map((category) => {
-            const items = problems.filter((p) => p.category === category && matches(p.title, p.number));
+            const items = problems.filter((p) => p.category === category && matches(p.title));
             if (items.length === 0) return null;
             return (
               <div className="category-group" key={category}>
@@ -111,7 +98,6 @@ export function HomePage() {
                 <div className="problem-list">
                   {items.map((p) => (
                     <Link className="problem-card" to={`/problems/${p.slug}`} key={p.slug}>
-                      <span className="problem-number">{p.number}</span>
                       <span className="problem-title">{p.title}</span>
                       <span className={`difficulty difficulty-${p.difficulty.toLowerCase()}`}>
                         {p.difficulty}
@@ -122,8 +108,8 @@ export function HomePage() {
               </div>
             );
           })}
-          {q && problems.every((p) => !matches(p.title, p.number)) && (
-            <p className="search-empty">No problems match “{query}”.</p>
+          {q && problems.every((p) => !matches(p.title)) && (
+            <p className="search-empty">No problems match "{query}".</p>
           )}
         </>
       )}

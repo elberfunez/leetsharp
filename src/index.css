@@ -1199,3 +1199,30 @@ body {
 .panel-solution:hover {
   color: var(--accent);
 }
+
+/* ---------- Home links bar ---------- */
+
+.home-links {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.home-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}

@@ -38,7 +38,6 @@ export function CategoryPanel({ category, onClose }: Props) {
             <div className="panel-row" key={p.slug}>
               <span className="panel-star">★</span>
               <Link className="panel-problem" to={`/problems/${p.slug}`} onClick={onClose}>
-                <span className="panel-number">{p.number}</span>
                 {p.title}
               </Link>
               <span className={`difficulty difficulty-${p.difficulty.toLowerCase()}`}>
