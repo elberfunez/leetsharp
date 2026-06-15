@@ -64,8 +64,26 @@ export const longestConsecutiveSequence: Problem = {
         },
         {
           lines: [12, 14, 15],
-          label: "Extend the run upward: 3 is in the set, then 4, then 5. 6 is missing — the run stops at 5. Length: 4.",
-          variables: { num: "2", seqCounter: "4", curNum: "5" },
+          label: "Check curNum + 1 = 3. It's in the set — extend the run.",
+          variables: { num: "2", curNum: "3", seqCounter: "2" },
+          visuals: [set(3), run([2, 3])],
+        },
+        {
+          lines: [14, 15],
+          label: "Check curNum + 1 = 4. It's in the set — extend the run.",
+          variables: { num: "2", curNum: "4", seqCounter: "3" },
+          visuals: [set(4), run([2, 3, 4])],
+        },
+        {
+          lines: [14, 15],
+          label: "Check curNum + 1 = 5. It's in the set — extend the run.",
+          variables: { num: "2", curNum: "5", seqCounter: "4" },
+          visuals: [set(5), run([2, 3, 4, 5])],
+        },
+        {
+          lines: [12],
+          label: "Check curNum + 1 = 6. Not in the set — the run is over. Length: 4.",
+          variables: { num: "2", curNum: "5", seqCounter: "4" },
           visuals: [set(), run([2, 3, 4, 5])],
         },
         {
