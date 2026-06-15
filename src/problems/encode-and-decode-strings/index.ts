@@ -28,11 +28,20 @@ const code = `public class Solution {
     }
 }`;
 
-// The encoded form of ["Hello", "World"], one cell per character.
-const encoded = ["5", "#", "H", "e", "l", "l", "o", "5", "#", "W", "o", "r", "l", "d"];
+// The encoded form of ["hi", "bye"], one cell per character: 2#hi3#bye
+const encoded = ["2", "#", "h", "i", "3", "#", "b", "y", "e"];
 
 function enc(pointers?: Record<string, number>, highlighted?: number[]): VisualState {
   return { type: "array", title: "encoded string", items: encoded, pointers, highlighted };
+}
+
+function res(items: string[], highlightLast = false): VisualState {
+  return {
+    type: "array",
+    title: "result (decoded list)",
+    items,
+    highlighted: highlightLast && items.length > 0 ? [items.length - 1] : [],
+  };
 }
 
 export const encodeAndDecodeStrings: Problem = {
@@ -46,59 +55,59 @@ export const encodeAndDecodeStrings: Problem = {
   solutions: [
     {
       name: "Length Prefixing",
-      input: '["Hello", "World"]',
+      input: '["hi", "bye"]',
       code,
       steps: [
         {
           lines: [2, 3],
           label: "Encoding: glue the strings into one. The trick is to prefix each with its length and a # marker, so decoding stays unambiguous even if a string itself contains a #.",
-          visuals: [{ type: "array", title: "input list", items: ["Hello", "World"] }],
+          visuals: [{ type: "array", title: "input list", items: ["hi", "bye"] }],
         },
         {
           lines: [4, 6],
-          label: "'Hello' has length 5 → append \"5#Hello\".",
-          visuals: [{ type: "array", title: "input list", items: ["Hello", "World"], highlighted: [0] }, enc(undefined, [0, 1, 2, 3, 4, 5, 6])],
+          label: "'hi' has length 2 — append \"2#hi\".",
+          visuals: [{ type: "array", title: "input list", items: ["hi", "bye"], highlighted: [0] }, enc(undefined, [0, 1, 2, 3])],
         },
         {
           lines: [6, 8],
-          label: "'World' → append \"5#World\". Final encoded string: 5#Hello5#World",
-          visuals: [{ type: "array", title: "input list", items: ["Hello", "World"], highlighted: [1] }, enc()],
+          label: "'bye' has length 3 — append \"3#bye\". Final encoded string: 2#hi3#bye",
+          visuals: [{ type: "array", title: "input list", items: ["hi", "bye"], highlighted: [1] }, enc()],
         },
         {
           lines: [11, 13, 14],
-          label: "Decoding: scan with pointer i = 0. While there's string left, read a length, then read exactly that many characters.",
+          label: "Now decode. Start pointer i at 0 and an empty result list. Read a length prefix, then grab exactly that many characters.",
           variables: { i: "0" },
-          visuals: [enc({ i: 0 })],
+          visuals: [enc({ i: 0 }), res([])],
         },
         {
           lines: [16, 17],
-          label: "Find the next '#' (index 1). The digits before it — \"5\" — are the length of the next string.",
-          variables: { i: "0", delim: "1", len: "5" },
-          visuals: [enc({ i: 0, delim: 1 }, [0])],
+          label: "Find the next '#' at index 1. The digit before it — \"2\" — is the length of the next string.",
+          variables: { i: "0", delim: "1", len: "2" },
+          visuals: [enc({ i: 0, delim: 1 }, [0]), res([])],
         },
         {
           lines: [18, 19, 20],
-          label: "Skip past the '#' to index 2 and take 5 characters → \"Hello\". Advance i past them to 7.",
-          variables: { i: "7", added: '"Hello"' },
-          visuals: [enc({ i: 7 }, [2, 3, 4, 5, 6])],
+          label: "Skip past '#' to index 2 and take 2 characters — that's \"hi\". Add it to the result. Advance i to 4.",
+          variables: { i: "4", added: '"hi"' },
+          visuals: [enc({ i: 4 }, [2, 3]), res(["hi"], true)],
         },
         {
           lines: [16, 17],
-          label: "Next '#' is at index 8; the \"5\" before it (index 7) is the next length.",
-          variables: { i: "7", delim: "8", len: "5" },
-          visuals: [enc({ i: 7, delim: 8 }, [7])],
+          label: "Find the next '#' at index 5. The digit before it — \"3\" — is the length of the next string.",
+          variables: { i: "4", delim: "5", len: "3" },
+          visuals: [enc({ i: 4, delim: 5 }, [4]), res(["hi"])],
         },
         {
           lines: [18, 19, 20],
-          label: "Take 5 characters from index 9 → \"World\". i advances to 14.",
-          variables: { i: "14", added: '"World"' },
-          visuals: [enc({ i: 14 }, [9, 10, 11, 12, 13])],
+          label: "Skip past '#' to index 6 and take 3 characters — that's \"bye\". Add it to the result. i advances to 9.",
+          variables: { i: "9", added: '"bye"' },
+          visuals: [enc({ i: 9 }, [6, 7, 8]), res(["hi", "bye"], true)],
         },
         {
           lines: [14, 22],
-          label: "i = 14 is the end of the string → stop. Return [\"Hello\", \"World\"]. ✓",
-          variables: { result: '["Hello", "World"]' },
-          visuals: [enc()],
+          label: "i = 9 is the end of the string — loop exits. Return [\"hi\", \"bye\"]. ✓",
+          variables: { result: '["hi", "bye"]' },
+          visuals: [enc(), res(["hi", "bye"])],
         },
       ],
       approach: {

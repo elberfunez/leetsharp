@@ -23,6 +23,10 @@ function arr(cur: number, minIdx: number, highlighted?: number[]): VisualState {
   return { type: "array", title: "prices", items: prices, pointers: { p: cur, min: minIdx }, highlighted };
 }
 
+function profit(val: number): VisualState {
+  return { type: "dict", title: "running best", entries: [["best profit", `$${val}`]], activeKey: "best profit" };
+}
+
 export const bestTimeToBuyAndSellStock: Problem = {
   slug: "best-time-to-buy-and-sell-stock",
   number: 121,
@@ -41,49 +45,49 @@ export const bestTimeToBuyAndSellStock: Problem = {
           lines: [3, 4],
           label: "Track two running values: the cheapest price seen so far (starts at prices[0] = 10) and the best profit so far (0).",
           variables: { minPrice: "10", maxPrice: "0" },
-          visuals: [arr(0, 0)],
+          visuals: [arr(0, 0), profit(0)],
         },
         {
           lines: [6, 7, 8],
           label: "First price — nothing cheaper seen yet, so no profitable sell is possible.",
           variables: { minPrice: "10", maxPrice: "0" },
-          visuals: [arr(0, 0, [0])],
+          visuals: [arr(0, 0, [0]), profit(0)],
         },
         {
           lines: [7, 8],
           label: "New lowest price — update minPrice. This is now the best potential buy day.",
           variables: { minPrice: "1", maxPrice: "0" },
-          visuals: [arr(1, 1, [1])],
+          visuals: [arr(1, 1, [1]), profit(0)],
         },
         {
           lines: [8],
           label: "Selling today beats our previous best profit — update the record.",
           variables: { minPrice: "1", maxPrice: "4" },
-          visuals: [arr(2, 1, [2])],
+          visuals: [arr(2, 1, [2]), profit(4)],
         },
         {
           lines: [8],
           label: "Even better sell day — profit is higher than before. New best.",
           variables: { minPrice: "1", maxPrice: "5" },
-          visuals: [arr(3, 1, [3])],
+          visuals: [arr(3, 1, [3]), profit(5)],
         },
         {
           lines: [8],
           label: "Best profit yet — buy at the cheapest day seen so far, sell today.",
           variables: { minPrice: "1", maxPrice: "6" },
-          visuals: [arr(4, 1, [4])],
+          visuals: [arr(4, 1, [4]), profit(6)],
         },
         {
           lines: [7, 8],
           label: "Ties the minimum but doesn't improve it. Selling today gives zero profit — best unchanged.",
           variables: { minPrice: "1", maxPrice: "6" },
-          visuals: [arr(5, 1, [5])],
+          visuals: [arr(5, 1, [5]), profit(6)],
         },
         {
           lines: [11],
           label: "Loop done. Return the best profit ever seen: 6. ✓",
           variables: { result: "6" },
-          visuals: [arr(5, 1, [1, 4])],
+          visuals: [arr(5, 1, [1, 4]), profit(6)],
         },
       ],
       approach: {
