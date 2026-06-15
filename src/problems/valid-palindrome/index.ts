@@ -63,7 +63,7 @@ export const validPalindrome: Problem = {
         },
         {
           lines: [9, 13, 14],
-          label: "'o' = 'o' → match. l = 2, r = 15.",
+          label: "s[l] and s[r] are both 'o' — match. Step both pointers inward.",
           variables: { l: "2", r: "15" },
           visuals: [arr(1, 16, [1, 16])],
         },
@@ -75,19 +75,19 @@ export const validPalindrome: Problem = {
         },
         {
           lines: [9, 13, 14],
-          label: "'l' = 'l' → match. l = 4, r = 14.",
+          label: "'l' on both sides — match. Step inward.",
           variables: { l: "4", r: "14" },
           visuals: [arr(3, 15, [3, 15])],
         },
         {
           lines: [9, 13, 14],
-          label: "'e' = 'e' → match. l = 5, r = 13.",
+          label: "'e' on both sides — match. Step inward.",
           variables: { l: "5", r: "13" },
           visuals: [arr(4, 14, [4, 14])],
         },
         {
           lines: [9, 13, 14],
-          label: "'m' = 'm' → match. l = 6, r = 12.",
+          label: "'m' on both sides — match. Step inward.",
           variables: { l: "6", r: "12" },
           visuals: [arr(5, 13, [5, 13])],
         },
@@ -99,13 +99,13 @@ export const validPalindrome: Problem = {
         },
         {
           lines: [9, 13, 14],
-          label: "'o' = 'o' → match. l = 7, r = 10.",
+          label: "'o' on both sides — match. Step inward.",
           variables: { l: "7", r: "10" },
           visuals: [arr(6, 11, [6, 11])],
         },
         {
           lines: [9, 13, 14],
-          label: "'n' = 'n' → match. l = 8, r = 9.",
+          label: "'n' on both sides — match. Step inward.",
           variables: { l: "8", r: "9" },
           visuals: [arr(7, 10, [7, 10])],
         },

@@ -73,7 +73,7 @@ export const longestRepeatingCharacterReplacement: Problem = {
         },
         {
           lines: [16, 21],
-          label: "Window \"X\" (length 1), most common char appears 1×. Chars to replace = 1 − 1 = 0 ≤ k. result = 1.",
+          label: "Window \"X\" (length 1): all one character already, zero replacements needed. Within budget — valid window. result = 1.",
           variables: { k: "2", l: "0", r: "0", result: "1" },
           visuals: [win(0, 0), counts([["X", 1]])],
         },
@@ -85,7 +85,7 @@ export const longestRepeatingCharacterReplacement: Problem = {
         },
         {
           lines: [16, 21],
-          label: "Window \"XY\" (length 2), max freq 1. Replace = 2 − 1 = 1 ≤ 2. result = 2.",
+          label: "Window \"XY\" (length 2): one replacement turns it uniform. Within budget of 2 — valid. result = 2.",
           variables: { k: "2", l: "0", r: "1", result: "2" },
           visuals: [win(0, 1), counts([["X", 1], ["Y", 1]])],
         },
@@ -97,7 +97,7 @@ export const longestRepeatingCharacterReplacement: Problem = {
         },
         {
           lines: [16, 21],
-          label: "Window \"XYY\" (length 3), max freq 2 (the Y's). Replace the lone X → 3 − 2 = 1 ≤ 2. result = 3.",
+          label: "Window \"XYY\" (length 3): Y appears twice — replacing the lone X makes it all-Y. One swap, within budget. result = 3.",
           variables: { k: "2", l: "0", r: "2", result: "3" },
           visuals: [win(0, 2), counts([["X", 1], ["Y", 2]])],
         },
@@ -109,7 +109,7 @@ export const longestRepeatingCharacterReplacement: Problem = {
         },
         {
           lines: [16, 21],
-          label: "Window \"XYYX\" (length 4), max freq 2. Replace = 4 − 2 = 2 ≤ 2 — exactly at budget, still valid. result = 4.",
+          label: "Window \"XYYX\" (length 4): X and Y each appear twice. Two replacements make it uniform — exactly at the budget. Valid! result = 4.",
           variables: { k: "2", l: "0", r: "3", result: "4" },
           visuals: [win(0, 3), counts([["X", 2], ["Y", 2]])],
         },

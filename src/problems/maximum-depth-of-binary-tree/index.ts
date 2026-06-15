@@ -100,7 +100,7 @@ const dfsSteps: Step[] = [
   },
   {
     lines: [8],
-    label: "MaxDepth(2) returns 1 + max(0, 0) = 1 and pops off the stack. Node 2 is a leaf at depth 1.",
+    label: "Node 2 is a leaf — both subtrees are empty (depth 0). Its own depth is 1. Pop it off the call stack.",
     visuals: [
       tree({ visited: ["n2"], annotations: { n2: "1" } }),
       callStack(["MaxDepth(1)"]),
@@ -142,7 +142,7 @@ const dfsSteps: Step[] = [
   },
   {
     lines: [8],
-    label: "MaxDepth(4) returns 1 + max(0, 0) = 1 and pops. Node 4 is a leaf at depth 1.",
+    label: "Node 4 is a leaf — both subtrees are empty. Its depth is 1. Pop it.",
     visuals: [
       tree({ visited: ["n2", "n4"], annotations: { n2: "1", n4: "1" } }),
       callStack(["MaxDepth(1)", "MaxDepth(3)"]),
@@ -159,7 +159,7 @@ const dfsSteps: Step[] = [
   },
   {
     lines: [8],
-    label: "MaxDepth(3) returns 1 + max(1, 0) = 2 and pops. Node 3's subtree is depth 2.",
+    label: "Node 3's left subtree is depth 1, right is empty — its own depth is 2. Pop it.",
     visuals: [
       tree({ visited: ["n2", "n3", "n4"], annotations: { n2: "1", n3: "2", n4: "1" } }),
       callStack(["MaxDepth(1)"]),
@@ -176,7 +176,7 @@ const dfsSteps: Step[] = [
   },
   {
     lines: [8],
-    label: "MaxDepth(1) returns 1 + max(1, 2) = 3 — the deeper path 1→3→4 wins. ✓",
+    label: "Root's right subtree (depth 2) is deeper than the left (depth 1) — the root's total depth is 3. The path 1→3→4 wins. ✓",
     variables: { result: "3" },
     visuals: [
       tree({ annotations: { n1: "3", n2: "1", n3: "2", n4: "1" } }),

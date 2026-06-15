@@ -55,7 +55,7 @@ export const twoIntegerSumII: Problem = {
         },
         {
           lines: [5, 6, 7],
-          label: "numbers[l] + numbers[r] = 2 + 15 = 17. Compare to target 9 — the sum is too big.",
+          label: "The pair sums to 17, more than the target 9 — too large. The largest number (15) can't be part of any valid pair.",
           variables: { target: "9", l: "0", r: "3", sum: "17" },
           visuals: [arr({ l: 0, r: 3 }, [0, 3])],
         },
@@ -67,7 +67,7 @@ export const twoIntegerSumII: Problem = {
         },
         {
           lines: [7],
-          label: "Now 2 + 11 = 13. Still bigger than 9.",
+          label: "Pair sums to 13 — still too large. Keep shrinking from the right.",
           variables: { target: "9", l: "0", r: "2", sum: "13" },
           visuals: [arr({ l: 0, r: 2 }, [0, 2])],
         },

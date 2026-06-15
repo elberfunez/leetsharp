@@ -128,10 +128,8 @@ export function HomePage() {
         <header className="dash-header">
           <div>
             <p className="dash-subtitle">
-              <span className="solved-count">[{problems.length}]</span>
-              {" "}LeetCode problems, solved by{" "}
-              <a href="https://github.com/elberfunez" target="_blank" rel="noreferrer" className="solved-author">@elberfunez</a>
-              {" "}— with step-by-step visual walkthroughs.
+              <span className="solved-count">{problems.length}</span>
+              {" "} Solved LeetCode problems — with step-by-step visual walkthroughs.
             </p>
           </div>
           {view !== "map" && (

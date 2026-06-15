@@ -64,7 +64,7 @@ export const longestConsecutiveSequence: Problem = {
         },
         {
           lines: [12, 14, 15],
-          label: "Walk upward: 3 in the set? yes (run = 2). 4? yes (3). 5? yes (4). 6? no → stop.",
+          label: "Extend the run upward: 3 is in the set, then 4, then 5. 6 is missing — the run stops at 5. Length: 4.",
           variables: { num: "2", seqCounter: "4", curNum: "5" },
           visuals: [set(), run([2, 3, 4, 5])],
         },

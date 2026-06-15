@@ -50,7 +50,7 @@ export const containsDuplicate: Problem = {
         },
         {
           lines: [5, 7],
-          label: "num = 1. seen.Add(1) succeeds — it was new — so !true = false. Not a duplicate, keep going.",
+          label: "num = 1 hasn't been seen before — Add succeeds. Not a duplicate, keep going.",
           visuals: [arr(0, [0]), set([1], 1)],
         },
         {
@@ -65,7 +65,7 @@ export const containsDuplicate: Problem = {
         },
         {
           lines: [7, 9],
-          label: "num = 3 again. Add(3) FAILS — 3 is already in the set. !false = true → return true. ✓",
+          label: "num = 3 is already in the set — Add returns false, meaning it's a duplicate. Return true. ✓",
           variables: { result: "true" },
           visuals: [arr(3, [3]), set([1, 2, 3], 3)],
         },

@@ -56,7 +56,7 @@ export const addTwoNumbers: Problem = {
         },
         {
           lines: [8, 9, 10, 11, 12],
-          label: "5 + 5 + carry(0) = 10. Write digit 10 % 10 = 0, carry 10 / 10 = 1.",
+          label: "First column: 5 + 5 = 10. Write the ones digit (0), carry the tens digit (1) to the next column.",
           variables: { sum: "10", digit: "0", carry: "1" },
           visuals: [l1(0, [0]), l2(0, [0]), result([0])],
         },
@@ -68,13 +68,13 @@ export const addTwoNumbers: Problem = {
         },
         {
           lines: [8, 9, 10, 11, 12],
-          label: "5 + 5 + carry(1) = 11. Digit 1, carry 1.",
+          label: "Second column: 5 + 5 plus the incoming carry = 11. Write 1, carry 1 forward.",
           variables: { sum: "11", digit: "1", carry: "1" },
           visuals: [l1(1, [0]), l2(1, [0]), result([0, 1])],
         },
         {
           lines: [10, 11, 12],
-          label: "Next: 5 + 5 + 1 = 11 again. Digit 1, carry 1.",
+          label: "Third column: same digits, same carry — 11 again. Write 1, carry 1 to the next (new) column.",
           variables: { sum: "11", digit: "1", carry: "1" },
           visuals: [l1(2, [0, 1]), l2(2, [0, 1]), result([0, 1, 1])],
         },
@@ -86,7 +86,7 @@ export const addTwoNumbers: Problem = {
         },
         {
           lines: [10, 11, 12, 13],
-          label: "0 + 0 + 1 = 1. Digit 1, carry 0. Append the final leading 1.",
+          label: "Both lists are exhausted — only the carry remains. Write it as a new final digit.",
           variables: { sum: "1", digit: "1", carry: "0" },
           visuals: [l1(null, [0, 1, 2]), l2(null, [0, 1, 2]), result([0, 1, 1, 1])],
         },

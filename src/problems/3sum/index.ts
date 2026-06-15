@@ -88,7 +88,7 @@ export const threeSum: Problem = {
         },
         {
           lines: [15, 16, 18],
-          label: "total = -4 + (-1) + 2 = -3, which is negative — we need more. But even -4's best case (-4 + 1 + 2 = -1) stays negative, so L slides all the way up with no hit. Nothing starts with -4.",
+          label: "Sum is negative — the three numbers are too small. Even pairing -4 with the two largest remaining numbers can't reach zero, so no valid triplet starts with -4.",
           variables: { i: "0", total: "-3" },
           visuals: [arr({ i: 0, L: 1, R: 5 }, [0, 1, 5])],
         },
@@ -106,7 +106,7 @@ export const threeSum: Problem = {
         },
         {
           lines: [15, 24, 26],
-          label: "total = -1 + (-1) + 2 = 0. A hit! Record the triplet [-1, -1, 2].",
+          label: "Sum is exactly zero — found a valid triplet. Record it.",
           variables: { i: "1", total: "0", found: "[-1, -1, 2]" },
           visuals: [arr({ i: 1, L: 2, R: 5 }, [1, 2, 5], [0])],
         },
@@ -118,7 +118,7 @@ export const threeSum: Problem = {
         },
         {
           lines: [15, 24, 26],
-          label: "total = -1 + 0 + 1 = 0. Another hit! Record [-1, 0, 1].",
+          label: "Sum is zero again — another valid triplet. Record it.",
           variables: { i: "1", total: "0", found: "[-1, 0, 1]" },
           visuals: [arr({ i: 1, L: 3, R: 4 }, [1, 3, 4], [0])],
         },
@@ -142,7 +142,7 @@ export const threeSum: Problem = {
         },
         {
           lines: [15, 20, 22],
-          label: "total = 0 + 1 + 2 = 3, positive → move R left. Now L == R, the inner loop ends with no more hits.",
+          label: "Sum is positive — the right number is too large. Move R left. The pointers immediately cross, ending the search for i = 3.",
           variables: { i: "3", total: "3" },
           visuals: [arr({ i: 3, L: 4, R: 5 }, [3, 4, 5], [0, 1, 2])],
         },
