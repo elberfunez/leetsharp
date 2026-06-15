@@ -47,37 +47,37 @@ export const validAnagram: Problem = {
       steps: [
         {
           lines: [3, 4],
-          label: "Both strings are length 3 — equal lengths, so an anagram is still possible. Build a frequency map of s.",
+          label: "Same length, so an anagram is still possible. Build a frequency map by counting every character in s.",
           visuals: [freq([])],
         },
         {
           lines: [5, 7, 9],
-          label: "Count s: 'j' is new → freq['j'] = 1.",
+          label: "First character of s is 'j' — it's new, so add it to the map with a count of 1.",
           visuals: [freq([["j", 1]], "j")],
         },
         {
           lines: [7, 9],
-          label: "'a' is new → freq['a'] = 1.",
+          label: "'a' is also new — add it with count 1.",
           visuals: [freq([["j", 1], ["a", 1]], "a")],
         },
         {
           lines: [7, 9],
-          label: "'r' is new → freq['r'] = 1. s is now {j:1, a:1, r:1}.",
+          label: "Last character 'r' — new, add it. All of s is now counted in the map.",
           visuals: [freq([["j", 1], ["a", 1], ["r", 1]], "r")],
         },
         {
           lines: [16, 18, 19],
-          label: "Now walk t and SUBTRACT. 'j' is present → freq['j'] drops to 0.",
+          label: "Now walk through t and subtract. Each character in t must exist in s. 'j' is there — decrement its count.",
           visuals: [freq([["j", 0], ["a", 1], ["r", 1]], "j")],
         },
         {
           lines: [18, 19],
-          label: "'a' is present → freq['a'] drops to 0.",
+          label: "'a' is there too — decrement its count.",
           visuals: [freq([["j", 0], ["a", 0], ["r", 1]], "a")],
         },
         {
           lines: [18],
-          label: "'m' is NOT in the map — s never had an 'm'. So t can't be an anagram of s → return false. ✓",
+          label: "'m' doesn't exist in the map at all — s never contained 'm'. Same letters required for an anagram, so return false.",
           variables: { result: "false" },
           visuals: [freq([["j", 0], ["a", 0], ["r", 1]])],
         },
