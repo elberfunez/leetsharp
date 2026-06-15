@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Problem, Solution } from "../domain/types";
 import { useStepRunner } from "../engine/useStepRunner";
@@ -10,6 +10,17 @@ import { StepControls } from "../components/StepControls";
 /** Renders a single solution: code + visualization + approach write-up. */
 function SolutionView({ solution }: { solution: Solution }) {
   const runner = useStepRunner(solution.steps);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement).tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA") return;
+      if (e.key === "ArrowLeft") runner.prev();
+      if (e.key === "ArrowRight") runner.next();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [runner]);
 
   return (
     <>
