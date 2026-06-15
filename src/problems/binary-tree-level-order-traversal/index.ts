@@ -1,4 +1,5 @@
 import type { Problem, TreeVisualNode, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/Trees/BinaryTreeLevelOrderTraversal,
 // presented in LeetCode submission format.
@@ -45,6 +46,7 @@ export const binaryTreeLevelOrderTraversal: Problem = {
   difficulty: "Medium",
   category: "Trees",
   leetcodeUrl: "https://leetcode.com/problems/binary-tree-level-order-traversal/",
+  author: ELBER,
   solutions: [
     {
       name: "BFS",

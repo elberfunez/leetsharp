@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/ArraysAndHashing/TwoSum,
 // presented in LeetCode submission format.
@@ -39,6 +40,7 @@ export const twoSum: Problem = {
   difficulty: "Easy",
   category: "Arrays & Hashing",
   leetcodeUrl: "https://leetcode.com/problems/two-sum/",
+  author: ELBER,
   solutions: [
     {
       name: "Hash Map",

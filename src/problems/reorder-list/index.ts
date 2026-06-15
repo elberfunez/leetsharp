@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/LinkedList/ReorderLinkedList,
 // presented in LeetCode submission format.
@@ -51,6 +52,7 @@ export const reorderList: Problem = {
   difficulty: "Medium",
   category: "Linked List",
   leetcodeUrl: "https://leetcode.com/problems/reorder-list/",
+  author: ELBER,
   solutions: [
     {
       name: "Find Mid + Reverse + Weave",

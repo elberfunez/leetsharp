@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/LinkedList/RemoveLinkedListElements,
 // presented in LeetCode submission format.
@@ -34,6 +35,7 @@ export const removeLinkedListElements: Problem = {
   difficulty: "Easy",
   category: "Linked List",
   leetcodeUrl: "https://leetcode.com/problems/remove-linked-list-elements/",
+  author: ELBER,
   solutions: [
     {
       name: "Dummy + Skip",

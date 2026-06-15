@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/SlidingWindow/LongestRepeatingCharacterReplacement,
 // presented in LeetCode submission format.
@@ -48,6 +49,7 @@ export const longestRepeatingCharacterReplacement: Problem = {
   difficulty: "Medium",
   category: "Sliding Window",
   leetcodeUrl: "https://leetcode.com/problems/longest-repeating-character-replacement/",
+  author: ELBER,
   solutions: [
     {
       name: "Sliding Window",

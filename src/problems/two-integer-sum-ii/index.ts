@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/TwoPointers/TwoIntegerSumII,
 // presented in LeetCode submission format.
@@ -39,6 +40,7 @@ export const twoIntegerSumII: Problem = {
   difficulty: "Medium",
   category: "Two Pointers",
   leetcodeUrl: "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/",
+  author: ELBER,
   solutions: [
     {
       name: "Two Pointers",

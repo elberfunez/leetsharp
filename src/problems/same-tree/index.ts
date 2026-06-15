@@ -1,4 +1,5 @@
 import type { Problem, TreeVisualNode, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/Trees/SameTree,
 // presented in LeetCode submission format.
@@ -28,6 +29,7 @@ export const sameTree: Problem = {
   difficulty: "Easy",
   category: "Trees",
   leetcodeUrl: "https://leetcode.com/problems/same-tree/",
+  author: ELBER,
   solutions: [
     {
       name: "Recursion",

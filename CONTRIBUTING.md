@@ -7,12 +7,29 @@ Thanks for helping make algorithm learning better for C# devs. Here's how.
 1. **Solve it.** Make sure you have a clean, working C# solution for a Blind 75 problem.
 2. **Create the folder:** `src/problems/<slug>/index.ts` (e.g., `src/problems/3sum/index.ts`).
 3. **Define the `Problem` object:**
+   - `author`: import your author constant from `src/problems/authors.ts` (add yourself there if you're new — see below)
    - `code`: your C# solution as a string, pasted from your submission
    - `steps`: an array tracing the algorithm on a real example (see existing problems for structure)
    - `approach`: summary, complexity, C#-specific notes
 4. **Register it:** add the import and export to `src/problems/index.ts`.
 5. **Test:** `npm run dev`, click to your problem, step through it, verify every step maps to your code.
 6. **Open a PR** with a clear title: "Add [Problem Name] with [visual type]" (e.g., "Add 3Sum with ArrayVisual").
+
+## Adding yourself as an author
+
+Open `src/problems/authors.ts` and add an entry:
+
+```typescript
+export const YOUR_HANDLE: Author = {
+  name: "Your Name",
+  handle: "your-github-handle",
+  githubUrl: "https://github.com/your-github-handle",
+};
+```
+
+Then set `author: YOUR_HANDLE` on the `Problem` object. Your handle will appear as a clickable tag on the problem page and your name will be credited on the homepage counter.
+
+If you're adding an alternative solution to an existing problem, set `author` on the `Solution` object instead — it will override the problem-level author for that specific approach tab.
 
 ## Authoring steps
 
@@ -32,7 +49,7 @@ Example: in BinarySearch, when we set `m = l + (r - l) / 2`, the step is:
 ```typescript
 {
   lines: [7],
-  label: "l ≤ r, so the search space isn't empty. Middle: m = 0 + (5 − 0) / 2 = 2.",
+  label: "Search space isn't empty. Compute the midpoint to split it in half.",
   variables: { l: "0", r: "5", m: "2" },
   visuals: [numsVisual({ pointers: { l: 0, r: 5, m: 2 }, highlighted: [2] })]
 }

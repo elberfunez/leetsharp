@@ -1,4 +1,5 @@
 import type { LinkedListVisualState, Problem } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/LinkedList/ReverseLinkedList,
 // presented in LeetCode submission format.
@@ -36,6 +37,7 @@ export const reverseLinkedList: Problem = {
   difficulty: "Easy",
   category: "Linked List",
   leetcodeUrl: "https://leetcode.com/problems/reverse-linked-list/",
+  author: ELBER,
   solutions: [
     {
       name: "Iterative",

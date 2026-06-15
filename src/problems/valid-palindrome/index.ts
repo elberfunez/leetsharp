@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/TwoPointers/IsPalindrome,
 // presented in LeetCode submission format.
@@ -35,6 +36,7 @@ export const validPalindrome: Problem = {
   difficulty: "Easy",
   category: "Two Pointers",
   leetcodeUrl: "https://leetcode.com/problems/valid-palindrome/",
+  author: ELBER,
   solutions: [
     {
       name: "Two Pointers",

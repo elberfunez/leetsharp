@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/TwoPointers/ThreeSum,
 // presented in LeetCode submission format.
@@ -61,6 +62,7 @@ export const threeSum: Problem = {
   difficulty: "Medium",
   category: "Two Pointers",
   leetcodeUrl: "https://leetcode.com/problems/3sum/",
+  author: ELBER,
   solutions: [
     {
       name: "Sort + Two Pointers",

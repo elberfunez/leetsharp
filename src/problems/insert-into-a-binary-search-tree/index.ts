@@ -1,4 +1,5 @@
 import type { Problem, TreeVisualNode, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/Trees/InsertIntoBinarySearchTree,
 // presented in LeetCode submission format.
@@ -46,6 +47,7 @@ export const insertIntoABinarySearchTree: Problem = {
   difficulty: "Medium",
   category: "Trees",
   leetcodeUrl: "https://leetcode.com/problems/insert-into-a-binary-search-tree/",
+  author: ELBER,
   solutions: [
     {
       name: "Recursive Search",

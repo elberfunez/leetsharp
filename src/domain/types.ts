@@ -107,9 +107,17 @@ export interface Approach {
   notes?: string[];
 }
 
+export interface Author {
+  name: string;
+  handle: string;
+  githubUrl: string;
+}
+
 /** One way to solve a problem. A problem can ship several (e.g. BFS + DFS),
  *  rendered as tabs. Single-solution problems just have one entry. */
 export interface Solution {
+  /** Who wrote this solution — defaults to the problem author if omitted. */
+  author?: Author;
   /** Short tab label, e.g. "Hash Map", "BFS", "Two Pointers" */
   name: string;
   /** Human-readable description of the traced input, e.g. "nums = [3,4,5,6], target = 7" */
@@ -129,6 +137,8 @@ export interface Problem {
   /** NeetCode roadmap category, e.g. "Arrays & Hashing" */
   category: string;
   leetcodeUrl: string;
+  /** Default author for all solutions on this problem. */
+  author: Author;
   /** One or more approaches. Multiple → rendered as tabs. */
   solutions: Solution[];
 }

@@ -1,4 +1,5 @@
 import type { Problem, TreeVisualNode, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/Trees/SubtreeOfAnotherTree,
 // presented in LeetCode submission format.
@@ -44,6 +45,7 @@ export const subtreeOfAnotherTree: Problem = {
   difficulty: "Easy",
   category: "Trees",
   leetcodeUrl: "https://leetcode.com/problems/subtree-of-another-tree/",
+  author: ELBER,
   solutions: [
     {
       name: "SameTree at Each Node",

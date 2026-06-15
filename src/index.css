@@ -123,6 +123,45 @@ body {
   color: var(--text);
 }
 
+.author-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid rgba(174, 113, 255, 0.3);
+  border-radius: 999px;
+  padding: 3px 10px;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.author-tag:hover {
+  background: rgba(174, 113, 255, 0.25);
+  border-color: var(--accent);
+}
+
+.solved-count {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 17px;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.solved-author {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.solved-author:hover {
+  text-decoration: underline;
+}
+
 .problem-input {
   display: flex;
   align-items: center;

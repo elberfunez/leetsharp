@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/ArraysAndHashing/ValidAnagram,
 // presented in LeetCode submission format.
@@ -39,6 +40,7 @@ export const validAnagram: Problem = {
   difficulty: "Easy",
   category: "Arrays & Hashing",
   leetcodeUrl: "https://leetcode.com/problems/valid-anagram/",
+  author: ELBER,
   solutions: [
     {
       name: "Frequency Count",

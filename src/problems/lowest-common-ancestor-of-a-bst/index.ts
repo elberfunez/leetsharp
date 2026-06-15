@@ -1,4 +1,5 @@
 import type { Problem, TreeVisualNode, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/Trees/LowestCommonAncestorBST,
 // presented in LeetCode submission format.
@@ -41,6 +42,7 @@ export const lowestCommonAncestorOfABST: Problem = {
   difficulty: "Medium",
   category: "Trees",
   leetcodeUrl: "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/",
+  author: ELBER,
   solutions: [
     {
       name: "BST Walk",

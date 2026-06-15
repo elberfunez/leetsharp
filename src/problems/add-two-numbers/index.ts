@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/LinkedList/AddTwoNumbers,
 // presented in LeetCode submission format.
@@ -40,6 +41,7 @@ export const addTwoNumbers: Problem = {
   difficulty: "Medium",
   category: "Linked List",
   leetcodeUrl: "https://leetcode.com/problems/add-two-numbers/",
+  author: ELBER,
   solutions: [
     {
       name: "Digit-by-Digit Carry",

@@ -127,7 +127,12 @@ export function HomePage() {
       <div className="home-main">
         <header className="dash-header">
           <div>
-            <p className="dash-subtitle">LeetCode problems, solved in C# — with step-by-step visual walkthroughs.</p>
+            <p className="dash-subtitle">
+              <span className="solved-count">[{problems.length}]</span>
+              {" "}LeetCode problems, solved by{" "}
+              <a href="https://github.com/elberfunez" target="_blank" rel="noreferrer" className="solved-author">@elberfunez</a>
+              {" "}— with step-by-step visual walkthroughs.
+            </p>
           </div>
           {view !== "map" && (
             <div className="view-toggle">

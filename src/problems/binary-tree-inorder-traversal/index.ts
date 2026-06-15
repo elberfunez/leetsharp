@@ -1,4 +1,5 @@
 import type { Problem, TreeVisualNode, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's two actual solutions from
 // LeetcodePractice/Problems/Trees/BinaryTreeInorderTraversal/Solutions/{Recursive,Iterative}.cs,
@@ -61,6 +62,7 @@ export const binaryTreeInorderTraversal: Problem = {
   difficulty: "Easy",
   category: "Trees",
   leetcodeUrl: "https://leetcode.com/problems/binary-tree-inorder-traversal/",
+  author: ELBER,
   solutions: [
     {
       name: "Recursion",

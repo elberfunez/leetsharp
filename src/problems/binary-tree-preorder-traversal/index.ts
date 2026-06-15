@@ -1,4 +1,5 @@
 import type { Problem, TreeVisualNode, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual recursive solution from
 // LeetcodePractice/Problems/Trees/BinaryTreePreorderTraversal/Solutions/Recursive.cs,
@@ -38,6 +39,7 @@ export const binaryTreePreorderTraversal: Problem = {
   difficulty: "Easy",
   category: "Trees",
   leetcodeUrl: "https://leetcode.com/problems/binary-tree-preorder-traversal/",
+  author: ELBER,
   solutions: [
     {
       name: "Recursion",

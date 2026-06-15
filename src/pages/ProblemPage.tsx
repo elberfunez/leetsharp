@@ -96,6 +96,14 @@ export function ProblemPage({ problem }: { problem: Problem }) {
         <span className={`difficulty difficulty-${problem.difficulty.toLowerCase()}`}>
           {problem.difficulty}
         </span>
+        <a
+          href={(solution.author ?? problem.author).githubUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="author-tag"
+        >
+          Solved by @{(solution.author ?? problem.author).handle}
+        </a>
         <div className="problem-input">
           <span className="problem-input-label">Tracing:</span>
           <code className="problem-input-value">{solution.input}</code>

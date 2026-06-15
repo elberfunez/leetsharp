@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/ArraysAndHashing/TopKFrequentElements,
 // presented in LeetCode submission format.
@@ -41,6 +42,7 @@ export const topKFrequentElements: Problem = {
   difficulty: "Medium",
   category: "Arrays & Hashing",
   leetcodeUrl: "https://leetcode.com/problems/top-k-frequent-elements/",
+  author: ELBER,
   solutions: [
     {
       name: "Count + Sort",

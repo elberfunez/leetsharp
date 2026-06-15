@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/ArraysAndHashing/LongestConsecutive,
 // presented in LeetCode submission format.
@@ -42,6 +43,7 @@ export const longestConsecutiveSequence: Problem = {
   difficulty: "Medium",
   category: "Arrays & Hashing",
   leetcodeUrl: "https://leetcode.com/problems/longest-consecutive-sequence/",
+  author: ELBER,
   solutions: [
     {
       name: "Hash Set",

@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/Stack/ValidParentheses,
 // presented in LeetCode submission format.
@@ -57,6 +58,7 @@ export const validParentheses: Problem = {
   difficulty: "Easy",
   category: "Stack",
   leetcodeUrl: "https://leetcode.com/problems/valid-parentheses/",
+  author: ELBER,
   solutions: [
     {
       name: "Stack",

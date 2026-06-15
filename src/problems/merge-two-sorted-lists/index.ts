@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/LinkedList/MergeTwoSortedLinkedLists,
 // presented in LeetCode submission format.
@@ -43,6 +44,7 @@ export const mergeTwoSortedLists: Problem = {
   difficulty: "Easy",
   category: "Linked List",
   leetcodeUrl: "https://leetcode.com/problems/merge-two-sorted-lists/",
+  author: ELBER,
   solutions: [
     {
       name: "Dummy + Splice",

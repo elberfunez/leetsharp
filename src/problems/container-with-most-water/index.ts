@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/TwoPointers/ContainerWithMostWater,
 // presented in LeetCode submission format.
@@ -37,6 +38,7 @@ export const containerWithMostWater: Problem = {
   difficulty: "Medium",
   category: "Two Pointers",
   leetcodeUrl: "https://leetcode.com/problems/container-with-most-water/",
+  author: ELBER,
   solutions: [
     {
       name: "Two Pointers",

@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/ArraysAndHashing/GroupAnagrams,
 // presented in LeetCode submission format.
@@ -40,6 +41,7 @@ export const groupAnagrams: Problem = {
   difficulty: "Medium",
   category: "Arrays & Hashing",
   leetcodeUrl: "https://leetcode.com/problems/group-anagrams/",
+  author: ELBER,
   solutions: [
     {
       name: "Sorted Key",

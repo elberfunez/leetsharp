@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/ArraysAndHashing/ContainsDuplicate,
 // presented in LeetCode submission format.
@@ -35,6 +36,7 @@ export const containsDuplicate: Problem = {
   difficulty: "Easy",
   category: "Arrays & Hashing",
   leetcodeUrl: "https://leetcode.com/problems/contains-duplicate/",
+  author: ELBER,
   solutions: [
     {
       name: "Hash Set",

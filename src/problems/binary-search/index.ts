@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/BinarySearch/BinarySearch,
 // presented in LeetCode submission format.
@@ -37,6 +38,7 @@ export const binarySearch: Problem = {
   difficulty: "Easy",
   category: "Binary Search",
   leetcodeUrl: "https://leetcode.com/problems/binary-search/",
+  author: ELBER,
   solutions: [
     {
       name: "Iterative",

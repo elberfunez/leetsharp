@@ -1,4 +1,5 @@
 import type { Problem, TreeVisualNode, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/Trees/ValidBinarySearchTree,
 // presented in LeetCode submission format.
@@ -29,6 +30,7 @@ export const validateBinarySearchTree: Problem = {
   difficulty: "Medium",
   category: "Trees",
   leetcodeUrl: "https://leetcode.com/problems/validate-binary-search-tree/",
+  author: ELBER,
   solutions: [
     {
       name: "Min/Max Bounds",

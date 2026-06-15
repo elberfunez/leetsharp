@@ -1,4 +1,5 @@
 import type { Approach, Problem, Step, TreeVisualState, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual BFS solution from
 // LeetcodePractice/Problems/Trees/MaximumDepthOfBinaryTree/Solutions/BFS.cs,
@@ -204,6 +205,7 @@ export const maximumDepthOfBinaryTree: Problem = {
   difficulty: "Easy",
   category: "Trees",
   leetcodeUrl: "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
+  author: ELBER,
   solutions: [
     {
       name: "BFS",

@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/LinkedList/LinkedListCycleDetection,
 // presented in LeetCode submission format.
@@ -27,6 +28,7 @@ export const linkedListCycle: Problem = {
   difficulty: "Easy",
   category: "Linked List",
   leetcodeUrl: "https://leetcode.com/problems/linked-list-cycle/",
+  author: ELBER,
   solutions: [
     {
       name: "Floyd's Tortoise & Hare",

@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from
 // LeetcodePractice/Problems/SlidingWindow/LongestSubstringWithoutRepeatingCharacters,
@@ -44,6 +45,7 @@ export const longestSubstringWithoutRepeatingCharacters: Problem = {
   difficulty: "Medium",
   category: "Sliding Window",
   leetcodeUrl: "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
+  author: ELBER,
   solutions: [
     {
       name: "Sliding Window",

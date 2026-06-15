@@ -1,4 +1,5 @@
 import type { Problem, TreeVisualNode, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/Tries/ImplementTrie,
 // presented in LeetCode submission format.
@@ -65,6 +66,7 @@ export const implementTrie: Problem = {
   difficulty: "Medium",
   category: "Tries",
   leetcodeUrl: "https://leetcode.com/problems/implement-trie-prefix-tree/",
+  author: ELBER,
   solutions: [
     {
       name: "Children Map per Node",

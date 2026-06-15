@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/LinkedList/PalindromeLinkedList,
 // presented in LeetCode submission format.
@@ -35,6 +36,7 @@ export const palindromeLinkedList: Problem = {
   difficulty: "Easy",
   category: "Linked List",
   leetcodeUrl: "https://leetcode.com/problems/palindrome-linked-list/",
+  author: ELBER,
   solutions: [
     {
       name: "Reverse Second Half",

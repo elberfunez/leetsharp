@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/SlidingWindow/BestTimeToBuyAndSellStock,
 // presented in LeetCode submission format.
@@ -29,6 +30,7 @@ export const bestTimeToBuyAndSellStock: Problem = {
   difficulty: "Easy",
   category: "Sliding Window",
   leetcodeUrl: "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
+  author: ELBER,
   solutions: [
     {
       name: "Track Min Price",

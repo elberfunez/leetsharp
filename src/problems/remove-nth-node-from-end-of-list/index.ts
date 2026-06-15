@@ -1,4 +1,5 @@
 import type { Problem, VisualState } from "../../domain/types";
+import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/LinkedList/RemoveNthFromEnd,
 // presented in LeetCode submission format.
@@ -32,6 +33,7 @@ export const removeNthNodeFromEndOfList: Problem = {
   difficulty: "Medium",
   category: "Linked List",
   leetcodeUrl: "https://leetcode.com/problems/remove-nth-node-from-end-of-list/",
+  author: ELBER,
   solutions: [
     {
       name: "Two Pointers (gap)",
