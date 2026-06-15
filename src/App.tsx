@@ -87,6 +87,20 @@ export default function App() {
           <Route path="/problems/:slug" element={<ProblemRoute />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        <footer className="footer">
+          <div className="footer-content">
+            <p className="footer-text">Made for C# developers preparing for technical interviews.</p>
+            <div className="footer-links">
+              <a href="https://github.com/elberfunez/leetsharp" target="_blank" rel="noreferrer">
+                GitHub
+              </a>
+              <a href="https://github.com/elberfunez" target="_blank" rel="noreferrer">
+                Author
+              </a>
+            </div>
+          </div>
+          <p className="footer-copy">© 2026 LeetSharp. All rights reserved.</p>
+        </footer>
       </div>
     </BrowserRouter>
   );

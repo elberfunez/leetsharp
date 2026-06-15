@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Copy, Check } from "lucide-react";
 import { highlightCSharp } from "../lib/highlighter";
 
 interface Props {
@@ -10,7 +11,14 @@ interface Props {
 /** Syntax-highlighted C# source with the current step's lines spotlighted. */
 export function CodePanel({ code, activeLines, stepIndex }: Props) {
   const [html, setHtml] = useState("");
+  const [copied, setCopied] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1000);
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -45,12 +53,25 @@ export function CodePanel({ code, activeLines, stepIndex }: Props) {
   }, [stepIndex, html]);
 
   return (
-    <div className="code-panel" ref={containerRef}>
-      {html ? (
-        <div dangerouslySetInnerHTML={{ __html: html }} />
-      ) : (
-        <div className="code-loading">Loading…</div>
-      )}
+    <div className="code-panel">
+      <div className="code-header">
+        <span className="code-title">Solution.cs</span>
+        <button
+          className="code-copy-btn"
+          onClick={handleCopy}
+          title="Copy code"
+          aria-label="Copy code"
+        >
+          {copied ? <Check size={16} strokeWidth={2} /> : <Copy size={16} strokeWidth={2} />}
+        </button>
+      </div>
+      <div className="code-body" ref={containerRef}>
+        {html ? (
+          <div dangerouslySetInnerHTML={{ __html: html }} />
+        ) : (
+          <div className="code-loading">Loading…</div>
+        )}
+      </div>
     </div>
   );
 }

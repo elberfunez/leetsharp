@@ -16,7 +16,10 @@ function SolutionView({ solution }: { solution: Solution }) {
       <div className="problem-input">Tracing: {solution.input}</div>
 
       <div className="workspace">
-        <CodePanel code={solution.code} activeLines={runner.step.lines} stepIndex={runner.index} />
+        <div className="left-column">
+          <CodePanel code={solution.code} activeLines={runner.step.lines} stepIndex={runner.index} />
+          <StepControls runner={runner} />
+        </div>
         <div className="right-pane">
           <AnimatePresence mode="wait">
             <motion.div
@@ -43,8 +46,6 @@ function SolutionView({ solution }: { solution: Solution }) {
           <VisualPanel visuals={runner.step.visuals} />
         </div>
       </div>
-
-      <StepControls runner={runner} />
 
       <section className="approach">
         <h2>Approach</h2>
