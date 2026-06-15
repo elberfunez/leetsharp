@@ -42,34 +42,34 @@ export const removeNthNodeFromEndOfList: Problem = {
       steps: [
         {
           lines: [3, 4, 5],
-          label: "A dummy node before the head lets us delete even the first node uniformly. left starts at dummy, right at the head.",
+          label: "A `dummy` node before the head lets us delete even the first node uniformly. `left` starts at `dummy`, `right` at the head.",
           variables: { n: "2" },
           visuals: [arr({ left: 0, right: 1 })],
         },
         {
           lines: [6, 7, 8],
-          label: "Open a gap: move right n = 2 nodes ahead. right lands on node 3, n hits 0.",
+          label: "Open a gap: move `right` n = 2 nodes ahead. `right` lands on node 3, `n` hits 0.",
           variables: { n: "0" },
           visuals: [arr({ left: 0, right: 3 })],
         },
         {
           lines: [10, 11, 12],
-          label: "Now slide BOTH forward together, keeping the gap of 2: left → node 1, right → node 4.",
+          label: "Now slide BOTH forward together, keeping the gap of 2: `left` → node 1, `right` → node 4.",
           visuals: [arr({ left: 1, right: 4 })],
         },
         {
           lines: [10, 11, 12],
-          label: "Again: left → node 2, right → off the end (null). The loop stops — left is now exactly one before the target.",
+          label: "Again: `left` → node 2, `right` → off the end (`null`). The loop stops — `left` is now exactly one before the target.",
           visuals: [arr({ left: 2 })],
         },
         {
           lines: [14],
-          label: "left.next = left.next.next skips node 3 (the 2nd from the end). It's unlinked.",
+          label: "`left.next = left.next.next` skips node 3 (the 2nd from the end). It's unlinked.",
           visuals: [arr({ left: 2 }, [3])],
         },
         {
           lines: [15],
-          label: "Return dummy.next → [1, 2, 4]. ✓",
+          label: "Return `dummy.next` → [1, 2, 4]. ✓",
           variables: { result: "[1, 2, 4]" },
           visuals: [arr({ left: 2 }, [3])],
         },

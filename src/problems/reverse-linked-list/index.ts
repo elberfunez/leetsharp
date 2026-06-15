@@ -46,30 +46,30 @@ export const reverseLinkedList: Problem = {
       steps: [
     {
       lines: [3, 4],
-      label: "Two trackers: cur starts at the head, prev starts at null — prev is always the portion already reversed (nothing yet).",
+      label: "Two trackers: `cur` starts at the head, `prev` starts at `null` — `prev` is always the portion already reversed (nothing yet).",
       variables: { prev: "null" },
       visuals: [list([1, 2, 3, null], { cur: 0 })],
     },
     {
       lines: [7],
-      label: "Iteration 1 — save cur's neighbor before we break the link: next = node 1.",
+      label: "Iteration 1 — save `cur`'s neighbor before we break the link: `next` = node 1.",
       variables: { prev: "null" },
       visuals: [list([1, 2, 3, null], { cur: 0, next: 1 }, [0])],
     },
     {
       lines: [8],
-      label: "Flip! Node 0's next now points backwards to prev (null). The 0→1 arrow goes dark and node 0 gets the ∅ badge — it's the new tail.",
+      label: "Flip! Node 0's `next` now points backwards to `prev` (`null`). The 0→1 arrow goes dark and node 0 gets the ∅ badge — it's the new tail.",
       variables: { prev: "null" },
       visuals: [list([null, 2, 3, null], { cur: 0, next: 1 }, [0])],
     },
     {
       lines: [9, 10],
-      label: "Slide the trackers forward: prev = node 0, cur = the saved next (node 1).",
+      label: "Slide the trackers forward: `prev` = node 0, `cur` = the saved `next` (node 1).",
       visuals: [list([null, 2, 3, null], { prev: 0, cur: 1, next: 1 })],
     },
     {
       lines: [7],
-      label: "Iteration 2 — save next = node 2.",
+      label: "Iteration 2 — save `next` = node 2.",
       visuals: [list([null, 2, 3, null], { prev: 0, cur: 1, next: 2 }, [1])],
     },
     {
@@ -79,12 +79,12 @@ export const reverseLinkedList: Problem = {
     },
     {
       lines: [9, 10],
-      label: "prev = node 1, cur = node 2. Everything left of cur is reversed.",
+      label: "`prev` = node 1, `cur` = node 2. Everything left of `cur` is reversed.",
       visuals: [list([null, 0, 3, null], { prev: 1, cur: 2, next: 2 })],
     },
     {
       lines: [7],
-      label: "Iteration 3 — save next = node 3.",
+      label: "Iteration 3 — save `next` = node 3.",
       visuals: [list([null, 0, 3, null], { prev: 1, cur: 2, next: 3 }, [2])],
     },
     {
@@ -94,12 +94,12 @@ export const reverseLinkedList: Problem = {
     },
     {
       lines: [9, 10],
-      label: "prev = node 2, cur = node 3 — the last node.",
+      label: "`prev` = node 2, `cur` = node 3 — the last node.",
       visuals: [list([null, 0, 1, null], { prev: 2, cur: 3, next: 3 })],
     },
     {
       lines: [7],
-      label: "Iteration 4 — cur.next is null (node 3 was the old tail), so next = null.",
+      label: "Iteration 4 — `cur.next` is `null` (node 3 was the old tail), so `next` = `null`.",
       variables: { next: "null" },
       visuals: [list([null, 0, 1, null], { prev: 2, cur: 3 }, [3])],
     },
@@ -111,19 +111,19 @@ export const reverseLinkedList: Problem = {
     },
     {
       lines: [9, 10],
-      label: "prev = node 3, cur = next = null. cur walked off the end of the list.",
+      label: "`prev` = node 3, `cur` = `next` = `null`. `cur` walked off the end of the list.",
       variables: { cur: "null", next: "null" },
       visuals: [list([null, 0, 1, 2], { prev: 3 })],
     },
     {
       lines: [5],
-      label: "cur is null → the loop exits.",
+      label: "`cur` is `null` → the loop exits.",
       variables: { cur: "null" },
       visuals: [list([null, 0, 1, 2], { prev: 3 })],
     },
     {
       lines: [12],
-      label: "Return prev — node 3, the old tail, is the new head: 3 → 2 → 1 → 0. ✓",
+      label: "Return `prev` — node 3, the old tail, is the new head: 3 → 2 → 1 → 0. ✓",
       variables: { result: "3 → 2 → 1 → 0" },
       visuals: [list([null, 0, 1, 2], { prev: 3 }, [3])],
     },

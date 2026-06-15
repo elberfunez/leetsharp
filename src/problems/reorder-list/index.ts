@@ -61,17 +61,17 @@ export const reorderList: Problem = {
       steps: [
         {
           lines: [4, 5, 6],
-          label: "Reorder weaves first, last, second, second-last, … in three phases. Phase 1: find the middle with slow (1×) and fast (2×) pointers.",
+          label: "Reorder weaves first, last, second, second-last, … in three phases. Phase 1: find the middle with `slow` (1×) and `fast` (2×) pointers.",
           visuals: [whole({ slow: 0, fast: 0 })],
         },
         {
           lines: [8, 9],
-          label: "slow → node 4, fast → node 6.",
+          label: "`slow` → node 4, `fast` → node 6.",
           visuals: [whole({ slow: 1, fast: 2 })],
         },
         {
           lines: [8, 9],
-          label: "slow → node 6, fast → node 10. fast can't move 2 more, so the loop ends. slow (node 6) is the middle.",
+          label: "`slow` → node 6, `fast` → node 10. `fast` can't move 2 more, so the loop ends. `slow` (node 6) is the middle.",
           visuals: [whole({ slow: 2, fast: 4 })],
         },
         {
@@ -86,7 +86,7 @@ export const reorderList: Problem = {
         },
         {
           lines: [18, 20, 21, 22, 23, 24, 25],
-          label: "Weave: splice first's head (2) → reversed head (10) → first's next (4). Advance both.",
+          label: "Weave: splice `firstHalf`'s head (2) → reversed head (10) → `firstHalf`'s next (4). Advance both.",
           visuals: [first([2, 4, 6], [0]), second([10, 8], [0]), result([2, 10])],
         },
         {
@@ -96,7 +96,7 @@ export const reorderList: Problem = {
         },
         {
           lines: [19],
-          label: "The reversed half is empty → loop ends. Node 6 keeps its trailing spot.",
+          label: "`secondHalfReversed` is empty → loop ends. Node 6 keeps its trailing spot.",
           visuals: [result([2, 10, 4, 8, 6])],
         },
         {

@@ -54,60 +54,60 @@ export const productOfArrayExceptSelf: Problem = {
         // ── Concept ────────────────────────────────────────────────
         {
           lines: [3],
-          label: "Core idea: result[i] = (product of everything to i's LEFT) × (product of everything to i's RIGHT). We'll precompute both sides in two passes, then multiply.",
+          label: "Core idea: `res[i]` = (product of everything to i's LEFT) × (product of everything to i's RIGHT). We'll precompute both sides in two passes, then multiply.",
           visuals: [row("nums", nums)],
         },
         // ── Prefix pass (left → right) ──────────────────────────
         {
           lines: [4],
-          label: "Left pass — scan left to right, building a running product. prefix[0] starts at nums[0] = 1.",
+          label: "Left pass — scan left to right, building a running product. `prefix[0]` starts at `nums[0]` = 1.",
           visuals: [row("nums", nums, [0], { i: 0 }), row("prefix", [1, 0, 0, 0], [0])],
         },
         {
           lines: [5, 7],
-          label: "prefix[1] = previous running product × nums[1]. The running product now covers the first two elements.",
+          label: "`prefix[1]` = previous running product × `nums[1]`. The running product now covers the first two elements.",
           visuals: [row("nums", nums, [1], { i: 1 }), row("prefix", [1, 2, 0, 0], [1])],
         },
         {
           lines: [7],
-          label: "prefix[2] = previous running product × nums[2]. Now covers the first three elements.",
+          label: "`prefix[2]` = previous running product × `nums[2]`. Now covers the first three elements.",
           visuals: [row("nums", nums, [2], { i: 2 }), row("prefix", [1, 2, 6, 0], [2])],
         },
         {
           lines: [7],
-          label: "prefix[3] = previous running product × nums[3]. Left pass complete — prefix[i] holds the product of nums[0..i].",
+          label: "`prefix[3]` = previous running product × `nums[3]`. Left pass complete — `prefix[i]` holds the product of `nums[0..i]`.",
           visuals: [row("nums", nums, [3], { i: 3 }), row("prefix", prefixArr, [3])],
         },
         // ── Postfix pass (right → left) ─────────────────────────
         {
           lines: [9, 10],
-          label: "Right pass — scan right to left, building a running product from the other end. postfix[3] starts at nums[3] = 4.",
+          label: "Right pass — scan right to left, building a running product from the other end. `postfix[3]` starts at `nums[3]` = 4.",
           visuals: [row("nums", nums, [3], { i: 3 }), row("postfix", [0, 0, 0, 4], [3])],
         },
         {
           lines: [11, 13],
-          label: "postfix[2] = nums[2] × next running product. Covers the last two elements.",
+          label: "`postfix[2]` = `nums[2]` × next running product. Covers the last two elements.",
           visuals: [row("nums", nums, [2], { i: 2 }), row("postfix", [0, 0, 12, 4], [2])],
         },
         {
           lines: [13],
-          label: "postfix[1] = nums[1] × next running product. Covers the last three elements.",
+          label: "`postfix[1]` = `nums[1]` × next running product. Covers the last three elements.",
           visuals: [row("nums", nums, [1], { i: 1 }), row("postfix", [0, 24, 12, 4], [1])],
         },
         {
           lines: [13],
-          label: "postfix[0] = nums[0] × next running product. Right pass complete — postfix[i] holds the product of nums[i..end].",
+          label: "`postfix[0]` = `nums[0]` × next running product. Right pass complete — `postfix[i]` holds the product of `nums[i..end]`.",
           visuals: [row("nums", nums, [0], { i: 0 }), row("postfix", postfixArr, [0])],
         },
         // ── Combine ─────────────────────────────────────────────
         {
           lines: [16],
-          label: "Now combine. For each index: result[i] = prefix[i−1] (everything left of i) × postfix[i+1] (everything right of i).",
+          label: "Now combine. For each index: `res[i]` = `prefix[i-1]` (everything left of i) × `postfix[i+1]` (everything right of i).",
           visuals: [row("prefix", prefixArr), row("postfix", postfixArr), row("res", [0, 0, 0, 0])],
         },
         {
           lines: [18, 19, 20],
-          label: "Index 0: nothing to its left (left product = 1). Right product = postfix[1] = 24. result[0] = 24.",
+          label: "Index 0: nothing to its left (left product = 1). Right product = `postfix[1]` = 24. `res[0]` = 24.",
           visuals: [
             row("prefix", prefixArr, []),
             row("postfix", postfixArr, [1], { "right →": 1 }),
@@ -116,7 +116,7 @@ export const productOfArrayExceptSelf: Problem = {
         },
         {
           lines: [18, 19, 20],
-          label: "Index 1: left product = prefix[0] = 1. Right product = postfix[2] = 12. result[1] = 12.",
+          label: "Index 1: left product = `prefix[0]` = 1. Right product = `postfix[2]` = 12. `res[1]` = 12.",
           visuals: [
             row("prefix", prefixArr, [0], { "← left": 0 }),
             row("postfix", postfixArr, [2], { "right →": 2 }),
@@ -125,7 +125,7 @@ export const productOfArrayExceptSelf: Problem = {
         },
         {
           lines: [18, 19, 20],
-          label: "Index 2: left product = prefix[1] = 2. Right product = postfix[3] = 4. result[2] = 8.",
+          label: "Index 2: left product = `prefix[1]` = 2. Right product = `postfix[3]` = 4. `res[2]` = 8.",
           visuals: [
             row("prefix", prefixArr, [1], { "← left": 1 }),
             row("postfix", postfixArr, [3], { "right →": 3 }),
@@ -134,7 +134,7 @@ export const productOfArrayExceptSelf: Problem = {
         },
         {
           lines: [18, 19, 20],
-          label: "Index 3: left product = prefix[2] = 6. Nothing to its right (right product = 1). result[3] = 6.",
+          label: "Index 3: left product = `prefix[2]` = 6. Nothing to its right (right product = 1). `res[3]` = 6.",
           visuals: [
             row("prefix", prefixArr, [2], { "← left": 2 }),
             row("postfix", postfixArr, []),
@@ -143,7 +143,7 @@ export const productOfArrayExceptSelf: Problem = {
         },
         {
           lines: [23],
-          label: "Return [24, 12, 8, 6]. Every slot holds the product of all other elements — no division needed. ✓",
+          label: "Return `res` = [24, 12, 8, 6]. Every slot holds the product of all other elements — no division needed. ✓",
           variables: { result: "[24, 12, 8, 6]" },
           visuals: [row("res", [24, 12, 8, 6], [0, 1, 2, 3])],
         },

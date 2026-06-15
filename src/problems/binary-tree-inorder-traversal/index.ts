@@ -136,7 +136,7 @@ export const binaryTreeInorderTraversal: Problem = {
       steps: [
         {
           lines: [3, 4, 5],
-          label: "Same traversal, but we run the call stack ourselves with an explicit Stack. Plunge down the left spine, pushing each node.",
+          label: "Same traversal, but we run the call stack ourselves with an explicit `Stack`. Plunge down the left spine, pushing each node.",
           visuals: [tree(["n1"], []), stack([]), result([])],
         },
         {
@@ -146,12 +146,12 @@ export const binaryTreeInorderTraversal: Problem = {
         },
         {
           lines: [11, 12, 13],
-          label: "Pop 4 (the leftmost), record it, then move to 4's right child (null).",
+          label: "Pop 4 (the leftmost), record it, then move to 4's right child (`null`).",
           visuals: [tree([], ["n4"]), stack(["1", "2"]), result([4])],
         },
         {
           lines: [11, 12, 13],
-          label: "cur is null, so pop 2, record it, and move to 2's right child, 5.",
+          label: "`cur` is `null`, so pop 2, record it, and move to 2's right child, 5.",
           visuals: [tree(["n5"], ["n4", "n2"]), stack(["1"]), result([4, 2])],
         },
         {
@@ -176,12 +176,12 @@ export const binaryTreeInorderTraversal: Problem = {
         },
         {
           lines: [7, 8, 11, 12],
-          label: "Push 7, pop 7, record it. Stack empty and cur null → done.",
+          label: "Push 7, pop 7, record it. Stack empty and `cur` = `null` → done.",
           visuals: [tree([], ["n4", "n2", "n5", "n1", "n6", "n3", "n7"]), stack([]), result([4, 2, 5, 1, 6, 3, 7])],
         },
         {
           lines: [17],
-          label: "Return [4, 2, 5, 1, 6, 3, 7] — identical to the recursive result. ✓",
+          label: "Return `result` = [4, 2, 5, 1, 6, 3, 7] — identical to the recursive result. ✓",
           variables: { result: "[4, 2, 5, 1, 6, 3, 7]" },
           visuals: [tree([], ["n4", "n2", "n5", "n1", "n6", "n3", "n7"]), stack([]), result([4, 2, 5, 1, 6, 3, 7])],
         },

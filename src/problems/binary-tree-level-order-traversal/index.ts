@@ -60,7 +60,7 @@ export const binaryTreeLevelOrderTraversal: Problem = {
         },
         {
           lines: [9, 10],
-          label: "Snapshot queueLength = 1 — that's how many nodes belong to THIS level. Start an empty list for it.",
+          label: "Snapshot `queueLength` = 1 — that's how many nodes belong to THIS level. Start an empty list for it.",
           variables: { queueLength: "1" },
           visuals: [tree(["n1"]), queue([1])],
         },
@@ -72,7 +72,7 @@ export const binaryTreeLevelOrderTraversal: Problem = {
         },
         {
           lines: [9],
-          label: "queueLength = 2 — the next level has 2 nodes.",
+          label: "`queueLength` = 2 — the next level has 2 nodes.",
           variables: { queueLength: "2" },
           visuals: [tree([], ["n1"]), queue([2, 3])],
         },
@@ -84,13 +84,13 @@ export const binaryTreeLevelOrderTraversal: Problem = {
         },
         {
           lines: [9, 13, 14],
-          label: "queueLength = 4. Dequeue all four leaves; none has children, so nothing new is enqueued. Level 2 = [4, 5, 6, 7].",
+          label: "`queueLength` = 4. Dequeue all four leaves; none has children, so nothing new is enqueued. Level 2 = [4, 5, 6, 7].",
           variables: { result: "[[1], [2, 3], [4, 5, 6, 7]]" },
           visuals: [tree([], ["n1", "n2", "n3", "n4", "n5", "n6", "n7"]), queue([])],
         },
         {
           lines: [7, 21],
-          label: "Queue empty → done. Return [[1], [2, 3], [4, 5, 6, 7]]. ✓",
+          label: "Queue empty → done. Return `res` = [[1], [2, 3], [4, 5, 6, 7]]. ✓",
           variables: { result: "[[1], [2, 3], [4, 5, 6, 7]]" },
           visuals: [tree([], ["n1", "n2", "n3", "n4", "n5", "n6", "n7"]), queue([])],
         },

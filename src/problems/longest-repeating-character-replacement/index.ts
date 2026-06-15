@@ -58,7 +58,7 @@ export const longestRepeatingCharacterReplacement: Problem = {
       steps: [
         {
           lines: [3, 4, 5],
-          label: "Track each character's count inside the window (d), the window's left edge l, and the best window length (result).",
+          label: "Track each character's count inside the window (`d`), the window's left edge `l`, and the best window length (`result`).",
           variables: { k: "2", l: "0", result: "0" },
           visuals: [
             { type: "array", title: "s (window highlighted)", items: chars, pointers: { l: 0 } },
@@ -67,55 +67,55 @@ export const longestRepeatingCharacterReplacement: Problem = {
         },
         {
           lines: [6, 8, 10],
-          label: "r = 0: 'X' is new → d['X'] = 1.",
+          label: "`r` = 0: 'X' is new → `d['X']` = 1.",
           variables: { k: "2", l: "0", r: "0" },
           visuals: [win(0, 0), counts([["X", 1]], "X")],
         },
         {
           lines: [16, 21],
-          label: "Window \"X\" (length 1): all one character already, zero replacements needed. Within budget — valid window. result = 1.",
+          label: "Window \"X\" (length 1): all one character already, zero replacements needed. Within budget — valid window. `result` = 1.",
           variables: { k: "2", l: "0", r: "0", result: "1" },
           visuals: [win(0, 0), counts([["X", 1]])],
         },
         {
           lines: [6, 8, 10],
-          label: "r = 1: 'Y' is new → d['Y'] = 1.",
+          label: "`r` = 1: 'Y' is new → `d['Y']` = 1.",
           variables: { k: "2", l: "0", r: "1" },
           visuals: [win(0, 1), counts([["X", 1], ["Y", 1]], "Y")],
         },
         {
           lines: [16, 21],
-          label: "Window \"XY\" (length 2): one replacement turns it uniform. Within budget of 2 — valid. result = 2.",
+          label: "Window \"XY\" (length 2): one replacement turns it uniform. Within budget of 2 — valid. `result` = 2.",
           variables: { k: "2", l: "0", r: "1", result: "2" },
           visuals: [win(0, 1), counts([["X", 1], ["Y", 1]])],
         },
         {
           lines: [6, 12, 14],
-          label: "r = 2: 'Y' seen before → d['Y'] becomes 2.",
+          label: "`r` = 2: 'Y' seen before → `d['Y']` becomes 2.",
           variables: { k: "2", l: "0", r: "2" },
           visuals: [win(0, 2), counts([["X", 1], ["Y", 2]], "Y")],
         },
         {
           lines: [16, 21],
-          label: "Window \"XYY\" (length 3): Y appears twice — replacing the lone X makes it all-Y. One swap, within budget. result = 3.",
+          label: "Window \"XYY\" (length 3): Y appears twice — replacing the lone X makes it all-Y. One swap, within budget. `result` = 3.",
           variables: { k: "2", l: "0", r: "2", result: "3" },
           visuals: [win(0, 2), counts([["X", 1], ["Y", 2]])],
         },
         {
           lines: [6, 12, 14],
-          label: "r = 3: 'X' seen before → d['X'] becomes 2.",
+          label: "`r` = 3: 'X' seen before → `d['X']` becomes 2.",
           variables: { k: "2", l: "0", r: "3" },
           visuals: [win(0, 3), counts([["X", 2], ["Y", 2]], "X")],
         },
         {
           lines: [16, 21],
-          label: "Window \"XYYX\" (length 4): X and Y each appear twice. Two replacements make it uniform — exactly at the budget. Valid! result = 4.",
+          label: "Window \"XYYX\" (length 4): X and Y each appear twice. Two replacements make it uniform — exactly at the budget. Valid! `result` = 4.",
           variables: { k: "2", l: "0", r: "3", result: "4" },
           visuals: [win(0, 3), counts([["X", 2], ["Y", 2]])],
         },
         {
           lines: [23],
-          label: "Loop done. The whole string can become one repeated letter with ≤ 2 swaps → return 4. ✓",
+          label: "Loop done. The whole string can become one repeated letter with ≤ 2 swaps → return `result` = 4. ✓",
           variables: { result: "4" },
           visuals: [win(0, 3), counts([["X", 2], ["Y", 2]])],
         },

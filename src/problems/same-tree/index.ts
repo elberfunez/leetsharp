@@ -38,7 +38,7 @@ export const sameTree: Problem = {
       steps: [
         {
           lines: [2, 3, 4, 5],
-          label: "Two trees are the same when their roots match AND their subtrees match. Roots: both exist, both = 1 → recurse into the children.",
+          label: "Two trees are the same when their roots match AND their subtrees match. Roots: both `p` and `q` exist, both = 1 → recurse into the children.",
           visuals: trees(["p1"], ["q1"]),
         },
         {
@@ -48,7 +48,7 @@ export const sameTree: Problem = {
         },
         {
           lines: [3],
-          label: "Node 2's children are null on both sides → null == null, those subtrees match.",
+          label: "Node 2's children are `null` on both sides → `null` == `null`, those subtrees match.",
           visuals: trees(["p2"], ["q2"], ["p1"], ["q1"]),
         },
         {
@@ -58,7 +58,7 @@ export const sameTree: Problem = {
         },
         {
           lines: [3, 6],
-          label: "Every node pair matched and all recursions bottomed out at null == null → return true. ✓",
+          label: "Every node pair matched and all recursions bottomed out at `null` == `null` → return `true`. ✓",
           variables: { result: "true" },
           visuals: trees([], [], ["p1", "p2", "p3"], ["q1", "q2", "q3"]),
         },

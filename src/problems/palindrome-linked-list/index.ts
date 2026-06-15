@@ -45,22 +45,22 @@ export const palindromeLinkedList: Problem = {
       steps: [
         {
           lines: [3, 4, 5],
-          label: "More than one node, so we compare it against itself reversed. Find the middle with slow/fast (fast starts one ahead).",
+          label: "More than one node, so we compare it against itself reversed. Find the middle with `slow`/`fast` (`fast` starts one ahead).",
           visuals: [whole({ slow: 0, fast: 1 })],
         },
         {
           lines: [7, 8],
-          label: "slow → node 2 (index 1), fast → node 2 (index 3).",
+          label: "`slow` → node 2 (index 1), `fast` → node 2 (index 3).",
           visuals: [whole({ slow: 1, fast: 3 })],
         },
         {
           lines: [7, 8],
-          label: "slow → node 3 (index 2). fast would run off the end, so the loop ends. slow sits at the middle.",
+          label: "`slow` → node 3 (index 2). `fast` would run off the end, so the loop ends. `slow` sits at the middle.",
           visuals: [whole({ slow: 2, fast: 2 })],
         },
         {
           lines: [11, 12],
-          label: "Reverse the list from the middle onward: [3, 2, 1] becomes a chain headed at the last node. Cut the first half off with slow.next = null.",
+          label: "Reverse the list from the middle onward: [3, 2, 1] becomes a chain headed at the last node. Cut the first half off with `slow.next = null`.",
           visuals: [
             { type: "array", title: "first half", items: [1, 2], highlighted: [0, 1] },
             { type: "array", title: "reversed second half", items: [1, 2, 3], highlighted: [0, 1, 2] },
@@ -68,7 +68,7 @@ export const palindromeLinkedList: Problem = {
         },
         {
           lines: [13, 15, 16, 17],
-          label: "Now compare from both ends inward. head's 1 vs reversed's 1 → match. Advance both.",
+          label: "Now compare from both ends inward. `head`'s 1 vs `rev`'s 1 → match. Advance both.",
           visuals: [
             { type: "array", title: "head →", items: [1, 2], pointers: { h: 0 } },
             { type: "array", title: "rev →", items: [1, 2, 3], pointers: { r: 0 } },
@@ -84,7 +84,7 @@ export const palindromeLinkedList: Problem = {
         },
         {
           lines: [13, 19],
-          label: "head has reached the end (the halves meet at the middle 3). No mismatch ever fired → return true. ✓",
+          label: "`head` has reached the end (the halves meet at the middle 3). No mismatch ever fired → return `true`. ✓",
           variables: { result: "true" },
           visuals: [whole({})],
         },

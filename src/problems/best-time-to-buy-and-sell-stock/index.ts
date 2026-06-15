@@ -43,7 +43,7 @@ export const bestTimeToBuyAndSellStock: Problem = {
       steps: [
         {
           lines: [3, 4],
-          label: "Track two running values: the cheapest price seen so far (starts at prices[0] = 10) and the best profit so far (0).",
+          label: "Track two running values: the cheapest price seen so far (starts at `prices[0]` = 10) and the best profit so far (0).",
           variables: { minPrice: "10", maxPrice: "0" },
           visuals: [arr(0, 0), profit(0)],
         },
@@ -55,7 +55,7 @@ export const bestTimeToBuyAndSellStock: Problem = {
         },
         {
           lines: [7, 8],
-          label: "New lowest price — update minPrice. This is now the best potential buy day.",
+          label: "New lowest price — update `minPrice`. This is now the best potential buy day.",
           variables: { minPrice: "1", maxPrice: "0" },
           visuals: [arr(1, 1, [1]), profit(0)],
         },
@@ -85,7 +85,7 @@ export const bestTimeToBuyAndSellStock: Problem = {
         },
         {
           lines: [11],
-          label: "Loop done. Return the best profit ever seen: 6. ✓",
+          label: "Loop done. Return the best profit ever seen: `maxPrice` = 6. ✓",
           variables: { result: "6" },
           visuals: [arr(5, 1, [1, 4]), profit(6)],
         },

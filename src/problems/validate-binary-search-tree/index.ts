@@ -39,25 +39,25 @@ export const validateBinarySearchTree: Problem = {
       steps: [
         {
           lines: [2, 6, 7, 8],
-          label: "A node is valid only if it fits a (min, max) range that tightens as you descend. The root gets the widest range (−∞, +∞) — 2 fits.",
+          label: "A node is valid only if it fits a (`min`, `max`) range that tightens as you descend. The root gets the widest range (−∞, +∞) — 2 fits.",
           variables: { range: "(-∞, +∞)" },
           visuals: [tree(["n2"], { n2: "(-∞,+∞)" })],
         },
         {
           lines: [9, 8],
-          label: "Go left to 1. Everything left of 2 must be < 2, so the range becomes (−∞, 2). 1 fits.",
+          label: "Go left to 1. Everything left of 2 must be < 2, so `max` becomes 2. Range: (−∞, 2). 1 fits.",
           variables: { range: "(-∞, 2)" },
           visuals: [tree(["n1"], { n2: "(-∞,+∞)", n1: "(-∞,2)" }, ["n2"])],
         },
         {
           lines: [10, 8],
-          label: "Go right to 3. Everything right of 2 must be > 2, so the range is (2, +∞). 3 fits.",
+          label: "Go right to 3. Everything right of 2 must be > 2, so `min` becomes 2. Range: (2, +∞). 3 fits.",
           variables: { range: "(2, +∞)" },
           visuals: [tree(["n3"], { n2: "(-∞,+∞)", n1: "(-∞,2)", n3: "(2,+∞)" }, ["n2", "n1"])],
         },
         {
           lines: [11],
-          label: "Every node satisfied its range and all recursions bottomed out at null → return true. ✓",
+          label: "Every node satisfied its range and all recursions bottomed out at `null` → return `true`. ✓",
           variables: { result: "true" },
           visuals: [tree([], { n2: "(-∞,+∞)", n1: "(-∞,2)", n3: "(2,+∞)" }, ["n2", "n1", "n3"])],
         },

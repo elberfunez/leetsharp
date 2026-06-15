@@ -49,7 +49,7 @@ export const twoIntegerSumII: Problem = {
       steps: [
         {
           lines: [3, 4],
-          label: "The array is sorted. Put l at the first number and r at the last, then squeeze them toward each other.",
+          label: "The array is sorted. Put `l` at the first number and `r` at the last, then squeeze them toward each other.",
           variables: { target: "9", l: "0", r: "3" },
           visuals: [arr({ l: 0, r: 3 })],
         },
@@ -61,7 +61,7 @@ export const twoIntegerSumII: Problem = {
         },
         {
           lines: [9],
-          label: "Sum overshot, so the largest number (15) is too big to ever be part of the answer. Drop it: move r left to 2.",
+          label: "Sum overshot, so the largest number (15) is too big to ever be part of the answer. Drop it: move `r` left to 2.",
           variables: { target: "9", l: "0", r: "2" },
           visuals: [arr({ l: 0, r: 2 })],
         },
@@ -73,7 +73,7 @@ export const twoIntegerSumII: Problem = {
         },
         {
           lines: [9],
-          label: "Too big again → move r left to 1.",
+          label: "Too big again → move `r` left to 1.",
           variables: { target: "9", l: "0", r: "1" },
           visuals: [arr({ l: 0, r: 1 })],
         },
@@ -85,7 +85,7 @@ export const twoIntegerSumII: Problem = {
         },
         {
           lines: [17],
-          label: "Return the 1-based indices [l + 1, r + 1] = [1, 2]. ✓",
+          label: "Return the 1-based indices [`l + 1`, `r + 1`] = [1, 2]. ✓",
           variables: { target: "9", result: "[1, 2]" },
           visuals: [arr({ l: 0, r: 1 }, [0, 1])],
         },

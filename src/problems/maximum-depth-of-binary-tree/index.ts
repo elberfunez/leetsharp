@@ -108,7 +108,7 @@ const dfsSteps: Step[] = [
   },
   {
     lines: [6],
-    label: "Back in MaxDepth(1): maxDepthLeftSide = 1.",
+    label: "Back in MaxDepth(1): `maxDepthLeftSide` = 1.",
     variables: { maxDepthLeftSide: "1" },
     visuals: [
       tree({ highlighted: ["n1"], visited: ["n2"], annotations: { n2: "1" } }),
@@ -150,7 +150,7 @@ const dfsSteps: Step[] = [
   },
   {
     lines: [7],
-    label: "Back in MaxDepth(3): left = 1. Its right child is null → MaxDepth(null) returns 0.",
+    label: "Back in MaxDepth(3): `maxDepthLeftSide` = 1. Its right child is `null` → MaxDepth(null) returns 0.",
     variables: { maxDepthLeftSide: "1", maxDepthRightSide: "0" },
     visuals: [
       tree({ highlighted: ["n3"], visited: ["n2", "n4"], annotations: { n2: "1", n4: "1" } }),
@@ -167,7 +167,7 @@ const dfsSteps: Step[] = [
   },
   {
     lines: [7],
-    label: "Back in MaxDepth(1): maxDepthRightSide = 2 (left was 1).",
+    label: "Back in MaxDepth(1): `maxDepthRightSide` = 2 (`maxDepthLeftSide` was 1).",
     variables: { maxDepthLeftSide: "1", maxDepthRightSide: "2" },
     visuals: [
       tree({ highlighted: ["n1"], visited: ["n2", "n3", "n4"], annotations: { n2: "1", n3: "2", n4: "1" } }),
@@ -224,7 +224,7 @@ export const maximumDepthOfBinaryTree: Problem = {
     },
     {
       lines: [8],
-      label: "depth starts at 0 — we haven't processed any levels yet.",
+      label: "`depth` starts at 0 — we haven't processed any levels yet.",
       variables: { depth: "0" },
       visuals: [tree(), queue([1])],
     },
@@ -236,7 +236,7 @@ export const maximumDepthOfBinaryTree: Problem = {
     },
     {
       lines: [12, 13],
-      label: "Level 1 begins: depth becomes 1. Snapshot the level size: qLength = 1 — that's how many nodes belong to THIS level.",
+      label: "Level 1 begins: `depth` becomes 1. Snapshot the level size: `qLength` = 1 — that's how many nodes belong to THIS level.",
       variables: { depth: "1", qLength: "1" },
       visuals: [tree({ annotations: { n1: "d1" } }), queue([1])],
     },
@@ -272,7 +272,7 @@ export const maximumDepthOfBinaryTree: Problem = {
     },
     {
       lines: [12, 13],
-      label: "Level 2: depth becomes 2, qLength = 2.",
+      label: "Level 2: `depth` becomes 2, `qLength` = 2.",
       variables: { depth: "2", qLength: "2" },
       visuals: [
         tree({ visited: ["n1"], annotations: { n1: "d1", n2: "d2", n3: "d2" } }),
@@ -312,7 +312,7 @@ export const maximumDepthOfBinaryTree: Problem = {
     },
     {
       lines: [12, 13],
-      label: "Level 3: depth becomes 3, qLength = 1.",
+      label: "Level 3: `depth` becomes 3, `qLength` = 1.",
       variables: { depth: "3", qLength: "1" },
       visuals: [
         tree({
@@ -349,7 +349,7 @@ export const maximumDepthOfBinaryTree: Problem = {
     },
     {
       lines: [22],
-      label: "We processed 3 levels → return depth = 3. ✓",
+      label: "We processed 3 levels → return `depth` = 3. ✓",
       variables: { result: "3" },
       visuals: [
         tree({

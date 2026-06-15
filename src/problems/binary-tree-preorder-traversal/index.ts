@@ -83,7 +83,7 @@ export const binaryTreePreorderTraversal: Problem = {
         },
         {
           lines: [4],
-          label: "Return [1, 2, 4, 5, 3, 6, 7]. ✓",
+          label: "Return `result` = [1, 2, 4, 5, 3, 6, 7]. ✓",
           variables: { result: "[1, 2, 4, 5, 3, 6, 7]" },
           visuals: [tree([], ["n1", "n2", "n4", "n5", "n3", "n6", "n7"]), result([1, 2, 4, 5, 3, 6, 7])],
         },

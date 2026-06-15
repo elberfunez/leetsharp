@@ -51,38 +51,38 @@ export const topKFrequentElements: Problem = {
       steps: [
         {
           lines: [3],
-          label: "First, count how many times each number appears.",
+          label: "First, count how many times each number appears in `freq`.",
           variables: { k: "2" },
           visuals: [arr(0), freq([])],
         },
         {
           lines: [4, 6, 12],
-          label: "num = 1, new → freq[1] = 1.",
+          label: "`num` = 1, new → `freq[1]` = 1.",
           visuals: [arr(0, [0]), freq([[1, 1]], 1)],
         },
         {
           lines: [6, 12],
-          label: "num = 2, new → freq[2] = 1.",
+          label: "`num` = 2, new → `freq[2]` = 1.",
           visuals: [arr(1, [1]), freq([[1, 1], [2, 1]], 2)],
         },
         {
           lines: [6, 8],
-          label: "num = 2 again → freq[2] = 2.",
+          label: "`num` = 2 again → `freq[2]` = 2.",
           visuals: [arr(2, [2]), freq([[1, 1], [2, 2]], 2)],
         },
         {
           lines: [6, 12],
-          label: "num = 3, new → freq[3] = 1.",
+          label: "`num` = 3, new → `freq[3]` = 1.",
           visuals: [arr(3, [3]), freq([[1, 1], [2, 2], [3, 1]], 3)],
         },
         {
           lines: [6, 8],
-          label: "num = 3 → freq[3] = 2.",
+          label: "`num` = 3 → `freq[3]` = 2.",
           visuals: [arr(4, [4]), freq([[1, 1], [2, 2], [3, 2]], 3)],
         },
         {
           lines: [6, 8],
-          label: "num = 3 → freq[3] = 3. Final counts: 1 appears 1×, 2 appears 2×, 3 appears 3×.",
+          label: "`num` = 3 → `freq[3]` = 3. Final counts: 1 appears 1×, 2 appears 2×, 3 appears 3×.",
           visuals: [arr(5, [5]), freq([[1, 1], [2, 2], [3, 3]], 3)],
         },
         {
@@ -92,7 +92,7 @@ export const topKFrequentElements: Problem = {
         },
         {
           lines: [16, 17, 18],
-          label: "Take the top k = 2 and keep just their keys → [3, 2]. ✓",
+          label: "Take the top `k` = 2 and keep just their keys → [3, 2]. ✓",
           variables: { result: "[3, 2]" },
           visuals: [
             freq([[3, 3], [2, 2], [1, 1]]),

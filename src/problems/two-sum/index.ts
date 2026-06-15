@@ -61,13 +61,13 @@ export const twoSum: Problem = {
     },
     {
       lines: [6],
-      label: "Compute rem (remaining) — the number still needed to reach the target. If we've seen it before, we're done.",
+      label: "Compute `rem` (remaining) — the number still needed to reach the target. If we've seen it before, we're done.",
       variables: { target: "7", i: "0", rem: "4" },
       visuals: [numsVisual({ pointers: { i: 0 }, highlighted: [0] }), dictVisual([])],
     },
     {
       lines: [7],
-      label: "Look up rem in the dictionary. The dictionary is empty — rem hasn't been seen yet.",
+      label: "Look up `rem` in the dictionary. The dictionary is empty — `rem` hasn't been seen yet.",
       variables: { target: "7", i: "0", rem: "4" },
       visuals: [numsVisual({ pointers: { i: 0 } }), dictVisual([])],
     },
@@ -85,7 +85,7 @@ export const twoSum: Problem = {
     },
     {
       lines: [6],
-      label: "rem is 3 — that's the remaining value needed to reach the target. Have we seen a 3 anywhere earlier?",
+      label: "`rem` is 3 — that's the remaining value needed to reach the target. Have we seen a 3 anywhere earlier?",
       variables: { target: "7", i: "1", rem: "3" },
       visuals: [numsVisual({ pointers: { i: 1 }, highlighted: [1] }), dictVisual([[3, 0]])],
     },
@@ -97,7 +97,7 @@ export const twoSum: Problem = {
     },
     {
       lines: [9],
-      label: "Return both indices. nums[j] + nums[i] = target — found in a single pass.",
+      label: "Return both indices. `nums[j]` + `nums[i]` = target — found in a single pass.",
       variables: { target: "7", i: "1", rem: "3", j: "0", result: "[0, 1]" },
       visuals: [numsVisual({ pointers: { i: 1 }, highlighted: [0, 1] }), dictVisual([[3, 0]], 3)],
     },

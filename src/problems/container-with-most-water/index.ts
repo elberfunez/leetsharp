@@ -47,19 +47,19 @@ export const containerWithMostWater: Problem = {
       steps: [
         {
           lines: [3, 4, 5],
-          label: "Start with the widest possible container: l at the far left wall, r at the far right. maxArea = 0.",
+          label: "Start with the widest possible container: `l` at the far left wall, `r` at the far right. `maxArea` = 0.",
           variables: { l: "0", r: "7", maxArea: "0" },
           visuals: [arr(0, 7)],
         },
         {
           lines: [7, 8, 9, 10],
-          label: "The left wall (1) is the shorter one — it caps the water height no matter how tall the right wall is. This area is the new best.",
+          label: "The left wall (heights[`l`] = 1) is the shorter one — it caps the water height no matter how tall the right wall is. This area is the new best.",
           variables: { l: "0", r: "7", area: "7", maxArea: "7" },
           visuals: [arr(0, 7, [0, 7])],
         },
         {
           lines: [15],
-          label: "The left wall (1) is the shorter one and caps the area. Moving it is the only way to possibly improve, so l → 1.",
+          label: "The left wall (1) is the shorter one and caps the area. Moving it is the only way to possibly improve, so `l` → 1.",
           variables: { l: "1", r: "7", maxArea: "7" },
           visuals: [arr(1, 7)],
         },
@@ -71,7 +71,7 @@ export const containerWithMostWater: Problem = {
         },
         {
           lines: [16],
-          label: "Right wall (3) is shorter — move it inward. The new container is narrower and capped at height 3. Not a new best.",
+          label: "Right wall (`heights[r]` = 3) is shorter — move it inward. The new container is narrower and capped at height 3. Not a new best.",
           variables: { l: "1", r: "6", area: "15", maxArea: "36" },
           visuals: [arr(1, 6, [1, 6])],
         },
@@ -101,7 +101,7 @@ export const containerWithMostWater: Problem = {
         },
         {
           lines: [6, 19],
-          label: "r → 1. Now l == r, the loop ends. Return the best we ever saw: maxArea = 36. ✓",
+          label: "`r` → 1. Now `l` == `r`, the loop ends. Return the best we ever saw: `maxArea` = 36. ✓",
           variables: { result: "36" },
           visuals: [arr(1, 1, [1])],
         },

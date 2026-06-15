@@ -50,7 +50,7 @@ export const groupAnagrams: Problem = {
       steps: [
         {
           lines: [3],
-          label: "Anagrams share the same letters, so sorting a word's letters gives a signature that all its anagrams share. Use that signature as a bucket key.",
+          label: "Anagrams share the same letters, so sorting a word's letters gives a signature that all its anagrams share. Use that signature as a bucket `key`.",
           visuals: [{ type: "array", title: "strs", items: strs }, groups([])],
         },
         {
@@ -72,13 +72,13 @@ export const groupAnagrams: Problem = {
         },
         {
           lines: [6, 7, 8, 9, 14],
-          label: "'tops' → sorted \"opst\" — that bucket already exists! Add 'tops' to it.",
+          label: "'tops' → sorted \"opst\" — that bucket already exists! Add 'tops' to `groups[\"opst\"]`.",
           variables: { key: '"opst"' },
           visuals: [arr(2), groups([["act", "act"], ["opst", "pots, tops"]], "opst")],
         },
         {
           lines: [6, 7, 8, 9, 14],
-          label: "'cat' → sorted \"act\" — existing bucket. Add 'cat' alongside 'act'.",
+          label: "'cat' → sorted \"act\" — existing bucket. Add 'cat' alongside 'act' in `groups[\"act\"]`.",
           variables: { key: '"act"' },
           visuals: [arr(3), groups([["act", "act, cat"], ["opst", "pots, tops"]], "act")],
         },
@@ -96,7 +96,7 @@ export const groupAnagrams: Problem = {
         },
         {
           lines: [16],
-          label: "Return the buckets' values: [[act, cat], [pots, tops, stop], [hat]]. ✓",
+          label: "Return `groups.Values`: [[act, cat], [pots, tops, stop], [hat]]. ✓",
           variables: { result: "[[act, cat], [pots, tops, stop], [hat]]" },
           visuals: [groups([["act", "act, cat"], ["opst", "pots, tops, stop"], ["aht", "hat"]])],
         },

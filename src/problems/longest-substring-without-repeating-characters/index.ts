@@ -54,7 +54,7 @@ export const longestSubstringWithoutRepeatingCharacters: Problem = {
       steps: [
     {
       lines: [3, 4, 5],
-      label: "Setup: an empty HashSet holding the characters inside the window, l = 0 (window's left edge), maxLen = 0 (best seen so far).",
+      label: "Setup: an empty HashSet `charSet` holding the characters inside the window, `l` = 0 (window's left edge), `maxLen` = 0 (best seen so far).",
       variables: { l: "0", maxLen: "0" },
       visuals: [
         { type: "array", title: "s (window highlighted)", items: chars, pointers: { l: 0 } },
@@ -123,19 +123,19 @@ export const longestSubstringWithoutRepeatingCharacters: Problem = {
     },
     {
       lines: [8],
-      label: "charSet already contains 'z' → the window has a duplicate. Shrink it from the left until the old 'z' is gone.",
+      label: "`charSet` already contains 'z' → the window has a duplicate. Shrink it from the left until the old 'z' is gone.",
       variables: { l: "0", r: "3", maxLen: "3" },
       visuals: [sVisual(0, 3), setVisual(["z", "x", "y"], "z")],
     },
     {
       lines: [10, 11],
-      label: "Evict s[0] ('z') from the set and slide l to 1. The duplicate is gone — the while check fails now.",
+      label: "Evict `s[0]` ('z') from `charSet` and slide `l` to 1. The duplicate is gone — the while check fails now.",
       variables: { l: "1", r: "3", maxLen: "3" },
       visuals: [sVisual(1, 3), setVisual(["x", "y"], "z")],
     },
     {
       lines: [13, 15],
-      label: "Add the NEW 'z'. Window \"xyz\", size 3 — maxLen stays 3.",
+      label: "Add the NEW 'z'. Window \"xyz\", size 3 — `maxLen` stays 3.",
       variables: { l: "1", r: "3", maxLen: "3" },
       visuals: [sVisual(1, 3), setVisual(["x", "y", "z"], "z")],
     },
@@ -147,13 +147,13 @@ export const longestSubstringWithoutRepeatingCharacters: Problem = {
     },
     {
       lines: [10, 11],
-      label: "Evict s[1] ('x'), l = 2. Duplicate cleared in one shrink.",
+      label: "Evict `s[1]` ('x'), `l` = 2. Duplicate cleared in one shrink.",
       variables: { l: "2", r: "4", maxLen: "3" },
       visuals: [sVisual(2, 4), setVisual(["y", "z"], "x")],
     },
     {
       lines: [13, 15],
-      label: "Add the new 'x'. Window \"yzx\", size 3 — maxLen stays 3.",
+      label: "Add the new 'x'. Window \"yzx\", size 3 — `maxLen` stays 3.",
       variables: { l: "2", r: "4", maxLen: "3" },
       visuals: [sVisual(2, 4), setVisual(["y", "z", "x"], "x")],
     },
@@ -165,7 +165,7 @@ export const longestSubstringWithoutRepeatingCharacters: Problem = {
     },
     {
       lines: [10, 11],
-      label: "Evict s[2] ('y'), l = 3.",
+      label: "Evict `s[2]` ('y'), `l` = 3.",
       variables: { l: "3", r: "5", maxLen: "3" },
       visuals: [sVisual(3, 5), setVisual(["z", "x"], "y")],
     },
@@ -183,19 +183,19 @@ export const longestSubstringWithoutRepeatingCharacters: Problem = {
     },
     {
       lines: [10, 11],
-      label: "Evict s[3] ('z'), l = 4.",
+      label: "Evict `s[3]` ('z'), `l` = 4.",
       variables: { l: "4", r: "6", maxLen: "3" },
       visuals: [sVisual(4, 6), setVisual(["x", "y"], "z")],
     },
     {
       lines: [13, 15],
-      label: "Add the new 'z'. Window \"xyz\", size 3 — maxLen never beats 3.",
+      label: "Add the new 'z'. Window \"xyz\", size 3 — `maxLen` never beats 3.",
       variables: { l: "4", r: "6", maxLen: "3" },
       visuals: [sVisual(4, 6), setVisual(["x", "y", "z"], "z")],
     },
     {
       lines: [17],
-      label: "Loop done — the longest run without a repeat was 3 (\"zxy\" / \"xyz\"). Return 3. ✓",
+      label: "Loop done — the longest run without a repeat was 3 (\"zxy\" / \"xyz\"). Return `maxLen` = 3. ✓",
       variables: { result: "3" },
       visuals: [sVisual(4, 6), setVisual(["x", "y", "z"])],
     },

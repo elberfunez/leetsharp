@@ -51,23 +51,23 @@ export const lowestCommonAncestorOfABST: Problem = {
       steps: [
         {
           lines: [3, 6, 10],
-          label: "Find the lowest common ancestor of 1 and 2. At root 5: both are less than 5, so both live in the left subtree → go left.",
+          label: "Find the lowest common ancestor of 1 and 2. At `cur` = root 5: both `p.val` and `q.val` are less than 5, so both live in the left subtree → go left.",
           variables: { "p.val": "1", "q.val": "2" },
           visuals: [tree(["n5"])],
         },
         {
           lines: [10, 12],
-          label: "At node 3: both 1 and 2 are still less than 3 → go left again.",
+          label: "At `cur` = node 3: both 1 and 2 are still less than 3 → go left again.",
           visuals: [tree(["n3"], ["n5"])],
         },
         {
           lines: [6, 10, 14, 16],
-          label: "At node 1: neither branch fires (1 isn't > 1, and not both values are < 1). The paths split here — and 1 is itself a target. Return 1.",
+          label: "At `cur` = node 1: neither branch fires (1 isn't > 1, and not both values are < 1). The paths split here — and 1 is itself a target. Return `cur`.",
           visuals: [tree(["n1"], ["n5", "n3"])],
         },
         {
           lines: [16],
-          label: "1 is the lowest node that is an ancestor of both 1 and 2 — and a node counts as its own ancestor. ✓",
+          label: "Node 1 is the lowest node that is an ancestor of both `p` = 1 and `q` = 2 — and a node counts as its own ancestor. ✓",
           variables: { result: "1" },
           visuals: [tree(["n1"], ["n5", "n3"])],
         },

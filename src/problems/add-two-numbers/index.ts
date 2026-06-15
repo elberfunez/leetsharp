@@ -50,19 +50,19 @@ export const addTwoNumbers: Problem = {
       steps: [
         {
           lines: [3, 4, 5],
-          label: "Digits are stored least-significant first, so we add left-to-right like grade-school addition, tracking a carry.",
+          label: "Digits are stored least-significant first, so we add left-to-right like grade-school addition, tracking a `carry`.",
           variables: { carry: "0" },
           visuals: [l1(0, []), l2(0, []), result([])],
         },
         {
           lines: [8, 9, 10, 11, 12],
-          label: "First column: 5 + 5 = 10. Write the ones digit (0), carry the tens digit (1) to the next column.",
+          label: "First column: 5 + 5 = 10. Write the ones `digit` (0), carry the tens digit (1) to the next column.",
           variables: { sum: "10", digit: "0", carry: "1" },
           visuals: [l1(0, [0]), l2(0, [0]), result([0])],
         },
         {
           lines: [13, 14, 15, 16],
-          label: "Append 0 to the result, advance both lists.",
+          label: "Append 0 to the result, advance both `l1` and `l2`.",
           variables: { carry: "1" },
           visuals: [l1(1, [0]), l2(1, [0]), result([0])],
         },
@@ -80,7 +80,7 @@ export const addTwoNumbers: Problem = {
         },
         {
           lines: [6, 8, 9],
-          label: "Both lists are empty now — BUT carry = 1 > 0, so the loop runs once more. Missing digits count as 0.",
+          label: "Both lists are empty now — BUT `carry` = 1 > 0, so the loop runs once more. Missing digits count as 0.",
           variables: { val1: "0", val2: "0", carry: "1" },
           visuals: [l1(null, [0, 1, 2]), l2(null, [0, 1, 2]), result([0, 1, 1])],
         },
@@ -92,7 +92,7 @@ export const addTwoNumbers: Problem = {
         },
         {
           lines: [6, 18],
-          label: "Everything is null and carry is 0 → stop. Return [0, 1, 1, 1] = 555 + 555 = 1110, stored least-significant first. ✓",
+          label: "Everything is `null` and `carry` is 0 → stop. Return [0, 1, 1, 1] = 555 + 555 = 1110, stored least-significant first. ✓",
           variables: { result: "[0, 1, 1, 1]" },
           visuals: [result([0, 1, 1, 1])],
         },

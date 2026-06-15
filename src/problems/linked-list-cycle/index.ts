@@ -37,27 +37,27 @@ export const linkedListCycle: Problem = {
       steps: [
         {
           lines: [3, 4],
-          label: "Two pointers start at the head. slow will step once per turn, fast twice. If a cycle exists, fast laps slow and they collide; if fast reaches the end, there's no cycle. (Here the tail loops back to node 2.)",
+          label: "Two pointers start at the head. `slow` will step once per turn, `fast` twice. If a cycle exists, `fast` laps `slow` and they collide; if `fast` reaches the end, there's no cycle. (Here the tail loops back to node 2.)",
           visuals: [arr(0, 0)],
         },
         {
           lines: [7, 8, 9],
-          label: "slow → node 2 (1 step). fast → node 3 (2 steps). Not equal yet.",
+          label: "`slow` → node 2 (1 step). `fast` → node 3 (2 steps). Not equal yet.",
           visuals: [arr(1, 2)],
         },
         {
           lines: [7, 8, 9],
-          label: "slow → node 3. fast moves 2: node 4, then the tail wraps back to node 2. They're not equal.",
+          label: "`slow` → node 3. `fast` moves 2: node 4, then the tail wraps back to node 2. They're not equal.",
           visuals: [arr(2, 1)],
         },
         {
           lines: [7, 8, 9],
-          label: "slow → node 4. fast moves 2: node 3 → node 4. Both land on node 4 — collision!",
+          label: "`slow` → node 4. `fast` moves 2: node 3 → node 4. Both land on node 4 — collision!",
           visuals: [arr(3, 3, [3])],
         },
         {
           lines: [9],
-          label: "slow == fast → a cycle exists. Return true. ✓",
+          label: "`slow` == `fast` → a cycle exists. Return `true`. ✓",
           variables: { result: "true" },
           visuals: [arr(3, 3, [3])],
         },

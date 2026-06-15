@@ -56,7 +56,7 @@ export const insertIntoABinarySearchTree: Problem = {
       steps: [
         {
           lines: [2, 7, 8],
-          label: "Insert 6. At root 5: 6 > 5, so it belongs somewhere in the RIGHT subtree. Recurse right.",
+          label: "Insert `val` = 6. At root 5: 6 > 5, so it belongs somewhere in the RIGHT subtree. Recurse right.",
           variables: { val: "6" },
           visuals: [treeBefore(["n5"])],
         },
@@ -67,17 +67,17 @@ export const insertIntoABinarySearchTree: Problem = {
         },
         {
           lines: [2, 3, 5],
-          label: "9's left child is null — the empty spot. Create a new node 6 and return it.",
+          label: "9's left child is `null` — the empty spot. Create a new node 6 and return it.",
           visuals: [treeAfter(["n6"], ["n5", "n9"])],
         },
         {
           lines: [14, 17],
-          label: "Unwinding: 9.left becomes the new node 6, and each parent returns itself unchanged.",
+          label: "Unwinding: `cur.right` (for node 9) becomes the new node 6, and each parent returns `cur` unchanged.",
           visuals: [treeAfter(["n6"], ["n5", "n9"])],
         },
         {
           lines: [17],
-          label: "Return the (same) root. The BST now holds 6 in its correct sorted position. ✓",
+          label: "Return the (same) `root`. The BST now holds 6 in its correct sorted position. ✓",
           variables: { result: "[5, 3, 9, 1, 4, 6]" },
           visuals: [treeAfter([], ["n5", "n3", "n9", "n1", "n4", "n6"])],
         },

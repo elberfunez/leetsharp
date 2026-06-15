@@ -45,27 +45,27 @@ export const containsDuplicate: Problem = {
       steps: [
         {
           lines: [3, 4],
-          label: "There are 4 numbers (≥ 2), so duplicates are possible. Set up an empty HashSet to remember what we've seen.",
+          label: "There are 4 numbers (≥ 2), so duplicates are possible. Set up an empty HashSet `seen` to remember what we've seen.",
           visuals: [arr(0), set([])],
         },
         {
           lines: [5, 7],
-          label: "num = 1 hasn't been seen before — Add succeeds. Not a duplicate, keep going.",
+          label: "`num` = 1 hasn't been seen before — `seen.Add()` succeeds. Not a duplicate, keep going.",
           visuals: [arr(0, [0]), set([1], 1)],
         },
         {
           lines: [7],
-          label: "num = 2. Add(2) succeeds → new. seen = {1, 2}.",
+          label: "`num` = 2. `seen.Add(2)` succeeds → new. `seen` = {1, 2}.",
           visuals: [arr(1, [1]), set([1, 2], 2)],
         },
         {
           lines: [7],
-          label: "num = 3. Add(3) succeeds → new. seen = {1, 2, 3}.",
+          label: "`num` = 3. `seen.Add(3)` succeeds → new. `seen` = {1, 2, 3}.",
           visuals: [arr(2, [2]), set([1, 2, 3], 3)],
         },
         {
           lines: [7, 9],
-          label: "num = 3 is already in the set — Add returns false, meaning it's a duplicate. Return true. ✓",
+          label: "`num` = 3 is already in `seen` — `seen.Add()` returns `false`, meaning it's a duplicate. Return `true`. ✓",
           variables: { result: "true" },
           visuals: [arr(3, [3]), set([1, 2, 3], 3)],
         },

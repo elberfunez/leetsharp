@@ -54,17 +54,17 @@ export const subtreeOfAnotherTree: Problem = {
       steps: [
         {
           lines: [2, 5],
-          label: "Is the small tree an exact subtree of the big one? Try each node of the big tree as a candidate match point. Start at root 1: SameTree(1, 2)?",
+          label: "Is the small tree an exact subtree of the big one? Try each node of the big tree as a candidate match point. Start at root 1: `SameTree(1, 2)`?",
           visuals: trees(["r1"], ["s2"]),
         },
         {
           lines: [5, 14, 8],
-          label: "SameTree(1, 2): values 1 ≠ 2 → not a match here. Recurse: try the left subtree, then (if needed) the right.",
+          label: "`SameTree(1, 2)`: values 1 ≠ 2 → not a match here. Recurse: try the left subtree, then (if needed) the right.",
           visuals: trees(["r1"], ["s2"], []),
         },
         {
           lines: [8, 5],
-          label: "Candidate node 2 (root's left child). SameTree(2, 2): root values match — now compare children.",
+          label: "Candidate node 2 (root's left child). `SameTree(2, 2)`: root values match — now compare children.",
           visuals: trees(["r2"], ["s2"], ["r1"]),
         },
         {
@@ -74,7 +74,7 @@ export const subtreeOfAnotherTree: Problem = {
         },
         {
           lines: [5],
-          label: "SameTree returned true → the subtree hanging off node 2 is exactly [2, 4, 5]. Return true. ✓",
+          label: "`SameTree` returned `true` → the subtree hanging off node 2 is exactly [2, 4, 5]. Return `true`. ✓",
           variables: { result: "true" },
           visuals: trees(["r2", "r4", "r5"], ["s2", "s4", "s5"], ["r1"]),
         },

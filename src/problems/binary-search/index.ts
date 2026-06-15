@@ -47,25 +47,25 @@ export const binarySearch: Problem = {
       steps: [
     {
       lines: [3, 4],
-      label: "Start with the whole array in play: l at the first index, r at the last.",
+      label: "Start with the whole array in play: `l` at the first index, `r` at the last.",
       variables: { target: "4", l: "0", r: "5" },
       visuals: [numsVisual({ pointers: { l: 0, r: 5 } })],
     },
     {
       lines: [6, 7],
-      label: "Search space is still open. Compute the midpoint to decide which half to keep.",
+      label: "Search space is still open. Compute the midpoint `m` to decide which half to keep.",
       variables: { target: "4", l: "0", r: "5", m: "2" },
       visuals: [numsVisual({ pointers: { l: 0, r: 5, m: 2 }, highlighted: [2] })],
     },
     {
       lines: [9],
-      label: "Is nums[2] the target? 2 ≠ 4 — no.",
+      label: "Is `nums[2]` the target? 2 ≠ 4 — no.",
       variables: { target: "4", l: "0", r: "5", m: "2" },
       visuals: [numsVisual({ pointers: { l: 0, r: 5, m: 2 }, highlighted: [2] })],
     },
     {
       lines: [11, 12],
-      label: "nums[m] is smaller than the target — answer must be to the right. Discard the left half.",
+      label: "`nums[m]` is smaller than the target — answer must be to the right. Discard the left half.",
       variables: { target: "4", l: "3", r: "5" },
       visuals: [numsVisual({ pointers: { l: 3, r: 5 }, dimmed: [0, 1, 2] })],
     },
@@ -77,13 +77,13 @@ export const binarySearch: Problem = {
     },
     {
       lines: [9],
-      label: "Is nums[4] the target? 6 ≠ 4 — no.",
+      label: "Is `nums[4]` the target? 6 ≠ 4 — no.",
       variables: { target: "4", l: "3", r: "5", m: "4" },
       visuals: [numsVisual({ pointers: { l: 3, r: 5, m: 4 }, highlighted: [4], dimmed: [0, 1, 2] })],
     },
     {
       lines: [13, 14],
-      label: "nums[m] is bigger than the target — answer must be to the left. Discard the right half.",
+      label: "`nums[m]` is bigger than the target — answer must be to the left. Discard the right half.",
       variables: { target: "4", l: "3", r: "3" },
       visuals: [numsVisual({ pointers: { l: 3, r: 3 }, dimmed: [0, 1, 2, 4, 5] })],
     },
@@ -97,7 +97,7 @@ export const binarySearch: Problem = {
     },
     {
       lines: [9, 10],
-      label: "nums[m] matches the target. Return m.",
+      label: "`nums[m]` matches the target. Return `m`.",
       variables: { target: "4", l: "3", r: "3", m: "3", result: "3" },
       visuals: [
         numsVisual({ pointers: { m: 3 }, highlighted: [3], dimmed: [0, 1, 2, 4, 5] }),

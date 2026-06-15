@@ -53,12 +53,12 @@ export const mergeTwoSortedLists: Problem = {
       steps: [
         {
           lines: [3, 4],
-          label: "A dummy node makes this clean: tail always points at the last node of the result, starting at dummy so we never special-case the head.",
+          label: "A `dummy` node makes this clean: `tail` always points at the last node of the result, starting at `dummy` so we never special-case the head.",
           visuals: [l1(0, []), l2(0, []), merged([])],
         },
         {
           lines: [5, 7, 14, 15, 17],
-          label: "Compare heads: 1 < 1 is false, so take list2's 1. Splice it on, advance list2.",
+          label: "Compare heads: 1 < 1 is false, so take `list2`'s 1. Splice it on, advance `list2`.",
           visuals: [l1(0, []), l2(1, [0]), merged([1])],
         },
         {
@@ -83,12 +83,12 @@ export const mergeTwoSortedLists: Problem = {
         },
         {
           lines: [5, 19, 20],
-          label: "list1 is empty, so the loop exits. list2 still has 5 — and it's already sorted, so attach the whole remainder at once.",
+          label: "`list1` is empty, so the loop exits. `list2` still has 5 — and it's already sorted, so attach the whole remainder at once.",
           visuals: [l1(null, [0, 1, 2]), l2(null, [0, 1, 2]), merged([1, 1, 2, 3, 4, 5])],
         },
         {
           lines: [21],
-          label: "Return dummy.next — the merged sorted list [1, 1, 2, 3, 4, 5]. ✓",
+          label: "Return `dummy.next` — the merged sorted list [1, 1, 2, 3, 4, 5]. ✓",
           variables: { result: "[1, 1, 2, 3, 4, 5]" },
           visuals: [merged([1, 1, 2, 3, 4, 5])],
         },

@@ -49,7 +49,7 @@ export const validAnagram: Problem = {
       steps: [
         {
           lines: [3, 4],
-          label: "Same length, so an anagram is still possible. Build a frequency map by counting every character in s.",
+          label: "Same length, so an anagram is still possible. Build a frequency map by counting every character in `s`.",
           visuals: [freq([])],
         },
         {
@@ -69,7 +69,7 @@ export const validAnagram: Problem = {
         },
         {
           lines: [16, 18, 19],
-          label: "Now walk through t and subtract. Each character in t must exist in s. 'j' is there — decrement its count.",
+          label: "Now walk through `t` and subtract. Each character in `t` must exist in `s`. 'j' is there — decrement its count.",
           visuals: [freq([["j", 0], ["a", 1], ["r", 1]], "j")],
         },
         {
@@ -79,7 +79,7 @@ export const validAnagram: Problem = {
         },
         {
           lines: [18],
-          label: "'m' doesn't exist in the map at all — s never contained 'm'. Same letters required for an anagram, so return false.",
+          label: "'m' doesn't exist in the map at all — `s` never contained 'm'. Same letters required for an anagram, so return `false`.",
           variables: { result: "false" },
           visuals: [freq([["j", 0], ["a", 0], ["r", 1]])],
         },
