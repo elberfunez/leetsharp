@@ -7,6 +7,14 @@ import { VisualPanel } from "../components/VisualPanel";
 import { VariablesPanel } from "../components/VariablesPanel";
 import { StepControls } from "../components/StepControls";
 
+function renderLabel(label: string) {
+  return label.split(/(`[^`]+`)/).map((part, i) =>
+    part.startsWith("`") && part.endsWith("`")
+      ? <code key={i} className="label-var">{part.slice(1, -1)}</code>
+      : part
+  );
+}
+
 /** Renders a single solution: code + visualization + approach write-up. */
 function SolutionView({ solution }: { solution: Solution }) {
   const runner = useStepRunner(solution.steps);
@@ -40,7 +48,7 @@ function SolutionView({ solution }: { solution: Solution }) {
               transition={{ duration: 0.15 }}
             >
               <span className="step-op-header">Current Operation</span>
-              <span className="step-label-text">{runner.step.label}</span>
+              <span className="step-label-text">{renderLabel(runner.step.label)}</span>
               <motion.span
                 key={runner.index}
                 className="step-badge"

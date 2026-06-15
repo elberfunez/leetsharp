@@ -338,6 +338,17 @@ body {
   display: block;
 }
 
+.label-var {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  font-weight: 700;
+  color: var(--accent);
+  background: rgba(174, 113, 255, 0.15);
+  border: 1px solid rgba(174, 113, 255, 0.35);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
 .step-badge {
   position: absolute;
   bottom: 8px;
@@ -402,6 +413,12 @@ body {
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 16px;
+  overflow: hidden;
+}
+
+.visual-block .array-row {
+  overflow-x: auto;
+  padding-bottom: 6px;
 }
 
 .visual-title {

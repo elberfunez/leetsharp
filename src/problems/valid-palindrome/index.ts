@@ -45,31 +45,31 @@ export const validPalindrome: Problem = {
       steps: [
         {
           lines: [3, 4],
-          label: "l at the first character, r at the last. We compare inward, ignoring anything that isn't a letter or digit.",
+          label: "`l` at the first character, `r` at the last. We compare inward, ignoring anything that isn't a letter or digit.",
           variables: { l: "0", r: "17" },
           visuals: [arr(0, 17)],
         },
         {
           lines: [7, 8, 9],
-          label: "s[0]='N', s[17]='n'. Both are letters, and char.ToLower makes them equal → match.",
+          label: "`s[0]`='N', `s[17]`='n'. Both are letters, and `char.ToLower` makes them equal — match.",
           variables: { l: "0", r: "17" },
           visuals: [arr(0, 17, [0, 17])],
         },
         {
           lines: [13, 14],
-          label: "Step both pointers inward: l = 1, r = 16.",
+          label: "Match confirmed — step both pointers inward: `l` = 1, `r` = 16.",
           variables: { l: "1", r: "16" },
           visuals: [arr(1, 16)],
         },
         {
           lines: [9, 13, 14],
-          label: "s[l] and s[r] are both 'o' — match. Step both pointers inward.",
+          label: "`s[l]` and `s[r]` are both 'o' — match. Step both pointers inward.",
           variables: { l: "2", r: "15" },
           visuals: [arr(1, 16, [1, 16])],
         },
         {
           lines: [7],
-          label: "s[2] is a space — the inner while skips it, advancing l to 3 ('l'). r stays at 15.",
+          label: "`s[2]` is a space — the inner while skips it, advancing `l` to 3. `r` stays at 15.",
           variables: { l: "3", r: "15" },
           visuals: [arr(3, 15)],
         },
@@ -93,7 +93,7 @@ export const validPalindrome: Problem = {
         },
         {
           lines: [8],
-          label: "s[12] is a space — the second inner while skips it, dropping r to 11 ('o'). l stays at 6.",
+          label: "`s[12]` is a space — the inner while skips it, dropping `r` to 11. `l` stays at 6.",
           variables: { l: "6", r: "11" },
           visuals: [arr(6, 11)],
         },
@@ -111,13 +111,13 @@ export const validPalindrome: Problem = {
         },
         {
           lines: [7],
-          label: "s[8]=',' is skipped, advancing l to 9 — the same spot as r. The pointers have met at the middle.",
+          label: "`s[8]`=',' is skipped, advancing `l` to 9 — the same spot as `r`. The pointers have met in the middle.",
           variables: { l: "9", r: "9" },
           visuals: [arr(9, 9)],
         },
         {
           lines: [5, 16],
-          label: "l is no longer less than r — every mirrored pair matched. Return true. ✓",
+          label: "`l` is no longer less than `r` — every mirrored pair matched. Return true. ✓",
           variables: { result: "true" },
           visuals: [arr(9, 9, [9])],
         },
