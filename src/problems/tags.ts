@@ -1,0 +1,42 @@
+/** Short technique tags per problem, shown on the grid cards. Keyed by slug. */
+export const PROBLEM_TAGS: Record<string, string[]> = {
+  "contains-duplicate": ["Array", "HashSet"],
+  "valid-anagram": ["String", "HashMap"],
+  "two-sum": ["Array", "HashMap"],
+  "group-anagrams": ["Array", "HashMap"],
+  "top-k-frequent-elements": ["Array", "Heap"],
+  "product-of-array-except-self": ["Array", "Prefix"],
+  "encode-and-decode-strings": ["String", "Design"],
+  "longest-consecutive-sequence": ["Array", "HashSet"],
+  "valid-palindrome": ["String", "Two Pointers"],
+  "two-integer-sum-ii": ["Array", "Two Pointers"],
+  "3sum": ["Array", "Two Pointers"],
+  "container-with-most-water": ["Array", "Two Pointers"],
+  "best-time-to-buy-and-sell-stock": ["Array", "Sliding Window"],
+  "longest-substring-without-repeating-characters": ["String", "Sliding Window"],
+  "longest-repeating-character-replacement": ["String", "Sliding Window"],
+  "valid-parentheses": ["Stack", "String"],
+  "binary-search": ["Array", "Binary Search"],
+  "reverse-linked-list": ["Linked List", "Pointers"],
+  "merge-two-sorted-lists": ["Linked List", "Recursion"],
+  "linked-list-cycle": ["Linked List", "Two Pointers"],
+  "remove-nth-node-from-end-of-list": ["Linked List", "Two Pointers"],
+  "add-two-numbers": ["Linked List", "Math"],
+  "reorder-list": ["Linked List", "Two Pointers"],
+  "palindrome-linked-list": ["Linked List", "Two Pointers"],
+  "remove-linked-list-elements": ["Linked List", "Pointers"],
+  "maximum-depth-of-binary-tree": ["Tree", "DFS / BFS"],
+  "same-tree": ["Tree", "DFS"],
+  "subtree-of-another-tree": ["Tree", "DFS"],
+  "binary-tree-level-order-traversal": ["Tree", "BFS"],
+  "binary-tree-inorder-traversal": ["Tree", "DFS"],
+  "binary-tree-preorder-traversal": ["Tree", "DFS"],
+  "validate-binary-search-tree": ["Tree", "BST"],
+  "insert-into-a-binary-search-tree": ["Tree", "BST"],
+  "lowest-common-ancestor-of-a-bst": ["Tree", "BST"],
+  "implement-trie": ["Trie", "Design"],
+};
+
+export function tagsFor(slug: string): string[] {
+  return PROBLEM_TAGS[slug] ?? [];
+}

@@ -1,5 +1,5 @@
-import { BrowserRouter, Link, Navigate, Route, Routes, useParams } from "react-router-dom";
-import { Sun, Moon, ArrowLeft } from "lucide-react";
+import { BrowserRouter, Link, Navigate, NavLink, Route, Routes, useParams, useSearchParams } from "react-router-dom";
+import { Sun, Moon, ArrowLeft, Code2 } from "lucide-react";
 import { getProblem } from "./problems";
 import { HomePage } from "./pages/HomePage";
 import { ProblemPage } from "./pages/ProblemPage";
@@ -24,13 +24,35 @@ function ThemeToggle() {
   const [theme, setTheme] = useTheme();
   return (
     <button
-      className="theme-toggle"
+      className="icon-btn"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       aria-label="Toggle theme"
       title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
     >
-      {theme === "dark" ? <Sun size={16} strokeWidth={2} /> : <Moon size={16} strokeWidth={2} />}
+      {theme === "dark" ? <Sun size={18} strokeWidth={2} /> : <Moon size={18} strokeWidth={2} />}
     </button>
+  );
+}
+
+function TopNav() {
+  const [searchParams] = useSearchParams();
+  const isMap = searchParams.get("view") === "map";
+  return (
+    <div className="topnav">
+      <NavLink
+        to="/"
+        end
+        className={`topnav-link${!isMap ? " topnav-active" : ""}`}
+      >
+        Problems
+      </NavLink>
+      <Link
+        to="/?view=map"
+        className={`topnav-link${isMap ? " topnav-active" : ""}`}
+      >
+        Roadmap
+      </Link>
+    </div>
   );
 }
 
@@ -40,11 +62,25 @@ export default function App() {
     <BrowserRouter>
       <div className="app">
         <nav className="topbar">
-          <Link to="/" className="topbar-link">
-            <img className="logo" src="/logo.png" alt="LeetSharp" />
-          </Link>
-          <span className="tagline">LeetCode, visualized for C# developers</span>
-          <ThemeToggle />
+          <div className="topbar-left">
+            <Link to="/" className="topbar-link">
+              <img className="logo" src="/logo.png" alt="LeetSharp" />
+            </Link>
+            <TopNav />
+          </div>
+          <div className="topbar-right">
+            <ThemeToggle />
+            <a
+              className="icon-btn"
+              href="https://github.com/elberfunez/leetsharp"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub"
+              title="GitHub"
+            >
+              <Code2 size={18} strokeWidth={2} />
+            </a>
+          </div>
         </nav>
         <Routes>
           <Route path="/" element={<HomePage />} />
