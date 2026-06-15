@@ -16,7 +16,7 @@ function SolutionView({ solution }: { solution: Solution }) {
       <div className="problem-input">Tracing: {solution.input}</div>
 
       <div className="workspace">
-        <CodePanel code={solution.code} activeLines={runner.step.lines} />
+        <CodePanel code={solution.code} activeLines={runner.step.lines} stepIndex={runner.index} />
         <div className="right-pane">
           <AnimatePresence mode="wait">
             <motion.div
@@ -27,7 +27,16 @@ function SolutionView({ solution }: { solution: Solution }) {
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.15 }}
             >
-              {runner.step.label}
+              <span className="step-label-text">{runner.step.label}</span>
+              <motion.span
+                key={runner.index}
+                className="step-badge"
+                initial={{ opacity: 0.3, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.18, type: "spring", stiffness: 400, damping: 25 }}
+              >
+                {runner.index + 1}<span className="step-badge-total">/{runner.total}</span>
+              </motion.span>
             </motion.div>
           </AnimatePresence>
           <VariablesPanel variables={runner.step.variables} />

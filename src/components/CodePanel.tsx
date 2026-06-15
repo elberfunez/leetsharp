@@ -4,10 +4,11 @@ import { highlightCSharp } from "../lib/highlighter";
 interface Props {
   code: string;
   activeLines: number[];
+  stepIndex: number;
 }
 
 /** Syntax-highlighted C# source with the current step's lines spotlighted. */
-export function CodePanel({ code, activeLines }: Props) {
+export function CodePanel({ code, activeLines, stepIndex }: Props) {
   const [html, setHtml] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -27,11 +28,21 @@ export function CodePanel({ code, activeLines }: Props) {
     const lines = container.querySelectorAll<HTMLElement>(".line");
     lines.forEach((el) => {
       const lineNumber = Number(el.dataset.line);
-      el.classList.toggle("line-active", activeLines.includes(lineNumber));
+      const isActive = activeLines.includes(lineNumber);
+      el.classList.toggle("line-active", isActive);
+      if (isActive) {
+        // Force the pulse animation to restart even if this line was already active.
+        el.classList.remove("line-pulse");
+        void el.offsetWidth; // reflow
+        el.classList.add("line-pulse");
+      } else {
+        el.classList.remove("line-pulse");
+      }
     });
     const first = container.querySelector(".line-active");
     first?.scrollIntoView({ block: "nearest", behavior: "smooth" });
-  }, [activeLines, html]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stepIndex, html]);
 
   return (
     <div className="code-panel" ref={containerRef}>

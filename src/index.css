@@ -191,6 +191,15 @@ body {
   box-shadow: inset 3px 0 0 var(--accent);
 }
 
+@keyframes line-step-pulse {
+  0%   { background-color: rgba(174, 113, 255, 0.42); }
+  100% { background-color: transparent; }
+}
+
+.code-panel .line-pulse {
+  animation: line-step-pulse 0.45s ease-out;
+}
+
 .code-loading {
   padding: 24px;
   color: var(--text-dim);
@@ -205,13 +214,39 @@ body {
 }
 
 .step-label {
+  position: relative;
   background: var(--bg-panel);
   border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 14px 16px;
+  padding: 14px 16px 28px;
   font-size: 15px;
   line-height: 1.5;
   min-height: 72px;
+}
+
+.step-label-text {
+  display: block;
+}
+
+.step-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid rgba(174, 113, 255, 0.25);
+  border-radius: 999px;
+  padding: 2px 7px;
+  letter-spacing: 0.04em;
+}
+
+.step-badge-total {
+  color: var(--text-dim);
+  font-weight: 400;
+  margin-left: 1px;
 }
 
 /* ---------- Variables ---------- */
