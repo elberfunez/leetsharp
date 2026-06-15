@@ -2095,3 +2095,48 @@ body {
   color: var(--text-dim);
   margin: 0;
 }
+
+/* ── Container With Most Water — cross-section water visual ─────────── */
+.cnt2-scene {
+  position: relative;
+  margin: 6px auto 0;
+}
+
+.cnt2-wall {
+  position: absolute;
+  background: var(--accent);
+  border-radius: 3px 3px 0 0;
+}
+
+.cnt2-water {
+  position: absolute;
+  background: rgba(56, 155, 255, 0.30);
+  border-top: 2px solid rgba(56, 195, 255, 0.75);
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.cnt2-wave {
+  position: absolute;
+  top: -5px;
+  left: -40%;
+  width: 180%;
+  height: 10px;
+  background: rgba(100, 210, 255, 0.45);
+  border-radius: 50%;
+  animation: cnt2-wave 2.4s ease-in-out infinite;
+}
+
+@keyframes cnt2-wave {
+  0%   { transform: translateX(0) scaleY(1); }
+  50%  { transform: translateX(8%) scaleY(1.5); }
+  100% { transform: translateX(0) scaleY(1); }
+}
+
+.cnt2-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(56, 195, 255, 0.9);
+  text-align: center;
+  margin-top: 6px;
+}

@@ -22,11 +22,13 @@ const code = `public class Solution {
     }
 }`;
 
-/** Traced input (Example 3 from the practice repo): "No lemon, no melon" → true. */
-const chars = ["N", "o", "·", "l", "e", "m", "o", "n", ",", "·", "n", "o", "·", "m", "e", "l", "o", "n"];
+/** Traced input: "taco cat" → true.
+ *  8 characters: t(0) a(1) c(2) o(3) space(4) c(5) a(6) t(7)
+ *  The space at index 4 is skipped, pointers meet in the middle. */
+const chars = ["t", "a", "c", "o", " ", "c", "a", "t"];
 
 function arr(l: number, r: number, highlighted?: number[]): VisualState {
-  return { type: "array", title: 's  (· = space, ignored)', items: chars, pointers: { l, r }, highlighted };
+  return { type: "array", title: 's  (space at index 4 is skipped)', items: chars, pointers: { l, r }, highlighted };
 }
 
 export const validPalindrome: Problem = {
@@ -40,86 +42,62 @@ export const validPalindrome: Problem = {
   solutions: [
     {
       name: "Two Pointers",
-      input: '"No lemon, no melon"',
+      input: '"taco cat"',
       code,
       steps: [
         {
           lines: [3, 4],
-          label: "`l` at the first character, `r` at the last. We compare inward, ignoring anything that isn't a letter or digit.",
-          variables: { l: "0", r: "17" },
-          visuals: [arr(0, 17)],
+          label: "`l` at the first character, `r` at the last. We'll compare inward, skipping anything that isn't a letter or digit.",
+          variables: { l: "0", r: "7" },
+          visuals: [arr(0, 7)],
         },
         {
           lines: [7, 8, 9],
-          label: "`s[0]`='N', `s[17]`='n'. Both are letters, and `char.ToLower` makes them equal — match.",
-          variables: { l: "0", r: "17" },
-          visuals: [arr(0, 17, [0, 17])],
+          label: "`s[0]`='t' and `s[7]`='t' — both letters, `char.ToLower` makes them equal. Match.",
+          variables: { l: "0", r: "7" },
+          visuals: [arr(0, 7, [0, 7])],
         },
         {
           lines: [13, 14],
-          label: "Match confirmed — step both pointers inward: `l` = 1, `r` = 16.",
-          variables: { l: "1", r: "16" },
-          visuals: [arr(1, 16)],
+          label: "Match — step both pointers inward: `l` = 1, `r` = 6.",
+          variables: { l: "1", r: "6" },
+          visuals: [arr(1, 6)],
         },
         {
-          lines: [9, 13, 14],
-          label: "`s[l]` and `s[r]` are both 'o' — match. Step both pointers inward.",
-          variables: { l: "2", r: "15" },
-          visuals: [arr(1, 16, [1, 16])],
+          lines: [7, 8, 9],
+          label: "`s[1]`='a' and `s[6]`='a' — match.",
+          variables: { l: "1", r: "6" },
+          visuals: [arr(1, 6, [1, 6])],
         },
         {
-          lines: [7],
-          label: "`s[2]` is a space — the inner while skips it, advancing `l` to 3. `r` stays at 15.",
-          variables: { l: "3", r: "15" },
-          visuals: [arr(3, 15)],
+          lines: [13, 14],
+          label: "Match — step inward: `l` = 2, `r` = 5.",
+          variables: { l: "2", r: "5" },
+          visuals: [arr(2, 5)],
         },
         {
-          lines: [9, 13, 14],
-          label: "'l' on both sides — match. Step inward.",
-          variables: { l: "4", r: "14" },
-          visuals: [arr(3, 15, [3, 15])],
+          lines: [7, 8, 9],
+          label: "`s[2]`='c' and `s[5]`='c' — match.",
+          variables: { l: "2", r: "5" },
+          visuals: [arr(2, 5, [2, 5])],
         },
         {
-          lines: [9, 13, 14],
-          label: "'e' on both sides — match. Step inward.",
-          variables: { l: "5", r: "13" },
-          visuals: [arr(4, 14, [4, 14])],
-        },
-        {
-          lines: [9, 13, 14],
-          label: "'m' on both sides — match. Step inward.",
-          variables: { l: "6", r: "12" },
-          visuals: [arr(5, 13, [5, 13])],
+          lines: [13, 14],
+          label: "Match — step inward: `l` = 3, `r` = 4.",
+          variables: { l: "3", r: "4" },
+          visuals: [arr(3, 4)],
         },
         {
           lines: [8],
-          label: "`s[12]` is a space — the inner while skips it, dropping `r` to 11. `l` stays at 6.",
-          variables: { l: "6", r: "11" },
-          visuals: [arr(6, 11)],
-        },
-        {
-          lines: [9, 13, 14],
-          label: "'o' on both sides — match. Step inward.",
-          variables: { l: "7", r: "10" },
-          visuals: [arr(6, 11, [6, 11])],
-        },
-        {
-          lines: [9, 13, 14],
-          label: "'n' on both sides — match. Step inward.",
-          variables: { l: "8", r: "9" },
-          visuals: [arr(7, 10, [7, 10])],
-        },
-        {
-          lines: [7],
-          label: "`s[8]`=',' is skipped, advancing `l` to 9 — the same spot as `r`. The pointers have met in the middle.",
-          variables: { l: "9", r: "9" },
-          visuals: [arr(9, 9)],
+          label: "`s[4]` is a space — not alphanumeric. The inner while skips it, dropping `r` to 3.",
+          variables: { l: "3", r: "3" },
+          visuals: [arr(3, 3)],
         },
         {
           lines: [5, 16],
-          label: "`l` is no longer less than `r` — every mirrored pair matched. Return true. ✓",
+          label: "`l` = 3 is no longer less than `r` = 3 — the pointers met. Every mirrored pair matched. Return `true`. ✓",
           variables: { result: "true" },
-          visuals: [arr(9, 9, [9])],
+          visuals: [arr(3, 3, [3])],
         },
       ],
       approach: {

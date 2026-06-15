@@ -5,6 +5,7 @@ import { SetVisual } from "./visuals/SetVisual";
 import { StackVisual } from "./visuals/StackVisual";
 import { LinkedListVisual } from "./visuals/LinkedListVisual";
 import { TreeVisual } from "./visuals/TreeVisual";
+import { ContainerVisual } from "./visuals/ContainerVisual";
 
 interface Props {
   visuals: VisualState[];
@@ -29,6 +30,8 @@ export function VisualPanel({ visuals }: Props) {
             return <LinkedListVisual key={i} {...visual} />;
           case "tree":
             return <TreeVisual key={i} {...visual} />;
+          case "container":
+            return <ContainerVisual key={i} {...visual} />;
         }
       })}
     </div>

@@ -11,7 +11,8 @@ export type VisualState =
   | SetVisualState
   | StackVisualState
   | LinkedListVisualState
-  | TreeVisualState;
+  | TreeVisualState
+  | ContainerVisualState;
 
 export interface ArrayVisualState {
   type: "array";
@@ -67,6 +68,14 @@ export interface LinkedListVisualState {
    *  omitted here and shown in the variables panel instead. */
   pointers?: Record<string, number>;
   highlighted?: number[];
+}
+
+export interface ContainerVisualState {
+  type: "container";
+  title?: string;
+  heights: number[];
+  l: number;
+  r: number;
 }
 
 export interface TreeVisualNode {
