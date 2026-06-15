@@ -11,9 +11,14 @@ function ProblemRoute() {
   if (!problem) return <Navigate to="/" replace />;
   return (
     <>
-      <Link to="/" className="back-link">
-        <ArrowLeft size={14} strokeWidth={2} /> All problems
-      </Link>
+      <div className="problem-nav-row">
+        <Link to="/" className="back-link">
+          <ArrowLeft size={14} strokeWidth={2} /> All problems
+        </Link>
+        <a href={problem.leetcodeUrl} target="_blank" rel="noreferrer" className="leetcode-link">
+          View on LeetCode ↗
+        </a>
+      </div>
       {/* key remounts the page so playback state resets when switching problems */}
       <ProblemPage key={problem.slug} problem={problem} />
     </>

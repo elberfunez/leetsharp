@@ -27,6 +27,23 @@ export function ArrayVisual({
             .join(" ");
           return (
             <div className="array-col" key={i}>
+              <div className="pointer-slot-top">
+                {pointerNames.map((name) => (
+                  <motion.div
+                    key={name}
+                    layoutId={`pointer-${name}`}
+                    className="pointer"
+                    animate={{ y: [0, 5, 0] }}
+                    transition={{
+                      y: { duration: 0.85, repeat: Infinity, ease: "easeInOut" },
+                      layout: { type: "spring", stiffness: 350, damping: 28 },
+                    }}
+                  >
+                    <span className="pointer-label">{name}</span>
+                    <span className="pointer-arrow">▼</span>
+                  </motion.div>
+                ))}
+              </div>
               <motion.div
                 className={cellClass}
                 animate={{
@@ -38,18 +55,6 @@ export function ArrayVisual({
                 {value}
               </motion.div>
               <div className="array-index">{i}</div>
-              <div className="pointer-slot">
-                {pointerNames.map((name) => (
-                  <motion.div
-                    key={name}
-                    layoutId={`pointer-${name}`}
-                    className="pointer"
-                    transition={{ type: "spring", stiffness: 350, damping: 28 }}
-                  >
-                    ▲ {name}
-                  </motion.div>
-                ))}
-              </div>
             </div>
           );
         })}

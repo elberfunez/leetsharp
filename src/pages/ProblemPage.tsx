@@ -13,8 +13,6 @@ function SolutionView({ solution }: { solution: Solution }) {
 
   return (
     <>
-      <div className="problem-input">Tracing: {solution.input}</div>
-
       <div className="workspace">
         <div className="left-column">
           <CodePanel code={solution.code} activeLines={runner.step.lines} stepIndex={runner.index} />
@@ -30,6 +28,7 @@ function SolutionView({ solution }: { solution: Solution }) {
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.15 }}
             >
+              <span className="step-op-header">Current Operation</span>
               <span className="step-label-text">{runner.step.label}</span>
               <motion.span
                 key={runner.index}
@@ -86,9 +85,10 @@ export function ProblemPage({ problem }: { problem: Problem }) {
         <span className={`difficulty difficulty-${problem.difficulty.toLowerCase()}`}>
           {problem.difficulty}
         </span>
-        <a href={problem.leetcodeUrl} target="_blank" rel="noreferrer" className="leetcode-link">
-          View on LeetCode ↗
-        </a>
+        <div className="problem-input">
+          <span className="problem-input-label">Tracing:</span>
+          <code className="problem-input-value">{solution.input}</code>
+        </div>
       </header>
 
       {multiple && (

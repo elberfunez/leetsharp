@@ -83,6 +83,7 @@ body {
   display: flex;
   align-items: center;
   gap: 14px;
+  margin-bottom: 20px;
 }
 
 .problem-header h1 {
@@ -113,7 +114,6 @@ body {
 }
 
 .leetcode-link {
-  margin-left: auto;
   color: var(--text-dim);
   font-size: 13px;
   text-decoration: none;
@@ -124,10 +124,25 @@ body {
 }
 
 .problem-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.problem-input-label {
+  font-size: 13px;
   color: var(--text-dim);
-  font-size: 14px;
+}
+
+.problem-input-value {
   font-family: var(--font-mono);
-  margin: 10px 0 20px;
+  font-size: 13px;
+  color: var(--text);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 10px;
 }
 
 /* ---------- Workspace ---------- */
@@ -270,6 +285,16 @@ body {
   min-height: 72px;
 }
 
+.step-op-header {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
 .step-label-text {
   display: block;
 }
@@ -368,18 +393,21 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
+  background: rgba(174, 113, 255, 0.08);
+  border: 1px solid rgba(174, 113, 255, 0.25);
   border-radius: 8px;
   font-family: var(--font-mono);
   font-size: 18px;
   font-weight: 600;
+  color: var(--accent-text);
+  backdrop-filter: blur(4px);
 }
 
 .cell-highlighted {
-  border-color: var(--highlight);
-  color: var(--highlight);
-  background: rgba(240, 136, 62, 0.12);
+  background: rgba(174, 113, 255, 0.28);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(174, 113, 255, 0.35);
 }
 
 .array-index {
@@ -389,17 +417,41 @@ body {
   font-family: var(--font-mono);
 }
 
-.pointer-slot {
-  height: 22px;
-  margin-top: 2px;
+.pointer-slot-top {
+  height: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 6px;
+  gap: 2px;
 }
 
 .pointer {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--accent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
   font-family: var(--font-mono);
   white-space: nowrap;
+  line-height: 1;
+}
+
+.pointer-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  background: rgba(174, 113, 255, 0.18);
+  border: 1px solid rgba(174, 113, 255, 0.4);
+  border-radius: 4px;
+  padding: 2px 6px;
+  letter-spacing: 0.03em;
+}
+
+.pointer-arrow {
+  font-size: 10px;
+  color: var(--accent);
+  line-height: 1;
 }
 
 /* Dictionary */
@@ -900,6 +952,13 @@ body {
   display: block;
 }
 
+.problem-nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
 .back-link {
   color: var(--text-dim);
   text-decoration: none;
@@ -907,7 +966,6 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  margin-bottom: 12px;
 }
 
 .back-link:hover {
