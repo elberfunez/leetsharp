@@ -1,9 +1,6 @@
 import type { Problem, VisualState } from "../../domain/types";
 import { ELBER } from "../authors";
 
-// Elber's actual solution from
-// LeetcodePractice/Problems/SlidingWindow/LongestSubstringWithoutRepeatingCharacters,
-// presented in LeetCode submission format.
 const code = `public class Solution {
     public int LengthOfLongestSubstring(string s) {
         var charSet = new HashSet<char>();
@@ -24,18 +21,17 @@ const code = `public class Solution {
     }
 }`;
 
-/** Traced input (Example 1 from the practice repo): s = "zxyzxyz" → 3. */
+/** Traced input: s = "zxyzxyz" → 3. */
 const chars = ["z", "x", "y", "z", "x", "y", "z"];
 
-/** The highlighted range l..r is the current window. */
-function sVisual(l: number, r: number): VisualState {
-  const window = [];
+function sArr(l: number, r: number): VisualState {
+  const window: number[] = [];
   for (let i = l; i <= r; i++) window.push(i);
-  return { type: "array", title: "s (window highlighted)", items: chars, pointers: { l, r }, highlighted: window };
+  return { type: "array", title: "s", items: chars, pointers: { l, r }, highlighted: window };
 }
 
-function setVisual(items: string[], activeItem?: string): VisualState {
-  return { type: "set", title: "charSet", items, activeItem };
+function charSet(items: string[], activeItem?: string): VisualState {
+  return { type: "set", title: "charSet (window contents)", items, activeItem };
 }
 
 export const longestSubstringWithoutRepeatingCharacters: Problem = {
@@ -52,166 +48,174 @@ export const longestSubstringWithoutRepeatingCharacters: Problem = {
       input: 's = "zxyzxyz"',
       code,
       steps: [
-    {
-      lines: [3, 4, 5],
-      label: "Setup: an empty HashSet `charSet` holding the characters inside the window, `l` = 0 (window's left edge), `maxLen` = 0 (best seen so far).",
-      variables: { l: "0", maxLen: "0" },
-      visuals: [
-        { type: "array", title: "s (window highlighted)", items: chars, pointers: { l: 0 } },
-        setVisual([]),
+        {
+          lines: [3, 4, 5],
+          label: "Initialize: empty `charSet` (tracks what's inside the window), `l` = 0 (left edge), `maxLen` = 0 (longest found so far).",
+          variables: { l: "0", maxLen: "0" },
+          visuals: [
+            { type: "array", title: "s", items: chars, pointers: { l: 0 } },
+            charSet([]),
+          ],
+        },
+        // ── r = 0, s[r] = 'z' ──────────────────────────────────────
+        {
+          lines: [6],
+          label: "`r` = 0 → looking at `s[r]` = 'z'.",
+          variables: { l: "0", r: "0", maxLen: "0" },
+          visuals: [sArr(0, 0), charSet([])],
+        },
+        {
+          lines: [8, 13],
+          label: "'z' is NOT in `charSet` — no duplicate. Add `s[r]` = 'z' to the set.",
+          variables: { l: "0", r: "0", maxLen: "0" },
+          visuals: [sArr(0, 0), charSet(["z"], "z")],
+        },
+        {
+          lines: [15],
+          label: "Window `s[l..r]` = \"z\" — size `r - l + 1` = 1. `maxLen` = 1.",
+          variables: { l: "0", r: "0", maxLen: "1" },
+          visuals: [sArr(0, 0), charSet(["z"])],
+        },
+        // ── r = 1, s[r] = 'x' ──────────────────────────────────────
+        {
+          lines: [6],
+          label: "`r` = 1 → looking at `s[r]` = 'x'.",
+          variables: { l: "0", r: "1", maxLen: "1" },
+          visuals: [sArr(0, 1), charSet(["z"])],
+        },
+        {
+          lines: [8, 13],
+          label: "'x' is NOT in `charSet`. Add `s[r]` = 'x' to the set.",
+          variables: { l: "0", r: "1", maxLen: "1" },
+          visuals: [sArr(0, 1), charSet(["z", "x"], "x")],
+        },
+        {
+          lines: [15],
+          label: "Window `s[l..r]` = \"zx\" — size 2. `maxLen` = 2.",
+          variables: { l: "0", r: "1", maxLen: "2" },
+          visuals: [sArr(0, 1), charSet(["z", "x"])],
+        },
+        // ── r = 2, s[r] = 'y' ──────────────────────────────────────
+        {
+          lines: [6],
+          label: "`r` = 2 → looking at `s[r]` = 'y'.",
+          variables: { l: "0", r: "2", maxLen: "2" },
+          visuals: [sArr(0, 2), charSet(["z", "x"])],
+        },
+        {
+          lines: [8, 13],
+          label: "'y' is NOT in `charSet`. Add `s[r]` = 'y' to the set.",
+          variables: { l: "0", r: "2", maxLen: "2" },
+          visuals: [sArr(0, 2), charSet(["z", "x", "y"], "y")],
+        },
+        {
+          lines: [15],
+          label: "Window `s[l..r]` = \"zxy\" — size 3. `maxLen` = 3.",
+          variables: { l: "0", r: "2", maxLen: "3" },
+          visuals: [sArr(0, 2), charSet(["z", "x", "y"])],
+        },
+        // ── r = 3, s[r] = 'z' — DUPLICATE ─────────────────────────
+        {
+          lines: [6],
+          label: "`r` = 3 → looking at `s[r]` = 'z'.",
+          variables: { l: "0", r: "3", maxLen: "3" },
+          visuals: [sArr(0, 3), charSet(["z", "x", "y"])],
+        },
+        {
+          lines: [8],
+          label: "'z' IS already in `charSet` — duplicate! Must shrink the window from the left until the old 'z' is gone.",
+          variables: { l: "0", r: "3", maxLen: "3" },
+          visuals: [sArr(0, 3), charSet(["z", "x", "y"], "z")],
+        },
+        {
+          lines: [10, 11],
+          label: "Remove `s[l]` = `s[0]` = 'z' from `charSet`, then `l`++. `l` is now 1 — old 'z' is evicted.",
+          variables: { l: "1", r: "3", maxLen: "3" },
+          visuals: [sArr(1, 3), charSet(["x", "y"], "z")],
+        },
+        {
+          lines: [13, 15],
+          label: "'z' no longer in `charSet`. Add `s[r]` = 'z'. Window `s[l..r]` = \"xyz\" — size 3. `maxLen` stays 3.",
+          variables: { l: "1", r: "3", maxLen: "3" },
+          visuals: [sArr(1, 3), charSet(["x", "y", "z"], "z")],
+        },
+        // ── r = 4, s[r] = 'x' — DUPLICATE ─────────────────────────
+        {
+          lines: [6, 8],
+          label: "`r` = 4 → `s[r]` = 'x'. 'x' IS in `charSet` — duplicate.",
+          variables: { l: "1", r: "4", maxLen: "3" },
+          visuals: [sArr(1, 4), charSet(["x", "y", "z"], "x")],
+        },
+        {
+          lines: [10, 11],
+          label: "Remove `s[l]` = `s[1]` = 'x' from `charSet`, then `l`++. `l` = 2.",
+          variables: { l: "2", r: "4", maxLen: "3" },
+          visuals: [sArr(2, 4), charSet(["y", "z"], "x")],
+        },
+        {
+          lines: [13, 15],
+          label: "'x' cleared. Add `s[r]` = 'x'. Window `s[l..r]` = \"yzx\" — size 3. `maxLen` stays 3.",
+          variables: { l: "2", r: "4", maxLen: "3" },
+          visuals: [sArr(2, 4), charSet(["y", "z", "x"], "x")],
+        },
+        // ── r = 5, s[r] = 'y' — DUPLICATE ─────────────────────────
+        {
+          lines: [6, 8],
+          label: "`r` = 5 → `s[r]` = 'y'. 'y' IS in `charSet` — duplicate.",
+          variables: { l: "2", r: "5", maxLen: "3" },
+          visuals: [sArr(2, 5), charSet(["y", "z", "x"], "y")],
+        },
+        {
+          lines: [10, 11],
+          label: "Remove `s[l]` = `s[2]` = 'y' from `charSet`, then `l`++. `l` = 3.",
+          variables: { l: "3", r: "5", maxLen: "3" },
+          visuals: [sArr(3, 5), charSet(["z", "x"], "y")],
+        },
+        {
+          lines: [13, 15],
+          label: "'y' cleared. Add `s[r]` = 'y'. Window `s[l..r]` = \"zxy\" — size 3. `maxLen` stays 3.",
+          variables: { l: "3", r: "5", maxLen: "3" },
+          visuals: [sArr(3, 5), charSet(["z", "x", "y"], "y")],
+        },
+        // ── r = 6, s[r] = 'z' — DUPLICATE ─────────────────────────
+        {
+          lines: [6, 8],
+          label: "`r` = 6 → `s[r]` = 'z'. 'z' IS in `charSet` — duplicate.",
+          variables: { l: "3", r: "6", maxLen: "3" },
+          visuals: [sArr(3, 6), charSet(["z", "x", "y"], "z")],
+        },
+        {
+          lines: [10, 11],
+          label: "Remove `s[l]` = `s[3]` = 'z' from `charSet`, then `l`++. `l` = 4.",
+          variables: { l: "4", r: "6", maxLen: "3" },
+          visuals: [sArr(4, 6), charSet(["x", "y"], "z")],
+        },
+        {
+          lines: [13, 15],
+          label: "'z' cleared. Add `s[r]` = 'z'. Window `s[l..r]` = \"xyz\" — size 3. `maxLen` stays 3.",
+          variables: { l: "4", r: "6", maxLen: "3" },
+          visuals: [sArr(4, 6), charSet(["x", "y", "z"], "z")],
+        },
+        // ── done ────────────────────────────────────────────────────
+        {
+          lines: [17],
+          label: "`r` reached the end. Longest window without a repeat was 3 (\"zxy\" / \"xyz\"). Return `maxLen` = 3. ✓",
+          variables: { result: "3" },
+          visuals: [sArr(4, 6), charSet(["x", "y", "z"])],
+        },
       ],
-    },
-    {
-      lines: [6],
-      label: "r = 0: the window's right edge looks at 'z'.",
-      variables: { l: "0", r: "0", maxLen: "0" },
-      visuals: [sVisual(0, 0), setVisual([])],
-    },
-    {
-      lines: [8, 13],
-      label: "'z' isn't in the set — no duplicate. Add it; the window is \"z\".",
-      variables: { l: "0", r: "0", maxLen: "0" },
-      visuals: [sVisual(0, 0), setVisual(["z"], "z")],
-    },
-    {
-      lines: [15],
-      label: "Window size = r − l + 1 = 1. maxLen = 1.",
-      variables: { l: "0", r: "0", maxLen: "1" },
-      visuals: [sVisual(0, 0), setVisual(["z"])],
-    },
-    {
-      lines: [6],
-      label: "r = 1: 'x'.",
-      variables: { l: "0", r: "1", maxLen: "1" },
-      visuals: [sVisual(0, 1), setVisual(["z"])],
-    },
-    {
-      lines: [8, 13],
-      label: "'x' is new — add it. Window: \"zx\".",
-      variables: { l: "0", r: "1", maxLen: "1" },
-      visuals: [sVisual(0, 1), setVisual(["z", "x"], "x")],
-    },
-    {
-      lines: [15],
-      label: "Window size 2 → maxLen = 2.",
-      variables: { l: "0", r: "1", maxLen: "2" },
-      visuals: [sVisual(0, 1), setVisual(["z", "x"])],
-    },
-    {
-      lines: [6],
-      label: "r = 2: 'y'.",
-      variables: { l: "0", r: "2", maxLen: "2" },
-      visuals: [sVisual(0, 2), setVisual(["z", "x"])],
-    },
-    {
-      lines: [8, 13],
-      label: "'y' is new — add it. Window: \"zxy\".",
-      variables: { l: "0", r: "2", maxLen: "2" },
-      visuals: [sVisual(0, 2), setVisual(["z", "x", "y"], "y")],
-    },
-    {
-      lines: [15],
-      label: "Window size 3 → maxLen = 3.",
-      variables: { l: "0", r: "2", maxLen: "3" },
-      visuals: [sVisual(0, 2), setVisual(["z", "x", "y"])],
-    },
-    {
-      lines: [6],
-      label: "r = 3: 'z' again — trouble ahead.",
-      variables: { l: "0", r: "3", maxLen: "3" },
-      visuals: [sVisual(0, 3), setVisual(["z", "x", "y"])],
-    },
-    {
-      lines: [8],
-      label: "`charSet` already contains 'z' → the window has a duplicate. Shrink it from the left until the old 'z' is gone.",
-      variables: { l: "0", r: "3", maxLen: "3" },
-      visuals: [sVisual(0, 3), setVisual(["z", "x", "y"], "z")],
-    },
-    {
-      lines: [10, 11],
-      label: "Evict `s[0]` ('z') from `charSet` and slide `l` to 1. The duplicate is gone — the while check fails now.",
-      variables: { l: "1", r: "3", maxLen: "3" },
-      visuals: [sVisual(1, 3), setVisual(["x", "y"], "z")],
-    },
-    {
-      lines: [13, 15],
-      label: "Add the NEW 'z'. Window \"xyz\", size 3 — `maxLen` stays 3.",
-      variables: { l: "1", r: "3", maxLen: "3" },
-      visuals: [sVisual(1, 3), setVisual(["x", "y", "z"], "z")],
-    },
-    {
-      lines: [6, 8],
-      label: "r = 4: 'x' — duplicate again ('x' entered at index 1).",
-      variables: { l: "1", r: "4", maxLen: "3" },
-      visuals: [sVisual(1, 4), setVisual(["x", "y", "z"], "x")],
-    },
-    {
-      lines: [10, 11],
-      label: "Evict `s[1]` ('x'), `l` = 2. Duplicate cleared in one shrink.",
-      variables: { l: "2", r: "4", maxLen: "3" },
-      visuals: [sVisual(2, 4), setVisual(["y", "z"], "x")],
-    },
-    {
-      lines: [13, 15],
-      label: "Add the new 'x'. Window \"yzx\", size 3 — `maxLen` stays 3.",
-      variables: { l: "2", r: "4", maxLen: "3" },
-      visuals: [sVisual(2, 4), setVisual(["y", "z", "x"], "x")],
-    },
-    {
-      lines: [6, 8],
-      label: "r = 5: 'y' — duplicate (from index 2).",
-      variables: { l: "2", r: "5", maxLen: "3" },
-      visuals: [sVisual(2, 5), setVisual(["y", "z", "x"], "y")],
-    },
-    {
-      lines: [10, 11],
-      label: "Evict `s[2]` ('y'), `l` = 3.",
-      variables: { l: "3", r: "5", maxLen: "3" },
-      visuals: [sVisual(3, 5), setVisual(["z", "x"], "y")],
-    },
-    {
-      lines: [13, 15],
-      label: "Add the new 'y'. Window \"zxy\", size 3.",
-      variables: { l: "3", r: "5", maxLen: "3" },
-      visuals: [sVisual(3, 5), setVisual(["z", "x", "y"], "y")],
-    },
-    {
-      lines: [6, 8],
-      label: "r = 6: 'z' — duplicate (from index 3).",
-      variables: { l: "3", r: "6", maxLen: "3" },
-      visuals: [sVisual(3, 6), setVisual(["z", "x", "y"], "z")],
-    },
-    {
-      lines: [10, 11],
-      label: "Evict `s[3]` ('z'), `l` = 4.",
-      variables: { l: "4", r: "6", maxLen: "3" },
-      visuals: [sVisual(4, 6), setVisual(["x", "y"], "z")],
-    },
-    {
-      lines: [13, 15],
-      label: "Add the new 'z'. Window \"xyz\", size 3 — `maxLen` never beats 3.",
-      variables: { l: "4", r: "6", maxLen: "3" },
-      visuals: [sVisual(4, 6), setVisual(["x", "y", "z"], "z")],
-    },
-    {
-      lines: [17],
-      label: "Loop done — the longest run without a repeat was 3 (\"zxy\" / \"xyz\"). Return `maxLen` = 3. ✓",
-      variables: { result: "3" },
-      visuals: [sVisual(4, 6), setVisual(["x", "y", "z"])],
-    },
-  ],
-  approach: {
-    summary:
-      "A sliding window over the string: r expands the window one character per iteration, and the HashSet knows exactly what's inside it. When s[r] is already in the set, the window contains a duplicate — shrink from the left (evict s[l], advance l) until that character is gone, then admit the new one. Every character enters the window once and leaves at most once, so two pointers cover all substrings worth checking.",
-    timeComplexity: "O(n) — r moves n times and l can only move n times total across the whole run, so the inner while is amortized O(1).",
-    spaceComplexity: "O(min(n, alphabet)) — the set never holds more than one of each distinct character.",
-    notes: [
-      "The inner while loop (not if) matters: one new character can require evicting SEVERAL from the left before the duplicate clears.",
-      "HashSet<char> gives O(1) Contains/Add/Remove — the window-membership question is what makes the two-pointer trick fast.",
-      "s[r] indexes the string directly — C# strings are IReadOnlyList<char>, no ToCharArray() copy needed.",
-      "An upgrade worth knowing: Dictionary<char, int> storing each char's last index lets l JUMP straight past the duplicate instead of evicting one at a time — same O(n), fewer steps.",
-    ],
-  },
+      approach: {
+        summary:
+          "A sliding window over the string: r expands the window one character per iteration, and the HashSet tracks exactly what's inside. When s[r] is already in the set, the window has a duplicate — shrink from the left (remove s[l], advance l) until that character is gone, then admit the new one. Every character enters and leaves at most once, so the two pointers run in O(n) total.",
+        timeComplexity: "O(n) — r moves n times and l can only move n times total across the whole run.",
+        spaceComplexity: "O(min(n, alphabet)) — the set never holds more than one of each distinct character.",
+        notes: [
+          "The inner while loop (not if) is important: one new character could force evicting several from the left before the duplicate clears.",
+          "HashSet<char> gives O(1) Contains/Add/Remove — that's what makes the window-membership check fast.",
+          "s[r] indexes the string directly — C# strings are IReadOnlyList<char>, no ToCharArray() copy needed.",
+          "An upgrade worth knowing: Dictionary<char, int> storing each char's last index lets l JUMP straight past the duplicate instead of evicting one at a time — same O(n), fewer steps.",
+        ],
+      },
     },
   ],
 };

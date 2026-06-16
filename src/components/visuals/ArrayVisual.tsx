@@ -47,7 +47,6 @@ export function ArrayVisual({
               <motion.div
                 className={cellClass}
                 animate={{
-                  scale: highlighted.includes(i) ? 1.08 : 1,
                   opacity: dimmed.includes(i) ? 0.3 : 1,
                 }}
                 transition={{ type: "spring", stiffness: 400, damping: 22 }}

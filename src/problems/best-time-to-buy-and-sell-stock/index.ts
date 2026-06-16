@@ -1,30 +1,38 @@
 import type { Problem, VisualState } from "../../domain/types";
 import { ELBER } from "../authors";
 
-// Elber's actual solution from LeetcodePractice/Problems/SlidingWindow/BestTimeToBuyAndSellStock,
-// presented in LeetCode submission format.
 const code = `public class Solution {
     public int MaxProfit(int[] prices) {
         int minPrice = prices[0];
-        int maxPrice = 0;
+        int maxProfit = 0;
         foreach (int p in prices)
         {
             minPrice = Math.Min(minPrice, p);
-            maxPrice = Math.Max(maxPrice, p - minPrice);
+            maxProfit = Math.Max(maxProfit, p - minPrice);
         }
-        return maxPrice;
+        return maxProfit;
     }
 }`;
 
-/** Traced input (Example 1 from the practice repo): prices = [10, 1, 5, 6, 7, 1] → 6. */
+/** Traced input: prices = [10, 1, 5, 6, 7, 1] → 6. */
 const prices = [10, 1, 5, 6, 7, 1];
 
-function arr(cur: number, minIdx: number, highlighted?: number[]): VisualState {
-  return { type: "array", title: "prices", items: prices, pointers: { p: cur, min: minIdx }, highlighted };
+function arr(cur: number, minIdx: number, sellIdx?: number, highlighted?: number[]): VisualState {
+  const ptrs: Record<string, number> = { p: cur, buy: minIdx };
+  if (sellIdx !== undefined) ptrs["sell"] = sellIdx;
+  return { type: "array", title: "prices", items: prices, pointers: ptrs, highlighted };
 }
 
-function profit(val: number): VisualState {
-  return { type: "dict", title: "running best", entries: [["best profit", `$${val}`]], activeKey: "best profit" };
+function tracker(curProfit: number, bestProfit: number): VisualState {
+  return {
+    type: "dict",
+    title: "profit tracker",
+    entries: [
+      ["if sold now", `$${curProfit}`],
+      ["best so far", `$${bestProfit}`],
+    ],
+    activeKey: curProfit > bestProfit ? "if sold now" : "best so far",
+  };
 }
 
 export const bestTimeToBuyAndSellStock: Problem = {
@@ -43,51 +51,51 @@ export const bestTimeToBuyAndSellStock: Problem = {
       steps: [
         {
           lines: [3, 4],
-          label: "Track two running values: the cheapest price seen so far (starts at `prices[0]` = 10) and the best profit so far (0).",
-          variables: { minPrice: "10", maxPrice: "0" },
-          visuals: [arr(0, 0), profit(0)],
+          label: "Track two running values: cheapest buy price seen so far (`minPrice` = 10) and best profit so far (`maxProfit` = 0).",
+          variables: { minPrice: "10", maxProfit: "0" },
+          visuals: [arr(0, 0), tracker(0, 0)],
         },
         {
           lines: [6, 7, 8],
-          label: "First price — nothing cheaper seen yet, so no profitable sell is possible.",
-          variables: { minPrice: "10", maxPrice: "0" },
-          visuals: [arr(0, 0, [0]), profit(0)],
+          label: "`p` = 10. `buy` stays at index 0. Profit if sold now = 10 − 10 = $0. No improvement.",
+          variables: { p: "10", minPrice: "10", maxProfit: "0" },
+          visuals: [arr(0, 0, undefined, [0]), tracker(0, 0)],
         },
         {
           lines: [7, 8],
-          label: "New lowest price — update `minPrice`. This is now the best potential buy day.",
-          variables: { minPrice: "1", maxPrice: "0" },
-          visuals: [arr(1, 1, [1]), profit(0)],
+          label: "`p` = 1. New low — `buy` moves to index 1 (`minPrice` = 1). Profit if sold now = $0. No `sell` day yet.",
+          variables: { p: "1", minPrice: "1", maxProfit: "0" },
+          visuals: [arr(1, 1, undefined, [1]), tracker(0, 0)],
         },
         {
           lines: [8],
-          label: "Selling today beats our previous best profit — update the record.",
-          variables: { minPrice: "1", maxPrice: "4" },
-          visuals: [arr(2, 1, [2]), profit(4)],
+          label: "`p` = 5. Profit = 5 − 1 = $4. Beats `maxProfit` — `sell` moves to index 2. New best!",
+          variables: { p: "5", minPrice: "1", maxProfit: "4" },
+          visuals: [arr(2, 1, 2, [2]), tracker(4, 4)],
         },
         {
           lines: [8],
-          label: "Even better sell day — profit is higher than before. New best.",
-          variables: { minPrice: "1", maxPrice: "5" },
-          visuals: [arr(3, 1, [3]), profit(5)],
+          label: "`p` = 6. Profit = 6 − 1 = $5. New best — `sell` moves to index 3.",
+          variables: { p: "6", minPrice: "1", maxProfit: "5" },
+          visuals: [arr(3, 1, 3, [3]), tracker(5, 5)],
         },
         {
           lines: [8],
-          label: "Best profit yet — buy at the cheapest day seen so far, sell today.",
-          variables: { minPrice: "1", maxPrice: "6" },
-          visuals: [arr(4, 1, [4]), profit(6)],
+          label: "`p` = 7. Profit = 7 − 1 = $6. New best — `sell` moves to index 4.",
+          variables: { p: "7", minPrice: "1", maxProfit: "6" },
+          visuals: [arr(4, 1, 4, [4]), tracker(6, 6)],
         },
         {
           lines: [7, 8],
-          label: "Ties the minimum but doesn't improve it. Selling today gives zero profit — best unchanged.",
-          variables: { minPrice: "1", maxPrice: "6" },
-          visuals: [arr(5, 1, [5]), profit(6)],
+          label: "`p` = 1. Ties the minimum. Profit if sold now = $0. `sell` stays at index 4. Best profit unchanged at $6.",
+          variables: { p: "1", minPrice: "1", maxProfit: "6" },
+          visuals: [arr(5, 1, 4, [5]), tracker(0, 6)],
         },
         {
           lines: [11],
-          label: "Loop done. Return the best profit ever seen: `maxPrice` = 6. ✓",
+          label: "Loop done. Best pair: `buy` at index 1 (price 1), `sell` at index 4 (price 7). Return `maxProfit` = 6. ✓",
           variables: { result: "6" },
-          visuals: [arr(5, 1, [1, 4]), profit(6)],
+          visuals: [arr(5, 1, 4, [1, 4]), tracker(6, 6)],
         },
       ],
       approach: {
@@ -96,7 +104,6 @@ export const bestTimeToBuyAndSellStock: Problem = {
         timeComplexity: "O(n) — a single pass.",
         spaceComplexity: "O(1) — two running values.",
         notes: [
-          "Naming heads-up: maxPrice actually holds the max PROFIT, not a price. The math is correct, the label is just optimistic.",
           "Order inside the loop matters — update minPrice before computing profit, so 'sell today' is measured against the cheapest day up to and including today.",
           "p - minPrice is 0 on the day that sets a new minimum, and Math.Max keeps a new low from ever lowering the recorded profit.",
           "Despite living in the Sliding Window set, this is really a running-minimum scan — there's no left pointer to advance.",
