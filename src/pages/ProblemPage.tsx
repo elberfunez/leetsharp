@@ -49,15 +49,6 @@ function SolutionView({ solution }: { solution: Solution }) {
             >
               <span className="step-op-header">Current Operation</span>
               <span className="step-label-text">{renderLabel(runner.step.label)}</span>
-              <motion.span
-                key={runner.index}
-                className="step-badge"
-                initial={{ opacity: 0.3, scale: 0.85 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.18, type: "spring", stiffness: 400, damping: 25 }}
-              >
-                {runner.index + 1}<span className="step-badge-total">/{runner.total}</span>
-              </motion.span>
             </motion.div>
           </AnimatePresence>
           <VariablesPanel variables={runner.step.variables} />
