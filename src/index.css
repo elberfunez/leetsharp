@@ -408,6 +408,17 @@ body {
   gap: 14px;
 }
 
+.visual-row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.visual-row > * {
+  flex: 1;
+  min-width: 0;
+}
+
 .visual-block {
   background: var(--bg-panel);
   border: 1px solid var(--border);

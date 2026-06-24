@@ -12,7 +12,13 @@ export type VisualState =
   | StackVisualState
   | LinkedListVisualState
   | TreeVisualState
-  | ContainerVisualState;
+  | ContainerVisualState
+  | RowVisualState;
+
+export interface RowVisualState {
+  type: "row";
+  visuals: VisualState[];
+}
 
 export interface ArrayVisualState {
   type: "array";

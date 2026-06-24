@@ -33,6 +33,9 @@ function l1(pointer: number | null, dimmed: number[]): VisualState {
 function l2(pointer: number | null, dimmed: number[]): VisualState {
   return { type: "array", title: "list2", items: [1, 3, 5], pointers: pointer === null ? {} : { p2: pointer }, dimmed };
 }
+function lists(pointer1: number | null, dimmed1: number[], pointer2: number | null, dimmed2: number[]): VisualState {
+  return { type: "row", visuals: [l1(pointer1, dimmed1), l2(pointer2, dimmed2)] };
+}
 function merged(items: number[]): VisualState {
   return { type: "array", title: "merged", items, highlighted: items.length ? [items.length - 1] : [] };
 }
@@ -53,42 +56,42 @@ export const mergeTwoSortedLists: Problem = {
       steps: [
         {
           lines: [3, 4],
-          label: "A `dummy` node makes this clean: `tail` always points at the last node of the result, starting at `dummy` so we never special-case the head.",
-          visuals: [l1(0, []), l2(0, []), merged([])],
+          label: "A dummy node makes this clean: tail always points at the last node of the result, starting at dummy so we never special-case the head.",
+          visuals: [lists(0, [], 0, []), merged([])],
         },
         {
           lines: [5, 7, 14, 15, 17],
-          label: "Compare heads: 1 < 1 is false, so take `list2`'s 1. Splice it on, advance `list2`.",
-          visuals: [l1(0, []), l2(1, [0]), merged([1])],
+          label: "Compare heads: 1 < 1 is false → take list2's 1. Splice it on, advance list2.",
+          visuals: [lists(0, [], 1, [0]), merged([1])],
         },
         {
           lines: [7, 9, 10, 17],
           label: "Heads are now 1 and 3: 1 < 3 → take list1's 1. Advance list1.",
-          visuals: [l1(1, [0]), l2(1, [0]), merged([1, 1])],
+          visuals: [lists(1, [0], 1, [0]), merged([1, 1])],
         },
         {
           lines: [7, 9, 10, 17],
-          label: "2 < 3 → take list1's 2.",
-          visuals: [l1(2, [0, 1]), l2(1, [0]), merged([1, 1, 2])],
+          label: "2 < 3 → take list1's 2. Advance list1.",
+          visuals: [lists(2, [0, 1], 1, [0]), merged([1, 1, 2])],
         },
         {
           lines: [7, 14, 15, 17],
-          label: "Heads 4 and 3: 4 < 3 is false → take list2's 3.",
-          visuals: [l1(2, [0, 1]), l2(2, [0, 1]), merged([1, 1, 2, 3])],
+          label: "Heads 4 and 3: 4 < 3 is false → take list2's 3. Advance list2.",
+          visuals: [lists(2, [0, 1], 2, [0, 1]), merged([1, 1, 2, 3])],
         },
         {
           lines: [7, 9, 10, 17],
-          label: "4 < 5 → take list1's 4. Now list1 is empty.",
-          visuals: [l1(null, [0, 1, 2]), l2(2, [0, 1]), merged([1, 1, 2, 3, 4])],
+          label: "4 < 5 → take list1's 4. list1 is now empty.",
+          visuals: [lists(null, [0, 1, 2], 2, [0, 1]), merged([1, 1, 2, 3, 4])],
         },
         {
           lines: [5, 19, 20],
-          label: "`list1` is empty, so the loop exits. `list2` still has 5 — and it's already sorted, so attach the whole remainder at once.",
-          visuals: [l1(null, [0, 1, 2]), l2(null, [0, 1, 2]), merged([1, 1, 2, 3, 4, 5])],
+          label: "list1 is empty — loop exits. list2 still has 5 and is already sorted, so attach the whole remainder at once.",
+          visuals: [lists(null, [0, 1, 2], null, [0, 1, 2]), merged([1, 1, 2, 3, 4, 5])],
         },
         {
           lines: [21],
-          label: "Return `dummy.next` — the merged sorted list [1, 1, 2, 3, 4, 5]. ✓",
+          label: "Return dummy.next — the merged sorted list [1, 1, 2, 3, 4, 5]. ✓",
           variables: { result: "[1, 1, 2, 3, 4, 5]" },
           visuals: [merged([1, 1, 2, 3, 4, 5])],
         },

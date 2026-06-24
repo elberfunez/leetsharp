@@ -10,6 +10,8 @@ export function ArrayVisual({
   highlighted = [],
   dimmed = [],
 }: ArrayVisualState) {
+  const hasPointers = Object.keys(pointers).length > 0;
+
   return (
     <div className="visual-block">
       {title && <div className="visual-title">{title}</div>}
@@ -27,7 +29,7 @@ export function ArrayVisual({
             .join(" ");
           return (
             <div className="array-col" key={i}>
-              <div className="pointer-slot-top">
+              {hasPointers && <div className="pointer-slot-top">
                 {pointerNames.map((name) => (
                   <motion.div
                     key={name}
@@ -43,7 +45,7 @@ export function ArrayVisual({
                     <span className="pointer-arrow">▼</span>
                   </motion.div>
                 ))}
-              </div>
+              </div>}
               <motion.div
                 className={cellClass}
                 animate={{

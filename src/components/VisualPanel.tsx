@@ -32,6 +32,22 @@ export function VisualPanel({ visuals }: Props) {
             return <TreeVisual key={i} {...visual} />;
           case "container":
             return <ContainerVisual key={i} {...visual} />;
+          case "row":
+            return (
+              <div key={i} className="visual-row">
+                {visual.visuals.map((v, j) => {
+                  switch (v.type) {
+                    case "array":     return <ArrayVisual key={j} {...v} />;
+                    case "dict":      return <DictVisual key={j} {...v} />;
+                    case "set":       return <SetVisual key={j} {...v} />;
+                    case "stack":     return <StackVisual key={j} {...v} />;
+                    case "linkedlist":return <LinkedListVisual key={j} {...v} />;
+                    case "tree":      return <TreeVisual key={j} {...v} />;
+                    case "container": return <ContainerVisual key={j} {...v} />;
+                  }
+                })}
+              </div>
+            );
         }
       })}
     </div>

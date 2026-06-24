@@ -129,7 +129,7 @@ export function HomePage() {
           <div>
             <p className="dash-subtitle">
               <span className="solved-count">{problems.length}</span>
-              {" "} LeetCode problems solved in <span className="solved-count">C#</span> — with step-by-step visual walkthroughs.
+              {" "} LeetCode problems solved so far in your favorite language: <span className="solved-count">C#</span> — with step-by-step visual walkthroughs.
             </p>
           </div>
           {view !== "map" && (
