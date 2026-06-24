@@ -19,9 +19,11 @@ const code = `public class Solution {
 }`;
 
 /** Traced input (Example 1 from the practice repo): 0 → 1 → 2 → 3, reversed to 3 → 2 → 1 → 0.
- *  Nodes stay where they are on screen — watch the arrows between them flip
- *  one by one. Pointers that are null in a given step appear only in the
- *  variables panel. */
+ *  Nodes stay put — watch each next-link break (its arc retracts) and
+ *  reconnect (a new arc draws in). Forward links bow over the top in
+ *  violet; reversed links bow under the bottom in green, so the reversal
+ *  visibly sweeps top→bottom across the row. Pointers that are null in a
+ *  given step appear only in the variables panel. */
 function list(
   next: (number | null)[],
   pointers?: Record<string, number>,
@@ -58,7 +60,7 @@ export const reverseLinkedList: Problem = {
     },
     {
       lines: [8],
-      label: "Flip! Node 0's `next` now points backwards to `prev` (`null`). The 0→1 arrow goes dark and node 0 gets the ∅ badge — it's the new tail.",
+      label: "Break! Node 0's `next` is reassigned to `prev` (`null`): the top 0→1 arc retracts and node 0's next-cell shows ∅ — it's the new tail.",
       variables: { prev: "null" },
       visuals: [list([null, 2, 3, null], { cur: 0, next: 1 }, [0])],
     },
@@ -74,7 +76,7 @@ export const reverseLinkedList: Problem = {
     },
     {
       lines: [8],
-      label: "Flip node 1's arrow: it now points back at node 0.",
+      label: "Reconnect: node 1's top link breaks and a green arc draws in underneath, pointing back at node 0.",
       visuals: [list([null, 0, 3, null], { prev: 0, cur: 1, next: 2 }, [1])],
     },
     {
@@ -89,7 +91,7 @@ export const reverseLinkedList: Problem = {
     },
     {
       lines: [8],
-      label: "Flip node 2's arrow: it points back at node 1.",
+      label: "Node 2's top link retracts and a green arc draws in below, pointing back at node 1.",
       visuals: [list([null, 0, 1, null], { prev: 1, cur: 2, next: 3 }, [2])],
     },
     {
@@ -105,7 +107,7 @@ export const reverseLinkedList: Problem = {
     },
     {
       lines: [8],
-      label: "Flip the final arrow: node 3 points back at node 2. Every arrow is now reversed.",
+      label: "The last link redraws below, node 3 → node 2. Every arc now bows along the bottom — the list is fully reversed.",
       variables: { next: "null" },
       visuals: [list([null, 0, 1, 2], { prev: 2, cur: 3 }, [3])],
     },
@@ -125,7 +127,7 @@ export const reverseLinkedList: Problem = {
       lines: [12],
       label: "Return `prev` — node 3, the old tail, is the new head: 3 → 2 → 1 → 0. ✓",
       variables: { result: "3 → 2 → 1 → 0" },
-      visuals: [list([null, 0, 1, 2], { prev: 3 }, [3])],
+      visuals: [{ ...list([null, 0, 1, 2], { prev: 3 }, [3]), celebrate: true }],
     },
   ],
   approach: {

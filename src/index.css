@@ -814,69 +814,103 @@ body {
 
 /* ---------- Linked list ---------- */
 
-.list-row {
+.ll-scroll {
+  overflow-x: auto;
   display: flex;
-  align-items: flex-start;
-}
-
-.list-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.list-node {
-  position: relative;
-  width: 52px;
-  height: 52px;
-  display: flex;
-  align-items: center;
   justify-content: center;
+  padding: 4px 2px;
+}
+
+.ll-stage {
+  position: relative;
+  flex: none;
+}
+
+.ll-arcs {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.ll-node {
+  position: absolute;
+  display: flex;
+  align-items: stretch;
+  height: 50px;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.ll-node-hot {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 0 18px var(--accent-soft);
+}
+
+.ll-val {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
   font-family: var(--font-mono);
   font-size: 18px;
   font-weight: 600;
+  color: var(--text);
 }
 
-.list-null-badge {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  font-size: 12px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  width: 20px;
-  height: 20px;
+.ll-next {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--red);
+  width: 22px;
+  border-left: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
 }
 
-.list-gap {
+.ll-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.ll-dot-rev {
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+}
+
+.ll-ground {
+  font-size: 13px;
+  color: var(--red);
+  line-height: 1;
+}
+
+.ll-pointer-slot {
+  position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 52px;
-  width: 34px;
   align-items: center;
+  gap: 2px;
 }
 
-.list-arrow {
-  font-size: 16px;
+.ll-pointer {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   line-height: 1.1;
-  color: var(--border);
-  opacity: 0.35;
-  transition: all 0.25s ease;
 }
 
-.list-arrow-on {
+.ll-pointer-caret {
   color: var(--accent);
-  opacity: 1;
-  font-weight: 700;
+  font-size: 10px;
 }
 
 /* ---------- Tree ---------- */

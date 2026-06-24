@@ -74,6 +74,10 @@ export interface LinkedListVisualState {
    *  omitted here and shown in the variables panel instead. */
   pointers?: Record<string, number>;
   highlighted?: number[];
+  /** When true the visual will play a one-shot celebration after ~800 ms:
+   *  the list re-renders in its reversed reading order (new head → … → tail)
+   *  with forward arcs so the viewer can "read" the result naturally. */
+  celebrate?: boolean;
 }
 
 export interface ContainerVisualState {
