@@ -1,4 +1,4 @@
-import type { Problem, VisualState } from "../../domain/types";
+import type { LinkedListVisualState, Problem, VisualState } from "../../domain/types";
 import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/LinkedList/ReorderLinkedList,
@@ -30,6 +30,19 @@ const code = `public class Solution {
             secondHalfReversed = secondNext;
         }
     }
+
+    private ListNode ReverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode cur = head;
+        while (cur != null)
+        {
+            ListNode next = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = next;
+        }
+        return prev;
+    }
 }`;
 
 function whole(pointers: Record<string, number>): VisualState {
@@ -37,6 +50,15 @@ function whole(pointers: Record<string, number>): VisualState {
 }
 function first(items: number[], highlighted?: number[]): VisualState {
   return { type: "array", title: "first half", items, highlighted };
+}
+// LinkedList visual for the second half [8, 10] as ReverseList executes on it.
+// next[i] tracks live next-pointer state; nodes stay put, only arrows change.
+function secondLL(
+  next: (number | null)[],
+  pointers?: Record<string, number>,
+  highlighted?: number[]
+): LinkedListVisualState {
+  return { type: "linkedlist", title: "second half", values: [8, 10], next, pointers, highlighted };
 }
 function second(items: number[], highlighted?: number[]): VisualState {
   return { type: "array", title: "second half (reversed)", items, highlighted };
@@ -59,6 +81,7 @@ export const reorderList: Problem = {
       input: "head = [2, 4, 6, 8, 10]",
       code,
       steps: [
+        // ── Phase 1: find the middle ──────────────────────────────────────
         {
           lines: [4, 5, 6],
           label: "Reorder weaves first, last, second, second-last, … in three phases. Phase 1: find the middle with `slow` (1×) and `fast` (2×) pointers.",
@@ -74,23 +97,67 @@ export const reorderList: Problem = {
           label: "`slow` → node 6, `fast` → node 10. `fast` can't move 2 more, so the loop ends. `slow` (node 6) is the middle.",
           visuals: [whole({ slow: 2, fast: 4 })],
         },
+        // ── Phase 2: split ────────────────────────────────────────────────
         {
           lines: [13, 14],
-          label: "Phase 2: cut after slow. First half [2, 4, 6], second half [8, 10].",
-          visuals: [first([2, 4, 6]), { type: "array", title: "second half", items: [8, 10] }],
+          label: "Phase 2: `secondHalf = slow.next` captures node 8, then `slow.next = null` severs the list. First half [2, 4, 6], second half [8, 10].",
+          visuals: [first([2, 4, 6]), secondLL([1, null])],
+        },
+        // ── Phase 3: step into ReverseList([8, 10]) ───────────────────────
+        {
+          lines: [15, 30, 31],
+          label: "Phase 3: stepping into `ReverseList(secondHalf)`. `prev` starts null (nothing reversed yet), `cur` starts at the head — node 8.",
+          variables: { prev: "null" },
+          visuals: [first([2, 4, 6]), secondLL([1, null], { cur: 0 })],
         },
         {
-          lines: [16],
-          label: "Phase 3: reverse the second half → [10, 8].",
-          visuals: [first([2, 4, 6]), second([10, 8])],
+          lines: [34],
+          label: "Iteration 1 — save `next` before breaking the link: `next` = node 10.",
+          variables: { prev: "null" },
+          visuals: [first([2, 4, 6]), secondLL([1, null], { cur: 0, next: 1 }, [0])],
         },
         {
-          lines: [18, 20, 21, 22, 23, 24, 25],
-          label: "Weave: splice `firstHalf`'s head (2) → reversed head (10) → `firstHalf`'s next (4). Advance both.",
+          lines: [35],
+          label: "Flip: `cur.next = prev` — node 8's forward arc retracts. It now points to `null` (prev), becoming the new tail.",
+          variables: { prev: "null" },
+          visuals: [first([2, 4, 6]), secondLL([null, null], { cur: 0, next: 1 }, [0])],
+        },
+        {
+          lines: [36, 37],
+          label: "Slide trackers forward: `prev` = node 8, `cur` = the saved `next` (node 10).",
+          visuals: [first([2, 4, 6]), secondLL([null, null], { prev: 0, cur: 1 })],
+        },
+        {
+          lines: [34],
+          label: "Iteration 2 — `cur.next` is `null` (node 10 was the old tail), so `next` = `null`.",
+          variables: { next: "null" },
+          visuals: [first([2, 4, 6]), secondLL([null, null], { prev: 0, cur: 1 }, [1])],
+        },
+        {
+          lines: [35],
+          label: "Flip: `cur.next = prev` — a backward arc draws in under the nodes, node 10 → node 8. The second half is now fully reversed.",
+          variables: { next: "null" },
+          visuals: [first([2, 4, 6]), secondLL([null, 0], { prev: 0, cur: 1 }, [1])],
+        },
+        {
+          lines: [36, 37, 33],
+          label: "`prev` = node 10, `cur` = `next` = `null`. `cur` is null — the loop exits.",
+          variables: { cur: "null", next: "null" },
+          visuals: [first([2, 4, 6]), secondLL([null, 0], { prev: 1 })],
+        },
+        {
+          lines: [39],
+          label: "Return `prev` (node 10) — the old tail is now the head: 10 → 8. Back in `ReorderList`, this becomes `secondHalfReversed`.",
+          visuals: [first([2, 4, 6]), secondLL([null, 0], { prev: 1 }, [1])],
+        },
+        // ── Phase 4: weave ────────────────────────────────────────────────
+        {
+          lines: [18, 21, 22, 23, 24, 25, 26],
+          label: "Phase 4 — weave: splice firstHalf head (2) → reversed head (10) → firstHalf's next (4). Advance both pointers.",
           visuals: [first([2, 4, 6], [0]), second([10, 8], [0]), result([2, 10])],
         },
         {
-          lines: [20, 22, 23, 24, 25],
+          lines: [21, 23, 24, 25, 26],
           label: "Again: 4 → 8 → 6. Advance both; the reversed half is now exhausted.",
           visuals: [first([2, 4, 6], [1]), second([10, 8], [1]), result([2, 10, 4, 8])],
         },

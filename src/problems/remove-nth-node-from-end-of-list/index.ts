@@ -1,4 +1,4 @@
-import type { Problem, VisualState } from "../../domain/types";
+import type { LinkedListVisualState, Problem } from "../../domain/types";
 import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/LinkedList/RemoveNthFromEnd,
@@ -21,9 +21,28 @@ const code = `public class Solution {
     }
 }`;
 
-// "·" is the dummy node sitting before the real head; nodes 1..4 follow.
-function arr(pointers: Record<string, number>, dimmed?: number[]): VisualState {
-  return { type: "array", title: "·(dummy) → 1 → 2 → 3 → 4", items: ["·", 1, 2, 3, 4], pointers, dimmed };
+// Index 0 is the dummy "·"; real nodes [1,2,3,4] at indices 1–4.
+// n = 2 → node at index 3 (value 3) is 2nd from the end and will be deleted.
+// After deletion: left.next (index 2) skips index 3 and points to index 4.
+// Node 3's own next is also cleared to null so it renders as a fully isolated box.
+const N_INIT: (number | null)[] = [1, 2, 3, 4, null];
+const N_DEL:  (number | null)[] = [1, 2, 4, null, null];
+
+function list(
+  next: (number | null)[],
+  pointers: Record<string, number>,
+  highlighted?: number[],
+  removed?: number[]
+): LinkedListVisualState {
+  return {
+    type: "linkedlist",
+    title: "·(dummy) → 1 → 2 → 3 → 4",
+    values: ["·", 1, 2, 3, 4],
+    next,
+    pointers,
+    highlighted,
+    removed,
+  };
 }
 
 export const removeNthNodeFromEndOfList: Problem = {
@@ -44,34 +63,35 @@ export const removeNthNodeFromEndOfList: Problem = {
           lines: [3, 4, 5],
           label: "A `dummy` node before the head lets us delete even the first node uniformly. `left` starts at `dummy`, `right` at the head.",
           variables: { n: "2" },
-          visuals: [arr({ left: 0, right: 1 })],
+          visuals: [list(N_INIT, { left: 0, right: 1 })],
         },
         {
           lines: [6, 7, 8],
           label: "Open a gap: move `right` n = 2 nodes ahead. `right` lands on node 3, `n` hits 0.",
           variables: { n: "0" },
-          visuals: [arr({ left: 0, right: 3 })],
+          visuals: [list(N_INIT, { left: 0, right: 3 })],
         },
         {
           lines: [10, 11, 12],
-          label: "Now slide BOTH forward together, keeping the gap of 2: `left` → node 1, `right` → node 4.",
-          visuals: [arr({ left: 1, right: 4 })],
+          label: "Slide BOTH forward together, keeping the gap of 2: `left` → node 1, `right` → node 4.",
+          visuals: [list(N_INIT, { left: 1, right: 4 })],
         },
         {
           lines: [10, 11, 12],
-          label: "Again: `left` → node 2, `right` → off the end (`null`). The loop stops — `left` is now exactly one before the target.",
-          visuals: [arr({ left: 2 })],
+          label: "`left` → node 2, `right` → off the end (`null`). The loop stops — `left` is now exactly one before the target.",
+          variables: { right: "null" },
+          visuals: [list(N_INIT, { left: 2 })],
         },
         {
           lines: [14],
-          label: "`left.next = left.next.next` skips node 3 (the 2nd from the end). It's unlinked.",
-          visuals: [arr({ left: 2 }, [3])],
+          label: "`left.next = left.next.next` — the arc from node 2 to node 3 retracts and a new arc draws in connecting node 2 directly to node 4. Node 3 drops out of the chain.",
+          visuals: [list(N_DEL, { left: 2 }, undefined, [3])],
         },
         {
           lines: [15],
           label: "Return `dummy.next` → [1, 2, 4]. ✓",
           variables: { result: "[1, 2, 4]" },
-          visuals: [arr({ left: 2 }, [3])],
+          visuals: [list(N_DEL, { left: 2 }, undefined, [3])],
         },
       ],
       approach: {

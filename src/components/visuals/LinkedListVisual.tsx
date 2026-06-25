@@ -9,7 +9,9 @@ import type { LinkedListVisualState } from "../../domain/types";
  *  reassigned the old arc retracts (the link "breaks") and the new arc
  *  draws itself in (the link "reconnects"), so a reversal sweeps visibly
  *  top-to-bottom across the row. Named pointers (prev/cur/next) glide
- *  between nodes below (or above when pointerPosition="above"). */
+ *  between nodes below (or above when pointerPosition="above").
+ *  Nodes in `removed` animate down below the chain so the surviving
+ *  path is visually unobstructed. */
 
 const NODE_W = 66;
 const NODE_H = 50;
@@ -17,6 +19,7 @@ const GAP = 50;
 const ARC_RISE = 10;       // how far regular arcs bow above / below the node row
 const CYCLE_ARC_RISE = 90; // shallower dip for cycle back-links
 const POINTER_AREA = 56;   // room for pointer labels
+const REMOVED_GAP = 28;    // extra vertical gap between chain and removed nodes
 
 const nodeX = (i: number) => i * (NODE_W + GAP);
 
@@ -26,6 +29,7 @@ export function LinkedListVisual({
   next,
   pointers = {},
   highlighted = [],
+  removed = [],
   pointerPosition = "below",
   cycleEdges = [],
   celebrate = false,
@@ -66,23 +70,27 @@ export function LinkedListVisual({
     : pointers;
 
   const cycleSet = new Set(cycleEdges.map(([f, t]) => `${f}-${t}`));
+  const removedSet = new Set(removed);
+  const hasRemoved = removed.length > 0;
 
-  // Layout depends on where pointers live.
-  // "above": allocate just enough room for a pointer label (~28px) + a small gap above the nodes.
-  const ABOVE_PAD = 38; // px reserved above node tops for labels when pointerPosition="above"
-  const padTop = pointerPosition === "above"
-    ? ABOVE_PAD
-    : ARC_RISE + 12;
+  // Layout
+  const ABOVE_PAD = 38;
+  const padTop = pointerPosition === "above" ? ABOVE_PAD : ARC_RISE + 12;
   const centerY = padTop + NODE_H / 2;
   const n = values.length;
   const svgW = n * NODE_W + (n - 1) * GAP;
+
+  // When removed nodes are present (below mode only), add room beneath the pointer area.
+  const removedTop = padTop + NODE_H + ARC_RISE + POINTER_AREA - 8;
   const svgH = pointerPosition === "above"
     ? padTop + NODE_H + CYCLE_ARC_RISE + 10
-    : padTop + NODE_H + ARC_RISE + POINTER_AREA;
+    : padTop + NODE_H + ARC_RISE + POINTER_AREA + (hasRemoved ? NODE_H + REMOVED_GAP : 0);
 
+  // Arcs — skip any arc whose source or target is a removed node.
   const arcs = displayValues.flatMap((_, i) => {
     const t = displayNext[i];
     if (t === null || t === undefined) return [];
+    if (removedSet.has(i) || removedSet.has(t)) return [];
     const isCycle = cycleSet.has(`${i}-${t}`);
     const forward = t > i;
     const rise = isCycle ? CYCLE_ARC_RISE : ARC_RISE;
@@ -97,7 +105,7 @@ export function LinkedListVisual({
   });
 
   const pointerSlotTop = pointerPosition === "above"
-    ? padTop - 4   // slot is anchored here; translateY(-100%) makes it grow upward
+    ? padTop - 4
     : padTop + NODE_H + ARC_RISE - 2;
 
   return (
@@ -140,19 +148,25 @@ export function LinkedListVisual({
           </svg>
 
           {displayValues.map((value, i) => {
+            const isRemoved = removedSet.has(i);
             const t = displayNext[i];
             const isNull = t === null || t === undefined;
             const reversed = !isNull && (t as number) < i;
             const pointerNames = Object.entries(displayPointers)
               .filter(([, idx]) => idx === i)
               .map(([name]) => name);
+            const nodeTop = isRemoved ? removedTop : padTop;
             return (
               <div key={i}>
                 <motion.div
                   className={`ll-node${highlighted.includes(i) ? " ll-node-hot" : ""}`}
-                  style={{ left: nodeX(i), top: padTop }}
-                  animate={{ scale: highlighted.includes(i) ? 1.07 : 1 }}
-                  transition={{ type: "spring", stiffness: 380, damping: 22 }}
+                  style={{ left: nodeX(i), top: nodeTop, opacity: isRemoved ? 0.45 : 1 }}
+                  animate={{
+                    top: nodeTop,
+                    opacity: isRemoved ? 0.45 : 1,
+                    scale: highlighted.includes(i) ? 1.07 : 1,
+                  }}
+                  transition={{ type: "spring", stiffness: 260, damping: 26 }}
                 >
                   <AnimatePresence mode="wait">
                     <motion.span

@@ -74,6 +74,9 @@ export interface LinkedListVisualState {
    *  omitted here and shown in the variables panel instead. */
   pointers?: Record<string, number>;
   highlighted?: number[];
+  /** Indices of nodes that have been unlinked and should drop below the main row.
+   *  Clears the chain's visual path so the surviving arcs read without obstruction. */
+  removed?: number[];
   /** "above" places pointer labels above the node row (leaves the bottom clean for cycle arcs).
    *  Defaults to "below". */
   pointerPosition?: "above" | "below";
