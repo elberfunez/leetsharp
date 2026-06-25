@@ -74,6 +74,12 @@ export interface LinkedListVisualState {
    *  omitted here and shown in the variables panel instead. */
   pointers?: Record<string, number>;
   highlighted?: number[];
+  /** "above" places pointer labels above the node row (leaves the bottom clean for cycle arcs).
+   *  Defaults to "below". */
+  pointerPosition?: "above" | "below";
+  /** [from, to] index pairs that represent cycle back-links — rendered in yellow
+   *  with a shallower arc so they're visually distinct from reversed links. */
+  cycleEdges?: [number, number][];
   /** When true the visual will play a one-shot celebration after ~800 ms:
    *  the list re-renders in its reversed reading order (new head → … → tail)
    *  with forward arcs so the viewer can "read" the result naturally. */

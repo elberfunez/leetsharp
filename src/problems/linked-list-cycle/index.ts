@@ -1,4 +1,4 @@
-import type { Problem, VisualState } from "../../domain/types";
+import type { LinkedListVisualState, Problem } from "../../domain/types";
 import { ELBER } from "../authors";
 
 // Elber's actual solution from LeetcodePractice/Problems/LinkedList/LinkedListCycleDetection,
@@ -17,8 +17,24 @@ const code = `public class Solution {
     }
 }`;
 
-function arr(slow: number, fast: number, highlighted?: number[]): VisualState {
-  return { type: "array", title: "nodes (tail links back to node 2)", items: [1, 2, 3, 4], pointers: { slow, fast }, highlighted };
+// next[3] = 1 means the tail (value 4) points back to index 1 (value 2) — the cycle.
+// The structure never changes; only slow/fast pointers move.
+const CYCLE_NEXT: (number | null)[] = [1, 2, 3, 1];
+
+function list(
+  pointers?: Record<string, number>,
+  highlighted?: number[]
+): LinkedListVisualState {
+  return {
+    type: "linkedlist",
+    title: "list (tail → node 2)",
+    values: [1, 2, 3, 4],
+    next: CYCLE_NEXT,
+    pointerPosition: "above",
+    cycleEdges: [[3, 1]],
+    pointers,
+    highlighted,
+  };
 }
 
 export const linkedListCycle: Problem = {
@@ -37,29 +53,29 @@ export const linkedListCycle: Problem = {
       steps: [
         {
           lines: [3, 4],
-          label: "Two pointers start at the head. `slow` will step once per turn, `fast` twice. If a cycle exists, `fast` laps `slow` and they collide; if `fast` reaches the end, there's no cycle. (Here the tail loops back to node 2.)",
-          visuals: [arr(0, 0)],
+          label: "Two pointers start at the head. `slow` will step once per turn, `fast` twice. If a cycle exists, `fast` laps `slow` and they collide; if `fast` reaches the end, there's no cycle. The backward arc below shows the tail (node 4) looping back to node 2.",
+          visuals: [list({ slow: 0, fast: 0 })],
         },
         {
           lines: [7, 8, 9],
           label: "`slow` → node 2 (1 step). `fast` → node 3 (2 steps). Not equal yet.",
-          visuals: [arr(1, 2)],
+          visuals: [list({ slow: 1, fast: 2 })],
         },
         {
           lines: [7, 8, 9],
-          label: "`slow` → node 3. `fast` moves 2: node 4, then the tail wraps back to node 2. They're not equal.",
-          visuals: [arr(2, 1)],
+          label: "`slow` → node 3. `fast` moves 2: node 4, then follows the cycle arc back to node 2. They're not equal.",
+          visuals: [list({ slow: 2, fast: 1 })],
         },
         {
           lines: [7, 8, 9],
           label: "`slow` → node 4. `fast` moves 2: node 3 → node 4. Both land on node 4 — collision!",
-          visuals: [arr(3, 3, [3])],
+          visuals: [list({ slow: 3, fast: 3 }, [3])],
         },
         {
           lines: [9],
           label: "`slow` == `fast` → a cycle exists. Return `true`. ✓",
           variables: { result: "true" },
-          visuals: [arr(3, 3, [3])],
+          visuals: [list({ slow: 3, fast: 3 }, [3])],
         },
       ],
       approach: {

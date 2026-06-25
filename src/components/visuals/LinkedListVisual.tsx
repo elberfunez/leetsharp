@@ -9,17 +9,16 @@ import type { LinkedListVisualState } from "../../domain/types";
  *  reassigned the old arc retracts (the link "breaks") and the new arc
  *  draws itself in (the link "reconnects"), so a reversal sweeps visibly
  *  top-to-bottom across the row. Named pointers (prev/cur/next) glide
- *  between nodes below. */
+ *  between nodes below (or above when pointerPosition="above"). */
 
 const NODE_W = 66;
 const NODE_H = 50;
 const GAP = 50;
-const ARC_RISE = 38; // how far arcs bow above / below the node row
-const PAD_TOP = ARC_RISE + 12;
-const POINTER_AREA = 56; // room below the bottom arcs for pointer labels
+const ARC_RISE = 10;       // how far regular arcs bow above / below the node row
+const CYCLE_ARC_RISE = 90; // shallower dip for cycle back-links
+const POINTER_AREA = 56;   // room for pointer labels
 
 const nodeX = (i: number) => i * (NODE_W + GAP);
-const centerY = PAD_TOP + NODE_H / 2;
 
 export function LinkedListVisual({
   title,
@@ -27,20 +26,18 @@ export function LinkedListVisual({
   next,
   pointers = {},
   highlighted = [],
+  pointerPosition = "below",
+  cycleEdges = [],
   celebrate = false,
 }: LinkedListVisualState) {
   const [flipped, setFlipped] = useState(false);
 
-  // When celebrate turns on, wait 900 ms then show the reversed reading order.
-  // Reset if the prop turns off (user navigated away from the final step).
   useEffect(() => {
     if (!celebrate) { setFlipped(false); return; }
     const id = setTimeout(() => setFlipped(true), 900);
     return () => clearTimeout(id);
   }, [celebrate]);
 
-  // In flipped mode we derive the natural reading order from the next-pointer
-  // chain and display it left-to-right with simple forward arcs.
   const flipOrder: number[] = (() => {
     if (!flipped) return [];
     const inDegree = new Array(values.length).fill(0);
@@ -59,7 +56,6 @@ export function LinkedListVisual({
     ? displayValues.map((_, i) => (i < displayValues.length - 1 ? i + 1 : null))
     : next;
 
-  // Remap pointer indices to their new display positions when flipped.
   const displayPointers: Record<string, number> = flipped
     ? Object.fromEntries(
         Object.entries(pointers).map(([name, origIdx]) => [
@@ -69,29 +65,40 @@ export function LinkedListVisual({
       )
     : pointers;
 
+  const cycleSet = new Set(cycleEdges.map(([f, t]) => `${f}-${t}`));
+
+  // Layout depends on where pointers live.
+  // "above": allocate just enough room for a pointer label (~28px) + a small gap above the nodes.
+  const ABOVE_PAD = 38; // px reserved above node tops for labels when pointerPosition="above"
+  const padTop = pointerPosition === "above"
+    ? ABOVE_PAD
+    : ARC_RISE + 12;
+  const centerY = padTop + NODE_H / 2;
   const n = values.length;
   const svgW = n * NODE_W + (n - 1) * GAP;
-  const svgH = PAD_TOP + NODE_H + ARC_RISE + POINTER_AREA;
+  const svgH = pointerPosition === "above"
+    ? padTop + NODE_H + CYCLE_ARC_RISE + 10
+    : padTop + NODE_H + ARC_RISE + POINTER_AREA;
 
-  // Build the set of arcs to draw this step, each with a stable key so
-  // framer-motion can animate breaking (exit) and reconnecting (enter).
   const arcs = displayValues.flatMap((_, i) => {
     const t = displayNext[i];
     if (t === null || t === undefined) return [];
+    const isCycle = cycleSet.has(`${i}-${t}`);
     const forward = t > i;
+    const rise = isCycle ? CYCLE_ARC_RISE : ARC_RISE;
     const sx = forward ? nodeX(i) + NODE_W : nodeX(i);
     const ex = forward ? nodeX(t) : nodeX(t) + NODE_W;
     const y = forward ? centerY - 8 : centerY + 8;
     const midX = (sx + ex) / 2;
-    const ctrlY = forward ? centerY - ARC_RISE : centerY + ARC_RISE;
-    return [
-      {
-        key: forward ? `fwd-${i}` : `bwd-${i}`,
-        d: `M ${sx} ${y} Q ${midX} ${ctrlY} ${ex} ${y}`,
-        forward,
-      },
-    ];
+    const ctrlY = forward ? centerY - rise : centerY + rise;
+    const color = isCycle ? "var(--yellow)" : forward ? "var(--accent)" : "var(--green)";
+    const markerId = isCycle ? "ll-head-cycle" : forward ? "ll-head-fwd" : "ll-head-bwd";
+    return [{ key: isCycle ? `cycle-${i}` : forward ? `fwd-${i}` : `bwd-${i}`, d: `M ${sx} ${y} Q ${midX} ${ctrlY} ${ex} ${y}`, color, markerId }];
   });
+
+  const pointerSlotTop = pointerPosition === "above"
+    ? padTop - 4   // slot is anchored here; translateY(-100%) makes it grow upward
+    : padTop + NODE_H + ARC_RISE - 2;
 
   return (
     <div className="visual-block">
@@ -100,25 +107,14 @@ export function LinkedListVisual({
         <div className="ll-stage" style={{ width: svgW, height: svgH }}>
           <svg className="ll-arcs" width={svgW} height={svgH} viewBox={`0 0 ${svgW} ${svgH}`}>
             <defs>
-              <marker
-                id="ll-head-fwd"
-                markerWidth="9"
-                markerHeight="9"
-                refX="7"
-                refY="3"
-                orient="auto"
-              >
+              <marker id="ll-head-fwd"   markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
                 <path d="M0,0 L7,3 L0,6 Z" fill="var(--accent)" />
               </marker>
-              <marker
-                id="ll-head-bwd"
-                markerWidth="9"
-                markerHeight="9"
-                refX="7"
-                refY="3"
-                orient="auto"
-              >
+              <marker id="ll-head-bwd"   markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
                 <path d="M0,0 L7,3 L0,6 Z" fill="var(--green)" />
+              </marker>
+              <marker id="ll-head-cycle" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+                <path d="M0,0 L7,3 L0,6 Z" fill="var(--yellow)" />
               </marker>
             </defs>
             <AnimatePresence>
@@ -127,10 +123,10 @@ export function LinkedListVisual({
                   key={arc.key}
                   d={arc.d}
                   fill="none"
-                  stroke={arc.forward ? "var(--accent)" : "var(--green)"}
+                  stroke={arc.color}
                   strokeWidth={2.5}
                   strokeLinecap="round"
-                  markerEnd={`url(#${arc.forward ? "ll-head-fwd" : "ll-head-bwd"})`}
+                  markerEnd={`url(#${arc.markerId})`}
                   initial={{ pathLength: 0, opacity: 0 }}
                   animate={{ pathLength: 1, opacity: 1 }}
                   exit={{ pathLength: 0, opacity: 0 }}
@@ -154,7 +150,7 @@ export function LinkedListVisual({
               <div key={i}>
                 <motion.div
                   className={`ll-node${highlighted.includes(i) ? " ll-node-hot" : ""}`}
-                  style={{ left: nodeX(i), top: PAD_TOP }}
+                  style={{ left: nodeX(i), top: padTop }}
                   animate={{ scale: highlighted.includes(i) ? 1.07 : 1 }}
                   transition={{ type: "spring", stiffness: 380, damping: 22 }}
                 >
@@ -181,7 +177,12 @@ export function LinkedListVisual({
                 {pointerNames.length > 0 && (
                   <div
                     className="ll-pointer-slot"
-                    style={{ left: nodeX(i), top: PAD_TOP + NODE_H + ARC_RISE - 2, width: NODE_W }}
+                    style={{
+                      left: nodeX(i),
+                      top: pointerSlotTop,
+                      width: NODE_W,
+                      ...(pointerPosition === "above" && { transform: "translateY(-100%)" }),
+                    }}
                   >
                     {pointerNames.map((name) => (
                       <motion.div
@@ -190,7 +191,10 @@ export function LinkedListVisual({
                         className="ll-pointer"
                         transition={{ type: "spring", stiffness: 350, damping: 28 }}
                       >
-                        <span className="ll-pointer-caret">▲</span> {name}
+                        <span className="ll-pointer-caret">
+                          {pointerPosition === "above" ? "▼" : "▲"}
+                        </span>{" "}
+                        {name}
                       </motion.div>
                     ))}
                   </div>
