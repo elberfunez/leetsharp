@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   Search, List, LayoutGrid, Play,
-  Star, GitBranch, GitFork,
+  Star, GitBranch, GitFork, MessageSquare,
 } from "lucide-react";
 import type { Problem } from "../domain/types";
 import { problems } from "../problems";
@@ -120,6 +120,14 @@ export function HomePage() {
             className="home-link"
           >
             <GitFork size={14} strokeWidth={2} /> Contribute
+          </a>
+          <a
+            href="https://github.com/elberfunez/leetsharp/issues/new?title=Feedback&body=**Type:**%20Bug%20%2F%20Suggestion%0A%0A**Description:**%0A"
+            target="_blank"
+            rel="noreferrer"
+            className="home-link"
+          >
+            <MessageSquare size={14} strokeWidth={2} /> Feedback
           </a>
         </div>
       </aside>

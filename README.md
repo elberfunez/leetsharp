@@ -2,12 +2,11 @@
 
 **LeetCode, visualized for C# developers.**
 
-Curated C# solutions to the [Blind 75](https://neetcode.io/practice) with step-by-step
-animated visualizations. Step through a solution line by line and watch the data
-structures change — pointers glide across arrays, dictionary entries appear as they're
-stored, the matching pair lights up when it's found.
+Curated C# solutions with step-by-step animated visualizations. Step through a solution
+line by line and watch the data structures change — pointers glide across arrays,
+dictionary entries appear as they're stored, the matching pair lights up when it's found.
 
-No accounts. No submissions. Free.
+No accounts. No submissions. Free. Open source.
 
 ## Running locally
 
@@ -23,6 +22,8 @@ which lines of the C# solution are executing and what every data structure looks
 that moment. Nothing is executed or AI-generated at runtime — step data is authored once
 (AI-assisted), reviewed by a human, and committed as plain TypeScript. That keeps the
 visualizations fast, free to serve, and — most importantly — correct.
+
+Community contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) to add your solutions.
 
 ## Architecture
 
@@ -68,12 +69,14 @@ one new variant + one new renderer, and every problem in that family becomes pur
 
 1. Create `src/problems/<slug>/index.ts` exporting a `Problem`: the C# solution as a
    string, the step frames, and the approach write-up.
-2. Register it in `src/problems/index.ts`.
+2. Register it in `src/problems/index.ts` (organized by the NeetCode roadmap).
 3. If it needs a visual type that doesn't exist yet, add a variant to `VisualState`
    and a renderer in `components/visuals/`.
 
 Step data can be drafted with an LLM (give it the solution and the `Step` schema),
 but **every frame gets hand-verified before it ships** — accuracy is the product.
+
+For detailed contribution guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Tech
 
@@ -84,7 +87,8 @@ but **every frame gets hand-verified before it ships** — accuracy is the produ
 ## Roadmap
 
 - [x] **Phase 1** — Visualizer engine + Two Sum end to end
-- [ ] **Phase 2** — Routing + problem list; one problem per visual family
-        (binary search, linked list, tree, graph, DP grid, stack, sliding window)
-- [ ] **Phase 3** — Author the remaining Blind 75
+- [x] **Phase 2** — Routing + problem list; 35+ problems across NeetCode roadmap topics
+- [ ] **Phase 3** — Expand coverage: more problems across all roadmap categories
 - [ ] **Phase 4** — Polish: keyboard shortcuts, shareable step links, mobile
+
+Want to help? [Contribute a problem!](CONTRIBUTING.md)

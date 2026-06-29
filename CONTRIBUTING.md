@@ -1,17 +1,17 @@
 # Contributing to LeetSharp
 
-Thanks for helping make algorithm learning better for C# devs. Here's how.
+Thanks for helping make algorithm learning better for C# developers. Here's how.
 
 ## Adding a problem
 
-1. **Solve it.** Make sure you have a clean, working C# solution for a Blind 75 problem.
+1. **Solve it.** Make sure you have a clean, working C# solution for any LeetCode problem.
 2. **Create the folder:** `src/problems/<slug>/index.ts` (e.g., `src/problems/3sum/index.ts`).
 3. **Define the `Problem` object:**
    - `author`: import your author constant from `src/problems/authors.ts` (add yourself there if you're new — see below)
    - `code`: your C# solution as a string, pasted from your submission
    - `steps`: an array tracing the algorithm on a real example (see existing problems for structure)
    - `approach`: summary, complexity, C#-specific notes
-4. **Register it:** add the import and export to `src/problems/index.ts`.
+4. **Register it:** add the import and export to `src/problems/index.ts`. Keep the comment order in sync with the [NeetCode roadmap](https://neetcode.io/roadmap).
 5. **Test:** `npm run dev`, click to your problem, step through it, verify every step maps to your code.
 6. **Open a PR** with a clear title: "Add [Problem Name] with [visual type]" (e.g., "Add 3Sum with ArrayVisual").
 
