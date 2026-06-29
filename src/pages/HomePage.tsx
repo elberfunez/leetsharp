@@ -10,26 +10,12 @@ import { problems } from "../problems";
 import { tagsFor } from "../problems/tags";
 import { RoadmapView } from "../components/RoadmapView";
 import { CategoryPanel } from "../components/CategoryPanel";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 type View = "grid" | "list" | "map";
 type Diff = "All" | "Easy" | "Medium" | "Hard";
 
 const isView = (v: string | null): v is View => v === "grid" || v === "list" || v === "map";
-
-/** Tracks the phone breakpoint so we can force list view and drop the roadmap. */
-function useIsMobile() {
-  const query = "(max-width: 600px)";
-  const [isMobile, setIsMobile] = useState(
-    () => typeof window !== "undefined" && window.matchMedia(query).matches
-  );
-  useEffect(() => {
-    const mq = window.matchMedia(query);
-    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
-  return isMobile;
-}
 
 export function HomePage() {
   const [searchParams] = useSearchParams();

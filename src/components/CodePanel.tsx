@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Copy, Check } from "lucide-react";
 import { highlightCSharp } from "../lib/highlighter";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 interface Props {
   code: string;
@@ -8,11 +9,29 @@ interface Props {
   stepIndex: number;
 }
 
+/** Halve each line's leading indentation (4-space → 2-space) so deeply nested
+ *  C# fits a phone without burning half the width on indent. Line count is
+ *  unchanged, so step line numbers still line up. */
+function collapseIndent(src: string): string {
+  return src
+    .split("\n")
+    .map((line) => {
+      const lead = line.match(/^ +/);
+      if (!lead) return line;
+      return " ".repeat(Math.ceil(lead[0].length / 2)) + line.slice(lead[0].length);
+    })
+    .join("\n");
+}
+
 /** Syntax-highlighted C# source with the current step's lines spotlighted. */
 export function CodePanel({ code, activeLines, stepIndex }: Props) {
   const [html, setHtml] = useState("");
   const [copied, setCopied] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
+
+  // Compact indentation for display only; Copy always yields the original source.
+  const displayCode = isMobile ? collapseIndent(code) : code;
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(code);
@@ -22,13 +41,13 @@ export function CodePanel({ code, activeLines, stepIndex }: Props) {
 
   useEffect(() => {
     let cancelled = false;
-    highlightCSharp(code).then((result) => {
+    highlightCSharp(displayCode).then((result) => {
       if (!cancelled) setHtml(result);
     });
     return () => {
       cancelled = true;
     };
-  }, [code]);
+  }, [displayCode]);
 
   useEffect(() => {
     const container = containerRef.current;
