@@ -328,6 +328,34 @@ body {
   box-shadow: inset 3px 0 0 var(--accent);
 }
 
+/* Phones: shrink the font/gutter, and soft-wrap long lines so nothing is
+   clipped (no horizontal scroll). The line number is pulled out as an absolute
+   element so wrapped continuation text hangs past the gutter instead of sliding
+   under the number. Paired with collapseIndent() in CodePanel.tsx. */
+@media (max-width: 600px) {
+  .code-panel {
+    max-height: 460px;
+  }
+  .code-panel pre {
+    font-size: 12px;
+    line-height: 1.55;
+    padding: 12px 0;
+  }
+  .code-panel .line {
+    position: relative;
+    padding: 0 10px 0 30px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .code-panel .line::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 22px;
+    padding-right: 0;
+  }
+}
+
 @keyframes line-step-pulse {
   0%   { background-color: rgba(174, 113, 255, 0.42); }
   100% { background-color: transparent; }
