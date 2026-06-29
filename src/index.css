@@ -56,6 +56,12 @@ body {
   padding: 0 24px 64px;
 }
 
+@media (max-width: 600px) {
+  .app {
+    padding: 0 14px 48px;
+  }
+}
+
 /* ---------- Top bar ---------- */
 
 .topbar {
@@ -184,6 +190,29 @@ body {
   padding: 3px 10px;
 }
 
+@media (max-width: 600px) {
+  .problem-header {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin-bottom: 16px;
+  }
+  .problem-header h1 {
+    font-size: 21px;
+    flex-basis: 100%;
+  }
+  /* Drop the auto-margin so "Tracing:" sits on its own wrapped row
+     instead of being pushed off the right edge. */
+  .problem-input {
+    margin-left: 0;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+  }
+  .problem-input-value {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+}
+
 /* ---------- Workspace ---------- */
 
 .workspace {
@@ -200,8 +229,16 @@ body {
 }
 
 @media (max-width: 900px) {
+  /* minmax(0, 1fr) (not bare 1fr) so the column can shrink below the code
+     panel's min-content width — otherwise the long C# lines blow the track
+     wider than the viewport. min-width:0 on the children lets their internal
+     overflow:auto scroll regions actually clip instead of expanding. */
   .workspace {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .left-column,
+  .right-pane {
+    min-width: 0;
   }
 }
 
@@ -469,6 +506,21 @@ body {
   backdrop-filter: blur(4px);
 }
 
+@media (max-width: 600px) {
+  .array-cell {
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
+  }
+  /* Stack side-by-side visuals (e.g. Two Sum's array + dict) on phones. */
+  .visual-row {
+    flex-direction: column;
+  }
+  .visual-block {
+    padding: 12px;
+  }
+}
+
 .cell-highlighted {
   background: rgba(174, 113, 255, 0.28);
   border-color: var(--accent);
@@ -709,6 +761,30 @@ body {
   color: #fff;
 }
 
+/* On phones the transport row can't fit on one line — wrap it and give the
+   scrubber its own full-width row. Bump hit areas for touch. */
+@media (max-width: 600px) {
+  .step-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 12px;
+    border-radius: 18px;
+    padding: 12px 14px;
+  }
+  .scrubber {
+    order: 3;
+    flex-basis: 100%;
+    height: 6px;
+  }
+  .transport-btn {
+    width: 38px;
+    height: 38px;
+  }
+  .speed-btn {
+    padding: 6px 12px;
+  }
+}
+
 /* ---------- Approach ---------- */
 
 .approach {
@@ -717,6 +793,17 @@ body {
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 24px;
+}
+
+@media (max-width: 600px) {
+  .approach {
+    margin-top: 24px;
+    padding: 18px;
+  }
+  .complexity {
+    flex-direction: column;
+    gap: 8px;
+  }
 }
 
 .approach h2 {
@@ -821,6 +908,14 @@ body {
   padding: 4px 2px;
 }
 
+/* On phones a long chain overflows; left-align so the start stays reachable
+   instead of being clipped by center justification. */
+@media (max-width: 600px) {
+  .ll-scroll {
+    justify-content: flex-start;
+  }
+}
+
 .ll-stage {
   position: relative;
   flex: none;
@@ -916,13 +1011,16 @@ body {
 /* ---------- Tree ---------- */
 
 .tree-root {
-  display: flex;
-  justify-content: center;
+  /* Block + auto margins on the canvas: centers when it fits, and when the
+     tree is wider than the panel the auto margins collapse to 0 so it scrolls
+     from the left edge instead of clipping. */
+  overflow-x: auto;
   padding: 8px 0;
 }
 
 .tree-canvas {
   position: relative;
+  margin: 0 auto;
 }
 
 .tree-node {
@@ -1035,6 +1133,16 @@ body {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
+}
+
+@media (max-width: 600px) {
+  .problem-nav-row {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+  }
+  .nav-row-right {
+    gap: 12px;
+  }
 }
 
 .back-link {
@@ -1598,9 +1706,23 @@ body {
   border-bottom-color: var(--accent);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 600px) {
+  .topbar {
+    gap: 8px;
+    padding: 12px 0;
+    margin-bottom: 16px;
+  }
+  /* Phones: drop the Problems/Roadmap nav entirely. The roadmap map isn't
+     usable at this width, and the logo already links home. */
   .topnav {
     display: none;
+  }
+  .logo {
+    height: 28px;
+  }
+  .icon-btn {
+    width: 34px;
+    height: 34px;
   }
 }
 
@@ -1639,13 +1761,92 @@ body {
   align-items: start;
 }
 
-@media (max-width: 980px) {
+@media (max-width: 900px) {
   .home-layout {
     grid-template-columns: 1fr;
   }
-  .home-sidebar {
+  /* Sidebar becomes a slide-in drawer on tablets/phones.
+     `.home-layout >` raises specificity above the base `.home-sidebar` rule,
+     which is defined LATER in this file — without it that base rule's
+     `position: sticky` wins and the off-canvas sidebar stays in flow,
+     shoving the page content down below the fold. */
+  .home-layout > .home-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 60;
+    width: min(284px, 84vw);
+    height: 100%;
+    border-radius: 0;
+    border: none;
+    border-right: 1px solid var(--border);
+    transform: translateX(-100%);
+    transition: transform 0.22s ease;
+    overflow-y: auto;
+  }
+  .home-layout > .home-sidebar.drawer-open {
+    transform: translateX(0);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Drawer trigger + close: shown by default (mobile); the desktop-hide override
+   lives AFTER these base rules (see below) so source order resolves correctly. */
+.home-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.home-menu-btn:hover {
+  border-color: var(--accent);
+}
+
+.sidebar-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 4px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+.sidebar-close:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+/* Desktop: no drawer, so hide its trigger/close. Placed after the base rules
+   above so this override wins above 900px. */
+@media (min-width: 901px) {
+  .home-menu-btn,
+  .sidebar-close {
     display: none;
   }
+}
+
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  background: rgba(0, 0, 0, 0.55);
 }
 
 .home-sidebar {
@@ -1897,6 +2098,22 @@ body {
   gap: 16px;
 }
 
+@media (max-width: 600px) {
+  .dash-header {
+    padding: 18px;
+    margin-bottom: 18px;
+  }
+  .dash-controls {
+    margin-bottom: 24px;
+  }
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+  .cat-sections {
+    gap: 30px;
+  }
+}
+
 .glass-card {
   position: relative;
   display: flex;
@@ -2103,6 +2320,17 @@ body {
   padding: 40px 0 24px;
   border-top: 1px solid var(--border);
   text-align: center;
+}
+
+@media (max-width: 600px) {
+  .footer {
+    margin-top: 48px;
+    padding: 28px 0 20px;
+  }
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 14px 18px;
+  }
 }
 
 .footer-content {

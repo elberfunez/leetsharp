@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import {
   Search, List, LayoutGrid, Play,
   Star, GitBranch, GitFork, MessageSquare,
+  Menu, X,
 } from "lucide-react";
 import type { Problem } from "../domain/types";
 import { problems } from "../problems";
@@ -14,6 +15,21 @@ type View = "grid" | "list" | "map";
 type Diff = "All" | "Easy" | "Medium" | "Hard";
 
 const isView = (v: string | null): v is View => v === "grid" || v === "list" || v === "map";
+
+/** Tracks the phone breakpoint so we can force list view and drop the roadmap. */
+function useIsMobile() {
+  const query = "(max-width: 600px)";
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== "undefined" && window.matchMedia(query).matches
+  );
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+  return isMobile;
+}
 
 export function HomePage() {
   const [searchParams] = useSearchParams();
@@ -28,6 +44,17 @@ export function HomePage() {
   const [difficulty, setDifficulty] = useState<Diff>("All");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [openCategory, setOpenCategory] = useState<string | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const isMobile = useIsMobile();
+  // On phones the roadmap is dropped and only the list renders, regardless of
+  // the saved/desktop preference.
+  const effectiveView: View = isMobile ? "list" : view;
+
+  // Picking a category from the mobile drawer also closes it.
+  const chooseCategory = (cat: string | null) => {
+    setSelectedCategory(cat);
+    setDrawerOpen(false);
+  };
 
   useEffect(() => {
     if (view === "list" || view === "grid") {
@@ -81,11 +108,14 @@ export function HomePage() {
 
   return (
     <div className="home-layout">
-      <aside className="home-sidebar">
+      <aside className={`home-sidebar${drawerOpen ? " drawer-open" : ""}`}>
+        <button className="sidebar-close" onClick={() => setDrawerOpen(false)} aria-label="Close categories">
+          <X size={18} strokeWidth={2} />
+        </button>
         <nav className="sidebar-nav">
           <button
             className={`sidebar-link${selectedCategory === null ? " sidebar-active" : ""}`}
-            onClick={() => setSelectedCategory(null)}
+            onClick={() => chooseCategory(null)}
           >
             <span className="sidebar-link-label">
               <LayoutGrid size={15} strokeWidth={2} /> All Problems
@@ -98,7 +128,7 @@ export function HomePage() {
               <button
                 key={cat}
                 className={`sidebar-link${selectedCategory === cat ? " sidebar-active" : ""}`}
-                onClick={() => setSelectedCategory(cat)}
+                onClick={() => chooseCategory(cat)}
               >
                 <span className="sidebar-link-label">{cat}</span>
                 <span className="sidebar-count">{total}</span>
@@ -132,6 +162,10 @@ export function HomePage() {
         </div>
       </aside>
 
+      {drawerOpen && (
+        <div className="sidebar-backdrop" onClick={() => setDrawerOpen(false)} />
+      )}
+
       <div className="home-main">
         <header className="dash-header">
           <div>
@@ -140,7 +174,7 @@ export function HomePage() {
               {" "} LeetCode problems solved so far in your favorite language: <span className="solved-count">C#</span> — with step-by-step visual walkthroughs.
             </p>
           </div>
-          {view !== "map" && (
+          {effectiveView !== "map" && !isMobile && (
             <div className="view-toggle">
               <button
                 className={`view-toggle-btn${view === "list" ? " view-toggle-active" : ""}`}
@@ -158,8 +192,16 @@ export function HomePage() {
           )}
         </header>
 
-        {view !== "map" && (
+        {effectiveView !== "map" && (
           <div className="dash-controls">
+            <button
+              className="home-menu-btn"
+              onClick={() => setDrawerOpen(true)}
+              aria-label="Browse categories"
+            >
+              <Menu size={18} strokeWidth={2} />
+              {selectedCategory ?? "Categories"}
+            </button>
             <div className="search-box">
               <Search size={16} strokeWidth={2} className="search-icon" />
               <input
@@ -183,7 +225,7 @@ export function HomePage() {
           </div>
         )}
 
-        {view === "map" ? (
+        {effectiveView === "map" ? (
           <RoadmapView onSelect={setOpenCategory} />
         ) : (
           <div className="cat-sections">
@@ -197,7 +239,7 @@ export function HomePage() {
                     <h2>{cat}</h2>
                     <span className="cat-section-count">{total} problems</span>
                   </div>
-                  {view === "grid" ? (
+                  {effectiveView === "grid" ? (
                     <div className="card-grid">
                       {items.map((p) => (
                         <Card key={p.slug} p={p} />
