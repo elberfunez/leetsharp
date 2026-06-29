@@ -62,7 +62,7 @@ interface Step {
 
 `VisualState` is a discriminated union — one variant per visual component. Today:
 `array` (cells, named pointers, highlighted indices) and `dict` (key→value pills,
-active key). The Blind 75 clusters into roughly 8 visual families; each new family is
+active key). NeetCode problems cluster into roughly 7 visual families; each new family is
 one new variant + one new renderer, and every problem in that family becomes pure data.
 
 ### Adding a problem
