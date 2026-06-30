@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { BookOpen } from "lucide-react";
 import type { Problem, Solution } from "../domain/types";
 import { useStepRunner } from "../engine/useStepRunner";
 import { CodePanel } from "../components/CodePanel";
 import { VisualPanel } from "../components/VisualPanel";
 import { VariablesPanel } from "../components/VariablesPanel";
 import { StepControls } from "../components/StepControls";
+import { ProblemStatement } from "../components/ProblemStatement";
 
 function renderLabel(label: string) {
   return label.split(/(`[^`]+`)/).map((part, i) =>
@@ -85,6 +87,7 @@ function SolutionView({ solution }: { solution: Solution }) {
 /** Composes the engine and panels for one problem, with a tab per approach. */
 export function ProblemPage({ problem }: { problem: Problem }) {
   const [active, setActive] = useState(0);
+  const [showStatement, setShowStatement] = useState(false);
   const solution = problem.solutions[active];
   const multiple = problem.solutions.length > 1;
 
@@ -95,6 +98,16 @@ export function ProblemPage({ problem }: { problem: Problem }) {
         <span className={`difficulty difficulty-${problem.difficulty.toLowerCase()}`}>
           {problem.difficulty}
         </span>
+        {problem.description && (
+          <button
+            type="button"
+            className="see-problem-btn"
+            onClick={() => setShowStatement(true)}
+          >
+            <BookOpen size={14} />
+            See Problem
+          </button>
+        )}
         <a
           href={(solution.author ?? problem.author).githubUrl}
           target="_blank"
@@ -128,6 +141,10 @@ export function ProblemPage({ problem }: { problem: Problem }) {
 
       {/* key remounts so playback state resets when switching approaches */}
       <SolutionView key={active} solution={solution} />
+
+      {showStatement && problem.description && (
+        <ProblemStatement problem={problem} onClose={() => setShowStatement(false)} />
+      )}
     </div>
   );
 }

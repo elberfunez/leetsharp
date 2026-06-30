@@ -165,6 +165,10 @@ export interface Problem {
   /** NeetCode roadmap category, e.g. "Arrays & Hashing" */
   category: string;
   leetcodeUrl: string;
+  /** The original problem statement as Markdown (heading, description, examples,
+   *  constraints). Shown in the "See Problem" panel. Optional — omit and the
+   *  button is hidden. */
+  description?: string;
   /** Default author for all solutions on this problem. */
   author: Author;
   /** One or more approaches. Multiple → rendered as tabs. */
