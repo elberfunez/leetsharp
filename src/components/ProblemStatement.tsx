@@ -184,10 +184,9 @@ function renderMarkdown(markdown: string): ReactNode[] {
 export function ProblemStatement({ problem, onClose }: Props) {
   // Drop the markdown's own title/difficulty preamble — the header below
   // renders it from structured data. Body starts at the first "## " heading.
-  const md = problem.description ?? "";
-  const lines = md.split("\n");
+  const lines = problem.description.split("\n");
   const start = lines.findIndex((l) => /^##\s/.test(l));
-  const body = start >= 0 ? lines.slice(start).join("\n") : md;
+  const body = start >= 0 ? lines.slice(start).join("\n") : problem.description;
 
   return (
     <div className="panel-overlay" onClick={onClose}>

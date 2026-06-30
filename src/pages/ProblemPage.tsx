@@ -98,16 +98,14 @@ export function ProblemPage({ problem }: { problem: Problem }) {
         <span className={`difficulty difficulty-${problem.difficulty.toLowerCase()}`}>
           {problem.difficulty}
         </span>
-        {problem.description && (
-          <button
-            type="button"
-            className="see-problem-btn"
-            onClick={() => setShowStatement(true)}
-          >
-            <BookOpen size={14} />
-            See Problem
-          </button>
-        )}
+        <button
+          type="button"
+          className="see-problem-btn"
+          onClick={() => setShowStatement(true)}
+        >
+          <BookOpen size={14} />
+          See Problem
+        </button>
         <a
           href={(solution.author ?? problem.author).githubUrl}
           target="_blank"
@@ -142,7 +140,7 @@ export function ProblemPage({ problem }: { problem: Problem }) {
       {/* key remounts so playback state resets when switching approaches */}
       <SolutionView key={active} solution={solution} />
 
-      {showStatement && problem.description && (
+      {showStatement && (
         <ProblemStatement problem={problem} onClose={() => setShowStatement(false)} />
       )}
     </div>

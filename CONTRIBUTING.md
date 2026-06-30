@@ -11,9 +11,55 @@ Thanks for helping make algorithm learning better for C# developers. Here's how.
    - `code`: your C# solution as a string, pasted from your submission
    - `steps`: an array tracing the algorithm on a real example (see existing problems for structure)
    - `approach`: summary, complexity, C#-specific notes
+   - `description`: **required** — the original problem statement as Markdown. `tsc` will fail the build if it's
+     missing. See [Adding the problem statement](#adding-the-problem-statement) below
 4. **Register it:** add the import and export to `src/problems/index.ts`. Keep the comment order in sync with the [NeetCode roadmap](https://neetcode.io/roadmap).
 5. **Test:** `npm run dev`, click to your problem, step through it, verify every step maps to your code.
 6. **Open a PR** with a clear title: "Add [Problem Name] with [visual type]" (e.g., "Add 3Sum with ArrayVisual").
+
+## Adding the problem statement
+
+`description` is a required `Markdown` string on `Problem` (`src/domain/types.ts`). It powers the
+**"See Problem"** button on the problem page, which opens a slide-over panel with the original question — every
+problem must ship the statement it's solving, so a PR that omits it won't type-check (`tsc` enforces this).
+
+```typescript
+description: `## Description
+
+Given an integer array \`nums\`, return \`true\` if any value appears more than once in the array, otherwise return \`false\`.
+
+## Examples
+
+### Example 1:
+
+\`\`\`
+Input: nums = [1, 2, 3, 3]
+
+Output: true
+\`\`\`
+
+## Constraints
+
+- \`0 <= nums.length <= 10^5\``,
+```
+
+**Rules the renderer expects** (`src/components/ProblemStatement.tsx` is a small hand-rolled Markdown
+renderer — no parser dependency — so keep statements regular):
+
+- Start the body at `## Description` — don't repeat the title or difficulty; those are already rendered from
+  the `title`/`difficulty` fields. Leading `#`/`**Difficulty:**`-style preambles before the first `##` heading
+  are stripped automatically, so it's fine to paste the full statement including those — just don't rely on them
+  rendering.
+- Supported blocks: `##`/`###` headings, fenced code blocks, `---` rules, `- ` bullet lists, and plain
+  paragraphs. Inline `` `code` `` and `**bold**` are supported.
+- Fenced blocks tagged ` ```csharp ` (e.g., interface signatures in "Design a ..." problems) get real syntax
+  highlighting via the same Shiki instance as the solution panel. Fenced blocks with `Input:`/`Output:`/`Explanation:`
+  lines (LeetCode's usual example format) get colored automatically — don't add language tags to those, leave
+  the fence bare (` ``` `).
+- Stop before any section that duplicates the app's own Approach panel — `## Approach`, `## Complexity
+  Analysis`, `## Key Observations`, `## Notes`, `## Hints`, etc. Genuine LeetCode sections like `## Follow-up`
+  should stay.
+- Escape backticks (`` \` ``) and `${` inside the template literal, since `description` is a JS template string.
 
 ## Adding yourself as an author
 
@@ -80,6 +126,7 @@ If you need a new data structure (e.g., a graph with highlighted edges):
 
 - [ ] Code builds without errors or warnings (`npm run build`)
 - [ ] TypeScript is strict (`tsc` passes)
+- [ ] `description` is set with the original problem statement, rendered correctly in the "See Problem" panel
 - [ ] Every step is manually verified against the code
 - [ ] C# solution is idiomatic (uses language strengths, not a literal translation from another lang)
 - [ ] Approach notes mention C#-specific considerations
