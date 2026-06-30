@@ -41,6 +41,48 @@ export const addTwoNumbers: Problem = {
   difficulty: "Medium",
   category: "Linked List",
   leetcodeUrl: "https://leetcode.com/problems/add-two-numbers/",
+  description: `# Add Two Numbers
+
+**LeetCode Problem #2**  
+**Difficulty:** Medium  
+**Topics:** Linked List, Math
+
+## Description
+
+You are given two non-empty linked lists, \`l1\` and \`l2\`, where each represents a non-negative integer.
+
+The digits are stored in **reverse order**, e.g. the number 321 is represented as \`1 -> 2 -> 3\` in the linked list.
+
+Each of the nodes contains a single digit. You may assume the two numbers do not contain any leading zeros, except the number 0 itself.
+
+**Return the sum of the two numbers as a linked list.**
+
+## Examples
+
+**Example 1:**
+\`\`\`
+Input: l1 = [1,2,3], l2 = [4,5,6]
+Output: [5,7,9]
+
+Explanation: 
+  321 + 654 = 975
+  Represented as: 5 -> 7 -> 9
+\`\`\`
+
+**Example 2:**
+\`\`\`
+Input: l1 = [9], l2 = [9]
+Output: [8,1]
+
+Explanation:
+  9 + 9 = 18
+  Represented as: 8 -> 1
+\`\`\`
+
+## Constraints
+
+- \`1 <= l1.length, l2.length <= 100\`
+- \`0 <= Node.val <= 9\``,
   author: ELBER,
   solutions: [
     {

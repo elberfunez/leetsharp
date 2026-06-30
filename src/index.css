@@ -2614,3 +2614,17 @@ body {
 .md-ex-note {
   color: var(--text-dim);
 }
+
+/* ---- Embedded C# snippets (Shiki-highlighted, no line gutter) ---- */
+
+.md-pre-cs pre {
+  margin: 0;
+  background: transparent !important;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+.md-pre-cs code {
+  display: block;
+}

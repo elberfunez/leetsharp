@@ -42,6 +42,51 @@ export const bestTimeToBuyAndSellStock: Problem = {
   difficulty: "Easy",
   category: "Sliding Window",
   leetcodeUrl: "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
+  description: `# Best Time to Buy and Sell Stock
+
+**Difficulty:** Easy  
+**Topic:** Sliding Window
+
+---
+
+## Description
+
+You are given an integer array \`prices\` where \`prices[i]\` is the price of NeetCoin on the ith day.
+
+You may choose a single day to buy one NeetCoin and choose a different day in the future to sell it.
+
+Return the maximum profit you can achieve. You may choose to not make any transactions, in which case the profit would be 0.
+
+---
+
+## Examples
+
+### Example 1:
+
+\`\`\`
+Input: prices = [10,1,5,6,7,1]
+
+Output: 6
+
+Explanation: Buy at prices[1] (price = 1) and sell at prices[4] (price = 7). Profit = 7 - 1 = 6.
+\`\`\`
+
+### Example 2:
+
+\`\`\`
+Input: prices = [10,8,7,5,2]
+
+Output: 0
+
+Explanation: No profitable transactions can be made. Prices are always decreasing, so return 0.
+\`\`\`
+
+---
+
+## Constraints
+
+- \`1 <= prices.length <= 100\`
+- \`0 <= prices[i] <= 100\``,
   author: ELBER,
   solutions: [
     {

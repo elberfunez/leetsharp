@@ -1,6 +1,7 @@
-import { type ReactNode, Fragment } from "react";
+import { type ReactNode, Fragment, useEffect, useState } from "react";
 import { X } from "lucide-react";
 import type { Problem } from "../domain/types";
+import { highlightCSharp } from "../lib/highlighter";
 
 interface Props {
   problem: Problem;
@@ -16,6 +17,35 @@ function renderInline(text: string): ReactNode[] {
       return <strong key={i}>{tok.slice(2, -2)}</strong>;
     return <Fragment key={i}>{tok}</Fragment>;
   });
+}
+
+/** A fenced ```csharp block — runs through the same Shiki instance as the
+ *  solution code panel so embedded snippets (e.g. interface signatures in
+ *  "Design a ..." problems) get real C# syntax highlighting, not plain text. */
+function CSharpSnippet({ code }: { code: string }) {
+  const [html, setHtml] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+    highlightCSharp(code).then((result) => {
+      if (!cancelled) setHtml(result);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [code]);
+
+  return (
+    <div className="md-pre md-pre-cs">
+      {html ? (
+        <div dangerouslySetInnerHTML={{ __html: html }} />
+      ) : (
+        <pre>
+          <code>{code}</code>
+        </pre>
+      )}
+    </div>
+  );
 }
 
 /** A fenced block (LeetCode examples). Tints Input/Output/Explanation labels and
@@ -57,7 +87,9 @@ function renderMarkdown(markdown: string): ReactNode[] {
     const line = lines[i];
 
     // Fenced code block — accumulate verbatim until the closing fence.
-    if (line.trimStart().startsWith("```")) {
+    const fence = /^```(\w*)/.exec(line.trimStart());
+    if (fence) {
+      const lang = fence[1];
       const code: string[] = [];
       i++;
       while (i < lines.length && !lines[i].trimStart().startsWith("```")) {
@@ -65,7 +97,12 @@ function renderMarkdown(markdown: string): ReactNode[] {
         i++;
       }
       i++; // skip closing fence
-      blocks.push(renderCodeBlock(code.join("\n"), blocks.length));
+      const text = code.join("\n");
+      blocks.push(
+        lang === "csharp" || lang === "cs"
+          ? <CSharpSnippet key={blocks.length} code={text} />
+          : renderCodeBlock(text, blocks.length)
+      );
       continue;
     }
 
