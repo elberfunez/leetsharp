@@ -66,6 +66,47 @@ export const implementTrie: Problem = {
   difficulty: "Medium",
   category: "Tries",
   leetcodeUrl: "https://leetcode.com/problems/implement-trie-prefix-tree/",
+  description: `# Implement Trie (Prefix Tree)
+
+**LeetCode Problem #208**  
+**Difficulty:** Medium  
+**Topics:** Trie, Hash Table, String, Design
+
+## Description
+
+A prefix tree (also known as a trie) is a tree data structure used to efficiently store and retrieve keys in a set of strings. Some applications of this data structure include auto-complete and spell checker systems.
+
+Implement the \`PrefixTree\` class:
+
+- \`PrefixTree()\` - Initializes the prefix tree object.
+- \`void Insert(string word)\` - Inserts the string \`word\` into the prefix tree.
+- \`bool Search(string word)\` - Returns \`true\` if the string \`word\` is in the prefix tree (i.e., was inserted before), and \`false\` otherwise.
+- \`bool StartsWith(string prefix)\` - Returns \`true\` if there is a previously inserted string \`word\` that has the prefix \`prefix\`, and \`false\` otherwise.
+
+## Example
+
+\`\`\`
+Input:
+["PrefixTree", "insert", "dog", "search", "dog", "search", "do", "startsWith", "do", "insert", "do", "search", "do"]
+
+Output:
+[null, null, true, false, true, null, true]
+
+Explanation:
+PrefixTree prefixTree = new PrefixTree();
+prefixTree.Insert("dog");
+prefixTree.Search("dog");    // return true
+prefixTree.Search("do");     // return false
+prefixTree.StartsWith("do"); // return true
+prefixTree.Insert("do");
+prefixTree.Search("do");     // return true
+\`\`\`
+
+## Constraints
+
+- \`1 <= word.length, prefix.length <= 1000\`
+- \`word\` and \`prefix\` consist of lowercase English letters.
+- At most \`3 * 10^4\` calls in total will be made to \`Insert\`, \`Search\`, and \`StartsWith\`.`,
   author: ELBER,
   solutions: [
     {
