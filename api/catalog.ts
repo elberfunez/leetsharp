@@ -1,8 +1,8 @@
 import { desc, eq } from "drizzle-orm";
 import { db, catalogEntries } from "../db/index.js";
-import { withErrors } from "./_lib/http";
-import { requireUser, HttpError } from "./_lib/auth";
-import { parseCatalogInput } from "./_lib/validate";
+import { withErrors } from "./_lib/http.js";
+import { requireUser, HttpError } from "./_lib/auth.js";
+import { parseCatalogInput } from "./_lib/validate.js";
 
 function slugFromUrl(url: string): string {
   const m = url.match(/(?:leetcode\.com|neetcode\.io)\/problems\/([a-z0-9-]+)/i);

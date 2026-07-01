@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { db, catalogEntries } from "../../db/index.js";
-import { withErrors } from "../_lib/http";
-import { requireAdmin, HttpError } from "../_lib/auth";
+import { withErrors } from "../_lib/http.js";
+import { requireAdmin, HttpError } from "../_lib/auth.js";
 
 /**
  * POST /api/admin/catalog — admin-only. Body: { id, action: "approve" | "reject", ...metadata }

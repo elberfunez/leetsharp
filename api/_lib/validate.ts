@@ -1,6 +1,6 @@
 /** Server-side validation of contributor input. Catalog proposals need only a
  *  valid LeetCode/NeetCode URL; the admin fills in the rest during review. */
-import { HttpError } from "./auth";
+import { HttpError } from "./auth.js";
 
 export interface CatalogInput {
   leetcodeUrl: string;
