@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import { db, catalogEntries } from "../../db";
+import { db, catalogEntries } from "../../db/index.js";
 import { withErrors } from "../_lib/http";
 import { requireAdmin, HttpError } from "../_lib/auth";
 

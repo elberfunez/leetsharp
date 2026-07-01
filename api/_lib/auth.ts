@@ -10,7 +10,7 @@
 import type { VercelRequest } from "@vercel/node";
 import { createClerkClient, verifyToken } from "@clerk/backend";
 import { eq } from "drizzle-orm";
-import { db, users, type User } from "../../db";
+import { db, users, type User } from "../../db/index.js";
 
 const secretKey = process.env.CLERK_SECRET_KEY ?? "";
 const clerk = createClerkClient({ secretKey });
