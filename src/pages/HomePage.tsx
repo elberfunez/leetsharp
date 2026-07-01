@@ -10,6 +10,7 @@ import { problems } from "../problems";
 import { tagsFor } from "../problems/tags";
 import { RoadmapView } from "../components/RoadmapView";
 import { CategoryPanel } from "../components/CategoryPanel";
+import { Contributors } from "../components/Contributors";
 import { useIsMobile } from "../hooks/useIsMobile";
 
 type View = "grid" | "list" | "map";
@@ -122,6 +123,7 @@ export function HomePage() {
             );
           })}
         </nav>
+        <Contributors />
         <div className="sidebar-footer">
           <a href="https://github.com/elberfunez/leetsharp" target="_blank" rel="noreferrer" className="home-link">
             <Star size={14} strokeWidth={2} /> Star

@@ -11,7 +11,7 @@ interface RoadmapNode {
 }
 
 const CANVAS_W = 920;
-const CANVAS_H = 740;
+const CANVAS_H = 1080;
 const NODE_W = 150;
 const NODE_H = 52;
 
@@ -24,8 +24,16 @@ const NODES: RoadmapNode[] = [
   { id: "linked", label: "Linked List", x: 720, y: 310, category: "Linked List" },
   { id: "trees", label: "Trees", x: 400, y: 450, category: "Trees" },
   { id: "tries", label: "Tries", x: 190, y: 590, category: "Tries" },
-  { id: "heap", label: "Heap / Priority Queue", x: 450, y: 590 },
-  { id: "backtrack", label: "Backtracking", x: 720, y: 590 },
+  { id: "heap", label: "Heap / Priority Queue", x: 450, y: 590, category: "Heap / Priority Queue" },
+  { id: "backtrack", label: "Backtracking", x: 720, y: 590, category: "Backtracking" },
+  { id: "graphs", label: "Graphs", x: 450, y: 720, category: "Graphs" },
+  { id: "dp1d", label: "1-D Dynamic Prog.", x: 720, y: 720, category: "1-D Dynamic Programming" },
+  { id: "advgraphs", label: "Advanced Graphs", x: 300, y: 850, category: "Advanced Graphs" },
+  { id: "dp2d", label: "2-D Dynamic Prog.", x: 560, y: 850, category: "2-D Dynamic Programming" },
+  { id: "greedy", label: "Greedy", x: 800, y: 850, category: "Greedy" },
+  { id: "mathgeo", label: "Math & Geometry", x: 300, y: 980, category: "Math & Geometry" },
+  { id: "bits", label: "Bit Manipulation", x: 560, y: 980, category: "Bit Manipulation" },
+  { id: "intervals", label: "Intervals", x: 800, y: 980, category: "Intervals" },
 ];
 
 const EDGES: [from: string, to: string][] = [
@@ -40,6 +48,16 @@ const EDGES: [from: string, to: string][] = [
   ["trees", "tries"],
   ["trees", "heap"],
   ["trees", "backtrack"],
+  ["heap", "graphs"],
+  ["backtrack", "graphs"],
+  ["backtrack", "dp1d"],
+  ["graphs", "advgraphs"],
+  ["graphs", "dp2d"],
+  ["dp1d", "dp2d"],
+  ["dp1d", "greedy"],
+  ["advgraphs", "mathgeo"],
+  ["dp2d", "bits"],
+  ["greedy", "intervals"],
 ];
 
 const byId = (id: string) => NODES.find((n) => n.id === id)!;

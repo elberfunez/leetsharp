@@ -17,8 +17,9 @@ function renderLabel(label: string) {
   );
 }
 
-/** Renders a single solution: code + visualization + approach write-up. */
-function SolutionView({ solution }: { solution: Solution }) {
+/** Renders a single solution: code + visualization + approach write-up. Exported
+ *  so the contribution wizard can preview a draft with the exact production view. */
+export function SolutionView({ solution }: { solution: Solution }) {
   const runner = useStepRunner(solution.steps);
 
   useEffect(() => {

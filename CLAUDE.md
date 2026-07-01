@@ -5,9 +5,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-npm run dev      # Vite dev server
-npm run build    # tsc (typecheck, strict) + vite build — run before any PR
+npm run dev      # Vite dev server (frontend only — /api functions are NOT served)
+npx vercel dev   # full stack: frontend + /api serverless functions (needs `vercel link` once)
+npm run build    # tsc (browser) + tsc -p tsconfig.api.json (server) + vite build — run before any PR
 npm run preview  # serve the production build
+
+npm run db:generate  # generate a Drizzle migration from db/schema.ts changes
+npm run db:migrate    # apply migrations to Neon (needs DATABASE_URL in env)
+npm run db:studio     # browse the DB
 ```
 
 There is no test runner and no linter. The quality gate is `tsc` under `strict`
@@ -15,6 +20,40 @@ There is no test runner and no linter. The quality gate is `tsc` under `strict`
 in the browser. "Testing a problem" means opening it in `npm run dev` and confirming
 every step's highlighted lines and visuals match the code — there is no automated check
 that step data is correct, so this is the only safety net.
+
+## Two halves: static site + contribution backend
+
+The **live site is still 100% static** — every published problem is a hand-authored
+`Problem` in `src/problems/*`, bundled at build time. Nothing about visitors' experience
+touches a database. Read the "Architecture" section below for that; it's the heart of the app.
+
+Layered on top is a **contribution workflow** (auth + DB + serverless API) that only powers
+submitting/reviewing new problems — never the live problem data. Keep these separate:
+
+- `src/` — browser code, typechecked by `tsconfig.json` (`include: ["src"]`).
+- `db/`, `api/` — server-only code, typechecked by `tsconfig.api.json`. **Must live outside
+  `src/`** so server imports (`process.env`, the Neon driver) never enter the browser build.
+- `db/schema.ts` — Drizzle/Postgres schema (`users`, `catalog_entries`, `submissions`).
+  Migrations in `db/migrations/` are committed. JSON columns reuse `src/domain` types.
+- `api/*.ts` — Vercel serverless functions. `api/_lib/` (underscore = not a route) holds
+  `auth.ts` (Clerk token verify + lazy user upsert; `requireUser`/`requireAdmin`) and `http.ts`.
+- Auth is **Clerk** (GitHub sign-in). Mounted conditionally in `main.tsx`: **no
+  `VITE_CLERK_PUBLISHABLE_KEY` → the app runs anonymously with all contribution UI hidden**,
+  so `npm run dev` works with zero setup. `AuthMenu`/`CurrentUserProvider` mirror that check.
+- Publishing is manual: an admin reviews a submission (URL + C# code) at `/admin/review`,
+  builds the real `src/problems/*` file by hand, and flips the submission's status. There is
+  **no auto-generation of problem files** from submissions.
+
+### Environment variables
+
+Local dev: put these in `.env` (read by `vercel dev` functions AND Vite) — `.env.local`
+alone is read by Vite but NOT by `vercel dev`'s function runtime. All are gitignored.
+Production: set the same in the Vercel project dashboard.
+
+- `DATABASE_URL` — Neon Postgres (pooled) connection string.
+- `VITE_CLERK_PUBLISHABLE_KEY` — Clerk publishable key (browser).
+- `CLERK_SECRET_KEY` — Clerk secret (server; verifies session tokens).
+- `GITHUB_PUBLISH_TOKEN`, `GITHUB_REPO` — reserved for future publish automation (unused today).
 
 ## Architecture
 

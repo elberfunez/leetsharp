@@ -1,6 +1,25 @@
 # Contributing to LeetSharp
 
-Thanks for helping make algorithm learning better for C# developers. Here's how.
+Thanks for helping make algorithm learning better for C# developers. There are two ways in.
+
+## The easy way: submit a solution in the app (no git required)
+
+1. Sign in with GitHub on the site.
+2. Browse the **Unsolved** board for a problem that needs solving (or propose one).
+3. Click **Solve this** and fill out the short form: the LeetCode/NeetCode **URL** and your
+   **C# solution** (a description is optional). That's it — submit for review.
+
+A maintainer builds the step-by-step animation, complexity notes, and approach, then
+publishes it with **you credited as the author**. You can track status on **My Submissions**.
+
+This is the recommended path for most contributors: you provide the solution, we do the
+visualization craft.
+
+## The full way: author the whole animated problem (git)
+
+If you want to author the entire experience — steps, visuals, and all — do it directly in
+code and open a PR. This is also the workflow a maintainer follows when building out a
+submitted solution.
 
 ## Adding a problem
 

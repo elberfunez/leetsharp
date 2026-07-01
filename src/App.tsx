@@ -1,9 +1,15 @@
-import { BrowserRouter, Link, Navigate, NavLink, Route, Routes, useParams, useSearchParams } from "react-router-dom";
+import { BrowserRouter, Link, Navigate, NavLink, Route, Routes, useLocation, useParams, useSearchParams } from "react-router-dom";
 import { Sun, Moon, ArrowLeft, Code2, AlertCircle } from "lucide-react";
 import { FaLinkedin } from "react-icons/fa";
 import { getProblem } from "./problems";
 import { HomePage } from "./pages/HomePage";
 import { ProblemPage } from "./pages/ProblemPage";
+import { UnsolvedPage } from "./pages/UnsolvedPage";
+import { ContributePage } from "./pages/ContributePage";
+import { MySubmissionsPage } from "./pages/MySubmissionsPage";
+import { AdminReviewPage } from "./pages/AdminReviewPage";
+import { AuthMenu } from "./components/AuthMenu";
+import { useCurrentUserCtx } from "./lib/currentUser";
 import { useTheme } from "./hooks/useTheme";
 
 function ProblemRoute() {
@@ -51,21 +57,45 @@ function ThemeToggle() {
 function TopNav() {
   const [searchParams] = useSearchParams();
   const isMap = searchParams.get("view") === "map";
+  const onHome = useLocation().pathname === "/";
+  const { user } = useCurrentUserCtx();
   return (
     <div className="topnav">
       <NavLink
         to="/"
         end
-        className={`topnav-link${!isMap ? " topnav-active" : ""}`}
+        className={`topnav-link${onHome && !isMap ? " topnav-active" : ""}`}
       >
         Problems
       </NavLink>
       <Link
         to="/?view=map"
-        className={`topnav-link${isMap ? " topnav-active" : ""}`}
+        className={`topnav-link${onHome && isMap ? " topnav-active" : ""}`}
       >
         Roadmap
       </Link>
+      <NavLink
+        to="/unsolved"
+        className={({ isActive }) => `topnav-link${isActive ? " topnav-active" : ""}`}
+      >
+        Unsolved
+      </NavLink>
+      {user && (
+        <NavLink
+          to="/my-submissions"
+          className={({ isActive }) => `topnav-link${isActive ? " topnav-active" : ""}`}
+        >
+          My Submissions
+        </NavLink>
+      )}
+      {user?.role === "admin" && (
+        <NavLink
+          to="/admin/review"
+          className={({ isActive }) => `topnav-link${isActive ? " topnav-active" : ""}`}
+        >
+          Review
+        </NavLink>
+      )}
     </div>
   );
 }
@@ -94,11 +124,16 @@ export default function App() {
             >
               <Code2 size={18} strokeWidth={2} />
             </a>
+            <AuthMenu />
           </div>
         </nav>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/problems/:slug" element={<ProblemRoute />} />
+          <Route path="/unsolved" element={<UnsolvedPage />} />
+          <Route path="/contribute/new" element={<ContributePage />} />
+          <Route path="/my-submissions" element={<MySubmissionsPage />} />
+          <Route path="/admin/review" element={<AdminReviewPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <footer className="footer">
