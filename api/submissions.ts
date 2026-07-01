@@ -1,8 +1,8 @@
 import { desc, eq } from "drizzle-orm";
 import { db, submissions, catalogEntries } from "../db/index.js";
-import { withErrors } from "./_lib/http";
-import { requireUser, HttpError } from "./_lib/auth";
-import { validateSubmission, slugFromUrl, type SubmissionDraft } from "../src/domain/submission";
+import { withErrors } from "./_lib/http.js";
+import { requireUser, HttpError } from "./_lib/auth.js";
+import { validateSubmission, slugFromUrl, type SubmissionDraft } from "../src/domain/submission.js";
 
 function coerceDraft(body: Record<string, any>): SubmissionDraft {
   const leetcodeUrl = String(body.leetcodeUrl ?? "").trim();

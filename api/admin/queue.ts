@@ -1,7 +1,7 @@
 import { desc, eq } from "drizzle-orm";
 import { db, catalogEntries, submissions, users } from "../../db/index.js";
-import { withErrors } from "../_lib/http";
-import { requireAdmin } from "../_lib/auth";
+import { withErrors } from "../_lib/http.js";
+import { requireAdmin } from "../_lib/auth.js";
 
 /** GET /api/admin/queue — admin-only; everything awaiting review. */
 export default withErrors(async (req, res) => {
