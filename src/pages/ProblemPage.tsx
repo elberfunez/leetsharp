@@ -17,8 +17,9 @@ function renderLabel(label: string) {
   );
 }
 
-/** Renders a single solution: code + visualization + approach write-up. */
-function SolutionView({ solution }: { solution: Solution }) {
+/** Renders a single solution: code + visualization + approach write-up. Exported
+ *  so the contribution wizard can preview a draft with the exact production view. */
+export function SolutionView({ solution }: { solution: Solution }) {
   const runner = useStepRunner(solution.steps);
 
   useEffect(() => {
@@ -98,16 +99,14 @@ export function ProblemPage({ problem }: { problem: Problem }) {
         <span className={`difficulty difficulty-${problem.difficulty.toLowerCase()}`}>
           {problem.difficulty}
         </span>
-        {problem.description && (
-          <button
-            type="button"
-            className="see-problem-btn"
-            onClick={() => setShowStatement(true)}
-          >
-            <BookOpen size={14} />
-            See Problem
-          </button>
-        )}
+        <button
+          type="button"
+          className="see-problem-btn"
+          onClick={() => setShowStatement(true)}
+        >
+          <BookOpen size={14} />
+          See Problem
+        </button>
         <a
           href={(solution.author ?? problem.author).githubUrl}
           target="_blank"
@@ -142,7 +141,7 @@ export function ProblemPage({ problem }: { problem: Problem }) {
       {/* key remounts so playback state resets when switching approaches */}
       <SolutionView key={active} solution={solution} />
 
-      {showStatement && problem.description && (
+      {showStatement && (
         <ProblemStatement problem={problem} onClose={() => setShowStatement(false)} />
       )}
     </div>

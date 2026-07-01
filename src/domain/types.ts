@@ -166,9 +166,9 @@ export interface Problem {
   category: string;
   leetcodeUrl: string;
   /** The original problem statement as Markdown (heading, description, examples,
-   *  constraints). Shown in the "See Problem" panel. Optional — omit and the
-   *  button is hidden. */
-  description?: string;
+   *  constraints). Shown in the "See Problem" panel. Required — every problem
+   *  must ship the statement it's solving. */
+  description: string;
   /** Default author for all solutions on this problem. */
   author: Author;
   /** One or more approaches. Multiple → rendered as tabs. */

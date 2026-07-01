@@ -178,17 +178,20 @@ function renderMarkdown(markdown: string): ReactNode[] {
   return blocks;
 }
 
+/** Renders a statement's Markdown body, dropping the title/difficulty preamble
+ *  before the first "## " heading. Shared by the panel below and the contribution
+ *  wizard's live preview so authoring matches what ships exactly. */
+export function MarkdownBody({ markdown }: { markdown: string }) {
+  const lines = markdown.split("\n");
+  const start = lines.findIndex((l) => /^##\s/.test(l));
+  const body = start >= 0 ? lines.slice(start).join("\n") : markdown;
+  return <div className="md-body">{renderMarkdown(body)}</div>;
+}
+
 /** Slide-over panel showing the original problem statement. The title and the
  *  chip row are built from structured Problem fields; the rest (Description,
  *  Examples, Constraints) is rendered from the Markdown body. */
 export function ProblemStatement({ problem, onClose }: Props) {
-  // Drop the markdown's own title/difficulty preamble — the header below
-  // renders it from structured data. Body starts at the first "## " heading.
-  const md = problem.description ?? "";
-  const lines = md.split("\n");
-  const start = lines.findIndex((l) => /^##\s/.test(l));
-  const body = start >= 0 ? lines.slice(start).join("\n") : md;
-
   return (
     <div className="panel-overlay" onClick={onClose}>
       <div
@@ -210,7 +213,7 @@ export function ProblemStatement({ problem, onClose }: Props) {
           </div>
         </header>
 
-        <div className="md-body">{renderMarkdown(body)}</div>
+        <MarkdownBody markdown={problem.description} />
       </div>
     </div>
   );
